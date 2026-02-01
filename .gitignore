@@ -47,3 +47,5 @@ coverage/
 .vscode/
 *.swp
 *.swo
+server/uploads/*.jpg
+dist/

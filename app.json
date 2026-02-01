@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#0a0a0f"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.faceanalyzer.app",
@@ -26,7 +28,10 @@
         "backgroundColor": "#0a0a0f"
       },
       "package": "com.faceanalyzer.app",
-      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE"]
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -44,7 +49,8 @@
         {
           "photosPermission": "Allow Face Analyzer to access your photos for analysis."
         }
-      ]
+      ],
+      "expo-router"
     ],
     "scheme": "faceanalyzer"
   }

@@ -7,6 +7,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateEnhancementPrompt } from './providers/geminiText.js';
 import { generateEnhancedImage } from './providers/imagen.js';
 import { saveImage, getUploadsDir } from './providers/storage.js';
+import foodRoutes from './routes/foodRoutes.js';
 
 dotenv.config();
 
@@ -30,6 +31,9 @@ app.use(express.json({ limit: '50mb' }));
 
 // Serve uploaded images
 app.use('/uploads', express.static(getUploadsDir()));
+
+// Food/Calorie tracker routes
+app.use('/api/food', foodRoutes);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -1039,6 +1043,11 @@ app.listen(PORT, () => {
   console.log(`   Health check: http://localhost:${PORT}/health`);
   console.log(`   Face analysis: POST http://localhost:${PORT}/api/face/analyze`);
   console.log(`   Body analysis: POST http://localhost:${PORT}/api/body/analyze`);
-  console.log(`   Best Version: POST http://localhost:${PORT}/api/best-version\n`);
+  console.log(`   Best Version: POST http://localhost:${PORT}/api/best-version`);
+  console.log(`\n🍽️ Calorie Tracker endpoints:`);
+  console.log(`   Food scan: POST http://localhost:${PORT}/api/food/scan`);
+  console.log(`   Recompute: POST http://localhost:${PORT}/api/food/recompute`);
+  console.log(`   Search: GET http://localhost:${PORT}/api/food/search?q=chicken`);
+  console.log(`   Common: GET http://localhost:${PORT}/api/food/common\n`);
   console.log('📊 Scoring calibration active - honest scores, no inflation');
 });
