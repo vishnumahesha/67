@@ -6,6 +6,7 @@ import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateEnhancementPrompt } from './providers/geminiText.js';
 import { generateEnhancedImage } from './providers/imagen.js';
+import { applyGlowUp } from './providers/imageEnhancer.js';
 import { saveImage, getUploadsDir } from './providers/storage.js';
 import foodRoutes from './routes/foodRoutes.js';
 
@@ -939,13 +940,6 @@ function applyBodyCalibration(response) {
 // ====== BEST VERSION GENERATOR ENDPOINT ======
 app.post('/api/best-version', async (req, res) => {
   try {
-    if (!GEMINI_API_KEY) {
-      return res.status(503).json({
-        error: 'API key not configured',
-        message: 'GEMINI_API_KEY not set. Get your FREE key from https://aistudio.google.com/apikey'
-      });
-    }
-
     const { image } = req.body;
 
     if (!image) {
@@ -954,47 +948,52 @@ app.post('/api/best-version', async (req, res) => {
 
     console.log('🎨 Best Version Generator - Starting...');
 
-    // Step 1: Generate enhancement prompt using Gemini
-    console.log('  → Generating enhancement prompt...');
-    const promptResult = await generateEnhancementPrompt(image, GEMINI_API_KEY);
-    console.log('  ✓ Enhancement prompt generated');
-    console.log('  → Changes:', promptResult.changes);
+    // Step 1: Apply real image enhancements using Sharp
+    console.log('  → Applying visual enhancements...');
+    const enhanceResult = await applyGlowUp(image);
+    
+    let changes = [];
+    let usedProvider = 'sharp-enhancer';
 
-    // Step 2: Try to generate enhanced image
-    console.log('  → Attempting image generation...');
-    const imageResult = await generateEnhancedImage(
-      image,
-      promptResult.imagenPrompt,
-      GEMINI_API_KEY
-    );
-
-    let resultImageUrl = null;
-    let usedProvider = 'fallback';
-
-    if (imageResult.success && imageResult.imageBase64) {
-      // Save the generated image
-      console.log(`  ✓ Image generated via ${imageResult.provider}`);
-      const saved = saveImage(imageResult.imageBase64);
-      resultImageUrl = saved.url;
-      usedProvider = imageResult.provider;
+    if (enhanceResult.success) {
+      changes = enhanceResult.applied;
+      console.log('  ✓ Enhancements applied:', changes);
     } else {
-      console.log('  ⚠️ Image generation not available, using fallback mode');
-      // In fallback mode, save the original image and return enhancement plan
-      const saved = saveImage(image, 'original');
-      resultImageUrl = saved.url;
-      usedProvider = 'fallback';
+      console.log('  ⚠️ Enhancement failed, using original');
+      changes = ['Original image (enhancement unavailable)'];
     }
+
+    // Step 2: Generate AI analysis of improvements (if API key available)
+    if (GEMINI_API_KEY) {
+      try {
+        console.log('  → Getting AI enhancement analysis...');
+        const promptResult = await generateEnhancementPrompt(image, GEMINI_API_KEY);
+        // Combine AI suggestions with actual applied changes
+        changes = [
+          ...changes,
+          '---',
+          'Additional AI recommendations:',
+          ...promptResult.changes.slice(0, 3),
+        ];
+      } catch (aiError) {
+        console.log('  ⚠️ AI analysis unavailable:', aiError.message);
+      }
+    }
+
+    // Step 3: Save the enhanced image
+    const imageToSave = enhanceResult.success ? enhanceResult.base64 : image;
+    const saved = saveImage(imageToSave, 'best-version');
+    const resultImageUrl = saved.url;
 
     console.log('🎨 Best Version Generator - Complete');
 
     res.json({
       resultImageUrl,
-      changes: promptResult.changes,
-      imagenPrompt: promptResult.imagenPrompt,
+      changes: changes.filter(c => c && c !== '---'),
       debug: {
         usedProvider,
-        imageGenerationAvailable: imageResult.success,
-        fallbackMode: !imageResult.success,
+        enhancementApplied: enhanceResult.success,
+        aiAnalysisAvailable: !!GEMINI_API_KEY,
       }
     });
 
