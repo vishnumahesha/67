@@ -1,7 +1,7 @@
 /**
  * Imagen Provider
  * Handles AI image generation via Google's Imagen API
- * Supports both Vertex AI and AI Studio approaches
+ * Updated to use latest available models
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
@@ -16,42 +16,133 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
  */
 export async function generateEnhancedImage(originalImageBase64, prompt, apiKey) {
   
-  // Try Gemini 2.0 Flash with image generation (experimental)
+  // Method 1: Try Gemini 2.0 Flash Experimental with image output
   try {
-    const result = await tryGeminiImageEdit(originalImageBase64, prompt, apiKey);
+    console.log('  → Trying gemini-2.0-flash-exp with image output...');
+    const result = await tryGemini2FlashExp(originalImageBase64, prompt, apiKey);
     if (result.success) {
+      console.log('  ✓ Success with gemini-2.0-flash-exp');
       return result;
     }
+    console.log('  ✗ gemini-2.0-flash-exp failed:', result.error);
   } catch (error) {
-    console.log('Gemini image edit not available:', error);
+    console.log('  ✗ gemini-2.0-flash-exp error:', error.message);
   }
 
-  // Try Imagen 3 via AI Studio (if available)
+  // Method 2: Try the image generation specific model
   try {
-    const result = await tryImagen3(originalImageBase64, prompt, apiKey);
+    console.log('  → Trying gemini-2.0-flash-exp-image-generation...');
+    const result = await tryGeminiImageGeneration(originalImageBase64, prompt, apiKey);
     if (result.success) {
+      console.log('  ✓ Success with gemini-2.0-flash-exp-image-generation');
       return result;
     }
+    console.log('  ✗ gemini-2.0-flash-exp-image-generation failed:', result.error);
   } catch (error) {
-    console.log('Imagen 3 not available:', error);
+    console.log('  ✗ gemini-2.0-flash-exp-image-generation error:', error.message);
   }
 
-  // All methods failed - return fallback
+  // Method 3: Try Imagen 3 via REST API
+  try {
+    console.log('  → Trying Imagen 3 REST API...');
+    const result = await tryImagen3Rest(originalImageBase64, prompt, apiKey);
+    if (result.success) {
+      console.log('  ✓ Success with Imagen 3');
+      return result;
+    }
+    console.log('  ✗ Imagen 3 failed:', result.error);
+  } catch (error) {
+    console.log('  ✗ Imagen 3 error:', error.message);
+  }
+
+  // All methods failed - return fallback with detailed info
+  console.log('  ⚠️ All image generation methods failed, using fallback');
   return {
     imageBase64: null,
     success: false,
-    error: 'Image generation not available - showing enhancement plan instead',
+    error: 'Image generation requires Gemini API with image output enabled. Currently showing enhancement plan.',
     provider: 'fallback',
+    details: 'Free Gemini API does not include image generation. Upgrade to Vertex AI or wait for broader availability.',
   };
 }
 
 /**
- * Try using Gemini 2.0 Flash for image editing
+ * Try using Gemini 2.0 Flash Experimental
  */
-async function tryGeminiImageEdit(originalImageBase64, prompt, apiKey) {
+async function tryGemini2FlashExp(originalImageBase64, prompt, apiKey) {
   const genAI = new GoogleGenerativeAI(apiKey);
   
-  // Try gemini-2.0-flash-exp-image-generation if available
+  try {
+    // Use the experimental model with image response modality
+    const model = genAI.getGenerativeModel({ 
+      model: 'gemini-2.0-flash-exp',
+      generationConfig: {
+        responseModalities: ['text', 'image'],
+      },
+    });
+
+    const editPrompt = `You are an expert photo editor. Edit this photo to create a subtly enhanced version.
+
+ENHANCEMENT INSTRUCTIONS:
+${prompt}
+
+CRITICAL RULES:
+- This MUST be the EXACT same person - clearly recognizable
+- Do NOT change: face shape, bone structure, age, ethnicity, or identity
+- Only improve: lighting, skin clarity, hair styling, grooming, color balance
+- Make subtle, professional enhancements - not dramatic transformations
+- The result should look like a professional photo of the same person
+
+Generate an enhanced version of this photo now.`;
+
+    const result = await model.generateContent([
+      {
+        inlineData: {
+          data: originalImageBase64,
+          mimeType: 'image/jpeg',
+        },
+      },
+      editPrompt,
+    ]);
+
+    const response = await result.response;
+    const candidates = response.candidates || [];
+    
+    for (const candidate of candidates) {
+      const parts = candidate.content?.parts || [];
+      for (const part of parts) {
+        if (part.inlineData?.data) {
+          return {
+            imageBase64: part.inlineData.data,
+            success: true,
+            provider: 'gemini-2.0-flash-exp',
+          };
+        }
+      }
+    }
+    
+    return {
+      imageBase64: null,
+      success: false,
+      error: 'No image in response - model may not support image output',
+      provider: 'gemini-2.0-flash-exp',
+    };
+  } catch (error) {
+    return {
+      imageBase64: null,
+      success: false,
+      error: error.message || String(error),
+      provider: 'gemini-2.0-flash-exp',
+    };
+  }
+}
+
+/**
+ * Try using the dedicated image generation model
+ */
+async function tryGeminiImageGeneration(originalImageBase64, prompt, apiKey) {
+  const genAI = new GoogleGenerativeAI(apiKey);
+  
   try {
     const model = genAI.getGenerativeModel({ 
       model: 'gemini-2.0-flash-exp-image-generation',
@@ -69,7 +160,8 @@ CRITICAL RULES:
 - Keep the EXACT same person - must be clearly recognizable
 - Do NOT change face shape, bone structure, age, or ethnicity
 - Only improve: lighting, skin clarity, hair styling, grooming, color balance
-- This is a subtle enhancement, not a transformation`;
+- This is a subtle enhancement, not a transformation
+- Output a single enhanced photo`;
 
     const result = await model.generateContent([
       editPrompt,
@@ -94,25 +186,28 @@ CRITICAL RULES:
       }
     }
     
-    throw new Error('No image in response');
+    return {
+      imageBase64: null,
+      success: false,
+      error: 'No image returned from model',
+      provider: 'gemini-2.0-flash-exp-image-generation',
+    };
   } catch (error) {
     return {
       imageBase64: null,
       success: false,
-      error: String(error),
-      provider: 'gemini-image-edit',
+      error: error.message || String(error),
+      provider: 'gemini-2.0-flash-exp-image-generation',
     };
   }
 }
 
 /**
- * Try using Imagen 3 via AI Studio
+ * Try using Imagen 3 via REST API
  */
-async function tryImagen3(originalImageBase64, prompt, apiKey) {
-  // Imagen 3 through AI Studio uses a different endpoint
-  // This requires the imagegeneration model
-  
+async function tryImagen3Rest(originalImageBase64, prompt, apiKey) {
   try {
+    // Try the standard Imagen endpoint
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`,
       {
@@ -123,7 +218,7 @@ async function tryImagen3(originalImageBase64, prompt, apiKey) {
         body: JSON.stringify({
           instances: [
             {
-              prompt: `Photo editing: ${prompt}. Keep the same person, only enhance lighting, skin, and presentation.`,
+              prompt: `Professional photo editing: ${prompt}. Maintain the exact same person's identity, only enhance lighting, skin clarity, and presentation quality.`,
               image: {
                 bytesBase64Encoded: originalImageBase64,
               },
@@ -141,7 +236,12 @@ async function tryImagen3(originalImageBase64, prompt, apiKey) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Imagen API error: ${response.status} - ${errorText}`);
+      return {
+        imageBase64: null,
+        success: false,
+        error: `API error ${response.status}: ${errorText.slice(0, 200)}`,
+        provider: 'imagen-3',
+      };
     }
 
     const data = await response.json();
@@ -154,12 +254,17 @@ async function tryImagen3(originalImageBase64, prompt, apiKey) {
       };
     }
     
-    throw new Error('No image in Imagen response');
+    return {
+      imageBase64: null,
+      success: false,
+      error: 'No image in Imagen response',
+      provider: 'imagen-3',
+    };
   } catch (error) {
     return {
       imageBase64: null,
       success: false,
-      error: String(error),
+      error: error.message || String(error),
       provider: 'imagen-3',
     };
   }

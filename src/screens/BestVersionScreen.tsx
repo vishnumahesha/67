@@ -398,9 +398,12 @@ export default function BestVersionScreen() {
             {result.debug.fallbackMode && (
               <View style={styles.fallbackNotice}>
                 <Ionicons name="information-circle" size={18} color={COLORS.warning} />
-                <Text style={styles.fallbackText}>
-                  Demo Mode: Showing enhancement plan (image generation coming soon)
-                </Text>
+                <View style={styles.fallbackContent}>
+                  <Text style={styles.fallbackTitle}>Enhancement Plan Mode</Text>
+                  <Text style={styles.fallbackText}>
+                    AI image generation requires a premium API. Below are the specific enhancements that would be applied to achieve your best version.
+                  </Text>
+                </View>
               </View>
             )}
 
@@ -765,20 +768,29 @@ const styles = StyleSheet.create({
   },
   fallbackNotice: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    alignItems: 'flex-start',
+    gap: 12,
     backgroundColor: COLORS.warning + '15',
     borderRadius: 12,
-    padding: 14,
+    padding: 16,
     marginBottom: 20,
     borderWidth: 1,
     borderColor: COLORS.warning + '30',
     width: '100%',
   },
+  fallbackContent: {
+    flex: 1,
+  },
+  fallbackTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.warning,
+    marginBottom: 4,
+  },
   fallbackText: {
     flex: 1,
     fontSize: 13,
-    color: COLORS.warning,
+    color: COLORS.textSecondary,
     lineHeight: 18,
   },
   
