@@ -34,6 +34,46 @@
       scroll-behavior: smooth;
     }
 
+    /* Page sections - only show active one */
+    .page-section {
+      display: none;
+      min-height: calc(100vh - 70px);
+      padding-top: 80px;
+    }
+
+    .page-section.active {
+      display: block;
+      animation: pageFadeIn 0.4s ease-out;
+    }
+
+    @keyframes pageFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Active nav link styling */
+    .nav-links a.active {
+      color: var(--primary);
+      position: relative;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+
     body {
       font-family: 'Outfit', sans-serif;
       background: var(--background);
@@ -143,11 +183,11 @@
 
     /* Hero Section */
     .hero {
-      min-height: 100vh;
+      min-height: calc(100vh - 80px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 8rem 2rem 4rem;
+      padding: 2rem 2rem 4rem;
       position: relative;
     }
 
@@ -417,8 +457,9 @@
 
     /* Upload Section */
     .upload-section {
-      padding: 6rem 2rem;
+      padding: 2rem 2rem 4rem;
       background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent);
+      min-height: calc(100vh - 150px);
     }
 
     .upload-container {
@@ -1450,8 +1491,9 @@
 
     /* Features Section */
     .features {
-      padding: 6rem 2rem;
+      padding: 2rem 2rem 6rem;
       position: relative;
+      min-height: calc(100vh - 80px);
     }
 
     .section-header {
@@ -1489,6 +1531,11 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
+    }
+
+    .section-cta {
+      text-align: center;
+      margin-top: 4rem;
     }
 
     .feature-card {
@@ -1551,8 +1598,9 @@
 
     /* How it works */
     .how-it-works {
-      padding: 6rem 2rem;
+      padding: 2rem 2rem 6rem;
       background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.03), transparent);
+      min-height: calc(100vh - 80px);
     }
 
     .steps {
@@ -1739,14 +1787,17 @@
         Face Analyzer
       </a>
       <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how-it-works">How it Works</a></li>
-        <li><a href="#upload">Analyze</a></li>
+        <li><a href="#" data-page="home" class="active">Home</a></li>
+        <li><a href="#" data-page="features">Features</a></li>
+        <li><a href="#" data-page="how-it-works">How it Works</a></li>
+        <li><a href="#" data-page="analyze">Analyze</a></li>
       </ul>
-      <a href="#upload" class="nav-cta">Get Started</a>
+      <a href="#" data-page="analyze" class="nav-cta">Get Started</a>
     </div>
   </nav>
 
+  <!-- HOME PAGE -->
+  <div class="page-section active" id="page-home">
   <section class="hero">
     <div class="hero-container">
       <div class="hero-content">
@@ -1758,10 +1809,10 @@
           Get honest, calibrated facial analysis with your current score, realistic potential, and a clear action plan. No score inflation – just evidence-based insights.
         </p>
         <div class="hero-buttons">
-          <a href="#upload" class="btn btn-primary">
+          <a href="#" data-page="analyze" class="btn btn-primary">
             Start Free Analysis →
           </a>
-          <a href="#how-it-works" class="btn btn-secondary">
+          <a href="#" data-page="how-it-works" class="btn btn-secondary">
             Learn More
           </a>
         </div>
@@ -1827,7 +1878,10 @@
       </div>
     </div>
   </section>
+  </div>
 
+  <!-- FEATURES PAGE -->
+  <div class="page-section" id="page-features">
   <section class="features" id="features">
     <div class="section-header">
       <span class="section-label">Features</span>
@@ -1868,8 +1922,14 @@
         <p>Your photos are analyzed securely and never stored. Complete privacy guaranteed.</p>
       </div>
     </div>
+    <div class="section-cta">
+      <a href="#" data-page="analyze" class="btn btn-primary">Try It Now →</a>
+    </div>
   </section>
+  </div>
 
+  <!-- HOW IT WORKS PAGE -->
+  <div class="page-section" id="page-how-it-works">
   <section class="how-it-works" id="how-it-works">
     <div class="section-header">
       <span class="section-label">How It Works</span>
@@ -1901,8 +1961,14 @@
         </div>
       </div>
     </div>
+    <div class="section-cta">
+      <a href="#" data-page="analyze" class="btn btn-primary">Start Your Analysis →</a>
+    </div>
   </section>
+  </div>
 
+  <!-- ANALYZE PAGE -->
+  <div class="page-section" id="page-analyze">
   <!-- Upload Section -->
   <section class="upload-section" id="upload">
     <div class="upload-container">
@@ -2062,6 +2128,7 @@
     <p class="loading-text">Analyzing your features...</p>
     <p class="loading-subtext">This usually takes 10-20 seconds</p>
   </div>
+  </div>
 
   <footer>
     <div class="footer-content">
@@ -2076,6 +2143,53 @@
   </footer>
 
   <script>
+    // Scroll to top on page load
+    window.onload = function() {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    };
+
+    // Page Navigation System
+    function showPage(pageName) {
+      // Hide all pages
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      
+      // Show selected page
+      const targetPage = document.getElementById('page-' + pageName);
+      if (targetPage) {
+        targetPage.classList.add('active');
+        window.scrollTo(0, 0);
+      }
+      
+      // Update nav links
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.page === pageName) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Add click handlers to navigation
+    document.addEventListener('DOMContentLoaded', function() {
+      // All elements with data-page attribute
+      document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          showPage(this.dataset.page);
+        });
+      });
+
+      // Logo click goes to home
+      document.querySelector('.logo').addEventListener('click', function(e) {
+        e.preventDefault();
+        showPage('home');
+      });
+    });
+
     // State
     let frontImage = null;
     let sideImage = null;
@@ -2479,7 +2593,7 @@
       updateUploadBox('side', null);
       resultsSection.classList.remove('visible');
       uploadSection.classList.remove('hidden');
-      uploadSection.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo(0, 0);
     });
 
     // Mock results for demo/offline mode - HONEST SCORING MODEL

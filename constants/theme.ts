@@ -1,71 +1,72 @@
 export const colors = {
-  // Primary palette - deep violet to electric purple
-  primary: '#8B5CF6',
-  primaryDark: '#7C3AED',
-  primaryLight: '#A78BFA',
-  primaryGlow: 'rgba(139, 92, 246, 0.4)',
+  // Primary palette - warm champagne and rose gold
+  primary: '#D4A574',
+  primaryDark: '#C49464',
+  primaryLight: '#E8C8A4',
+  primaryGlow: 'rgba(212, 165, 116, 0.35)',
 
-  // Accent - electric cyan
-  accent: '#06B6D4',
-  accentLight: '#22D3EE',
-  accentGlow: 'rgba(6, 182, 212, 0.4)',
+  // Accent - soft blush rose
+  accent: '#E8B4B8',
+  accentLight: '#F2CED0',
+  accentGlow: 'rgba(232, 180, 184, 0.35)',
 
-  // Secondary accent - rose
-  rose: '#F43F5E',
-  roseLight: '#FB7185',
+  // Secondary accent - warm mauve
+  rose: '#C9A4A8',
+  roseLight: '#DEC4C8',
 
   // Secondary color (for medium confidence, etc.)
-  secondary: '#6366F1',
-  secondaryLight: '#818CF8',
+  secondary: '#B8A4A0',
+  secondaryLight: '#D4C8C4',
 
-  // Background - rich dark navy
-  background: '#0A0A0F',
-  backgroundSecondary: '#12121A',
-  backgroundTertiary: '#1A1A25',
-  surface: '#1E1E2E',
-  surfaceLight: '#252535',
-  surfaceHighlight: '#2A2A3E',
+  // Background - rich warm charcoal
+  background: '#0F0D0B',
+  backgroundSecondary: '#161412',
+  backgroundTertiary: '#1E1A18',
+  surface: '#252120',
+  surfaceLight: '#302A28',
+  surfaceHighlight: '#3A3230',
 
-  // Text
-  text: '#FAFAFA',
-  textSecondary: '#A1A1AA',
-  textMuted: '#71717A',
-  textAccent: '#C4B5FD',
+  // Text - warm ivory and cream
+  text: '#F5F0E8',
+  textSecondary: '#C4B8A8',
+  textMuted: '#8A7E70',
+  textAccent: '#E8D4C0',
 
-  // Status colors
-  success: '#10B981',
-  successLight: '#34D399',
-  warning: '#F59E0B',
-  warningLight: '#FBBF24',
-  error: '#EF4444',
-  errorLight: '#F87171',
-  info: '#3B82F6',
+  // Status colors - softer, more elegant
+  success: '#9DB88C',
+  successLight: '#B8D0A8',
+  warning: '#D4B078',
+  warningLight: '#E8C898',
+  error: '#C98888',
+  errorLight: '#E0A8A8',
+  info: '#A8B8C8',
 
-  // Rating colors (gradient from low to high)
+  // Rating colors (gradient from low to high) - softer tones
   rating: {
-    low: '#EF4444', // 0-3
-    medium: '#F59E0B', // 4-6
-    good: '#10B981', // 7-8
-    excellent: '#8B5CF6', // 9-10
+    low: '#C98888', // 0-3
+    medium: '#D4B078', // 4-6
+    good: '#9DB88C', // 7-8
+    excellent: '#D4A574', // 9-10
   },
 
-  // Borders
-  border: 'rgba(255, 255, 255, 0.08)',
-  borderLight: 'rgba(255, 255, 255, 0.12)',
-  borderAccent: 'rgba(139, 92, 246, 0.3)',
+  // Borders - warm undertones
+  border: 'rgba(244, 240, 232, 0.06)',
+  borderLight: 'rgba(244, 240, 232, 0.10)',
+  borderAccent: 'rgba(212, 165, 116, 0.25)',
 
   // Overlays
-  overlay: 'rgba(0, 0, 0, 0.7)',
-  overlayLight: 'rgba(0, 0, 0, 0.5)',
+  overlay: 'rgba(15, 13, 11, 0.85)',
+  overlayLight: 'rgba(15, 13, 11, 0.6)',
 
   // Gradients (as arrays for LinearGradient)
   gradients: {
-    primary: ['#8B5CF6', '#6366F1'],
-    accent: ['#06B6D4', '#3B82F6'],
-    dark: ['#12121A', '#0A0A0F'],
-    surface: ['#1E1E2E', '#12121A'],
-    glow: ['rgba(139, 92, 246, 0.2)', 'rgba(139, 92, 246, 0)'],
-    rating: ['#10B981', '#8B5CF6'],
+    primary: ['#D4A574', '#C49464'],
+    accent: ['#E8B4B8', '#D4A4A8'],
+    dark: ['#161412', '#0F0D0B'],
+    surface: ['#252120', '#1E1A18'],
+    glow: ['rgba(212, 165, 116, 0.15)', 'rgba(212, 165, 116, 0)'],
+    rating: ['#9DB88C', '#D4A574'],
+    luxury: ['#D4A574', '#E8B4B8', '#C49464'],
   },
 };
 
@@ -113,31 +114,31 @@ export const typography = {
 
 export const shadows = {
   sm: {
-    shadowColor: '#000',
+    shadowColor: '#0F0D0B',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 2,
   },
   md: {
-    shadowColor: '#000',
+    shadowColor: '#0F0D0B',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 4,
   },
   lg: {
-    shadowColor: '#000',
+    shadowColor: '#0F0D0B',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.35,
     shadowRadius: 16,
     elevation: 8,
   },
   glow: {
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
+    shadowOpacity: 0.4,
+    shadowRadius: 24,
     elevation: 10,
   },
 };
