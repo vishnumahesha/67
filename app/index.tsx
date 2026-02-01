@@ -94,6 +94,10 @@ export default function FaceAnalyzerHome() {
     router.push('/calorie-tracker');
   };
 
+  const handleBodyAnalyzer = () => {
+    router.push('/body-analyzer');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -180,30 +184,68 @@ export default function FaceAnalyzerHome() {
           </View>
         </View>
 
-        {/* Calorie Tracker Feature */}
-        <View style={styles.calorieTrackerSection}>
-          <View style={styles.calorieTrackerHeader}>
-            <Text style={styles.calorieTrackerEmoji}>🍽️</Text>
+        {/* Body Analyzer Feature */}
+        <View style={styles.featureSection}>
+          <View style={styles.featureSectionHeader}>
+            <Text style={styles.featureSectionEmoji}>🏋️</Text>
             <View>
-              <Text style={styles.calorieTrackerTitle}>Calorie Tracker</Text>
-              <Text style={styles.calorieTrackerSubtitle}>AI-Powered Nutrition</Text>
+              <Text style={styles.featureSectionTitle}>Body Analyzer</Text>
+              <Text style={styles.featureSectionSubtitle}>Science + Kibbe Typing</Text>
             </View>
           </View>
-          <Text style={styles.calorieTrackerDesc}>
+          <Text style={styles.featureSectionDesc}>
+            Get your body aesthetics score, Kibbe body type, personalized workouts, and styling guide
+          </Text>
+          <View style={styles.featureSectionFeatures}>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>📐</Text>
+              <Text style={styles.fsFeatureText}>Ratios</Text>
+            </View>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>🧬</Text>
+              <Text style={styles.fsFeatureText}>Kibbe Type</Text>
+            </View>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>💪</Text>
+              <Text style={styles.fsFeatureText}>Workouts</Text>
+            </View>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>👔</Text>
+              <Text style={styles.fsFeatureText}>Styling</Text>
+            </View>
+          </View>
+          <Button
+            title="Open Body Analyzer"
+            onPress={handleBodyAnalyzer}
+            variant="secondary"
+            fullWidth
+          />
+        </View>
+
+        {/* Calorie Tracker Feature */}
+        <View style={styles.featureSection}>
+          <View style={styles.featureSectionHeader}>
+            <Text style={styles.featureSectionEmoji}>🍽️</Text>
+            <View>
+              <Text style={styles.featureSectionTitle}>Calorie Tracker</Text>
+              <Text style={styles.featureSectionSubtitle}>AI-Powered Nutrition</Text>
+            </View>
+          </View>
+          <Text style={styles.featureSectionDesc}>
             Snap a photo of your food and get instant calorie and macro estimates with AI
           </Text>
-          <View style={styles.calorieTrackerFeatures}>
-            <View style={styles.ctFeature}>
-              <Text style={styles.ctFeatureIcon}>📸</Text>
-              <Text style={styles.ctFeatureText}>Photo Scan</Text>
+          <View style={styles.featureSectionFeatures}>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>📸</Text>
+              <Text style={styles.fsFeatureText}>Photo Scan</Text>
             </View>
-            <View style={styles.ctFeature}>
-              <Text style={styles.ctFeatureIcon}>📊</Text>
-              <Text style={styles.ctFeatureText}>Track Macros</Text>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>📊</Text>
+              <Text style={styles.fsFeatureText}>Track Macros</Text>
             </View>
-            <View style={styles.ctFeature}>
-              <Text style={styles.ctFeatureIcon}>🎯</Text>
-              <Text style={styles.ctFeatureText}>Daily Goals</Text>
+            <View style={styles.fsFeature}>
+              <Text style={styles.fsFeatureIcon}>🎯</Text>
+              <Text style={styles.fsFeatureText}>Daily Goals</Text>
             </View>
           </View>
           <Button
@@ -397,7 +439,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginVertical: spacing.xs,
   },
-  calorieTrackerSection: {
+  featureSection: {
     marginTop: spacing.xl,
     backgroundColor: colors.surface,
     borderRadius: borderRadius.md,
@@ -405,45 +447,45 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderAccent,
   },
-  calorieTrackerHeader: {
+  featureSectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.md,
     marginBottom: spacing.sm,
   },
-  calorieTrackerEmoji: {
+  featureSectionEmoji: {
     fontSize: 36,
   },
-  calorieTrackerTitle: {
+  featureSectionTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
   },
-  calorieTrackerSubtitle: {
+  featureSectionSubtitle: {
     fontSize: 13,
     color: colors.primary,
     fontWeight: '500',
   },
-  calorieTrackerDesc: {
+  featureSectionDesc: {
     fontSize: 14,
     color: colors.textSecondary,
     lineHeight: 20,
     marginBottom: spacing.md,
   },
-  calorieTrackerFeatures: {
+  featureSectionFeatures: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: spacing.lg,
     paddingVertical: spacing.sm,
   },
-  ctFeature: {
+  fsFeature: {
     alignItems: 'center',
     gap: spacing.xs,
   },
-  ctFeatureIcon: {
+  fsFeatureIcon: {
     fontSize: 24,
   },
-  ctFeatureText: {
+  fsFeatureText: {
     fontSize: 12,
     color: colors.textMuted,
     fontWeight: '500',

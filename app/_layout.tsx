@@ -4,19 +4,22 @@ import { useEffect } from 'react';
 import { colors } from '@/constants/theme';
 import { useAppStore } from '@/store/useAppStore';
 import { useCalorieStore } from '@/store/useCalorieStore';
+import { useBodyAnalyzerStore } from '@/store/useBodyAnalyzerStore';
 
 export default function RootLayout() {
   const loadScanData = useAppStore((state) => state.loadScanData);
   const loadHistory = useAppStore((state) => state.loadHistory);
   const loadCalorieGoals = useCalorieStore((state) => state.loadGoals);
   const loadMealHistory = useCalorieStore((state) => state.loadMealHistory);
+  const loadBodyHistory = useBodyAnalyzerStore((state) => state.loadHistory);
 
   useEffect(() => {
     loadScanData();
     loadHistory();
     loadCalorieGoals();
     loadMealHistory();
-  }, [loadScanData, loadHistory, loadCalorieGoals, loadMealHistory]);
+    loadBodyHistory();
+  }, [loadScanData, loadHistory, loadCalorieGoals, loadMealHistory, loadBodyHistory]);
 
   return (
     <>
@@ -36,6 +39,7 @@ export default function RootLayout() {
         <Stack.Screen name="results" />
         <Stack.Screen name="upgrade" />
         <Stack.Screen name="calorie-tracker" />
+        <Stack.Screen name="body-analyzer" />
       </Stack>
     </>
   );
