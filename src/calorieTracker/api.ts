@@ -14,7 +14,7 @@ import {
 // Get server URL from environment or default to localhost
 const getServerUrl = () => {
   // In production, this would come from environment
-  return 'http://localhost:3001';
+  return 'http://localhost:3002';
 };
 
 // ============================================

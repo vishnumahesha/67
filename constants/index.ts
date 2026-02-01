@@ -1,7 +1,7 @@
 import { colors } from './theme';
 
 // API configuration
-export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001';
+export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3002';
 
 // App limits
 export const FREE_SCAN_LIMIT = 3;

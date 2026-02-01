@@ -181,6 +181,12 @@ export default function CaptureFrontPhoto() {
         ))}
       </View>
 
+      {/* Upload from files option */}
+      <TouchableOpacity onPress={handlePickImage} style={styles.uploadButton}>
+        <Text style={styles.uploadIcon}>📁</Text>
+        <Text style={styles.uploadText}>Upload from Files</Text>
+      </TouchableOpacity>
+
       <View style={styles.controls}>
         <TouchableOpacity onPress={handlePickImage} style={styles.galleryButton}>
           <Text style={styles.galleryIcon}>🖼️</Text>
@@ -335,6 +341,28 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textSecondary,
     marginTop: 4,
+  },
+  uploadButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.surface,
+    marginHorizontal: spacing.md,
+    marginTop: spacing.md,
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    borderStyle: 'dashed',
+    gap: spacing.sm,
+  },
+  uploadIcon: {
+    fontSize: 20,
+  },
+  uploadText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: colors.primary,
   },
   controls: {
     flexDirection: 'row',

@@ -205,24 +205,16 @@ export const TierSchema = z.object({
 });
 export type Tier = z.infer<typeof TierSchema>;
 
-// Full response schema - UPDATED with AppearanceProfile and HarmonyIndex
-export const FaceAnalysisResponseSchema = z.object({
-  photoQuality: PhotoQualitySchema,
-  overall: OverallSchema,
-  potential: PotentialSchema,
-  potentialRange: PotentialRangeSchema.optional(), // NEW: min/max potential range
-  features: z.array(FeatureSchema),
-  harmony: HarmonySchema,
-  harmonyIndex: HarmonyIndexSchema.optional(), // NEW: Golden ratio / phi-based harmony
-  symmetry: SymmetrySchema.optional(),
-  hair: HairSchema,
-  safety: SafetySchema,
-  tier: TierSchema,
-  appearanceProfile: AppearanceProfileSchema.optional(), // NEW: Auto-inferred appearance
+// ===== POTENTIAL RANGE (MIN/MAX) ===== (Must be defined before FaceAnalysisResponseSchema)
+export const PotentialRangeSchema = z.object({
+  min: z.number().min(0).max(10),
+  max: z.number().min(0).max(10),
+  confidence: ConfidenceSchema.optional(),
+  note: z.string().optional(),
 });
-export type FaceAnalysisResponse = z.infer<typeof FaceAnalysisResponseSchema>;
+export type PotentialRange = z.infer<typeof PotentialRangeSchema>;
 
-// ===== APPEARANCE PROFILE (AUTO-INFERRED) =====
+// ===== APPEARANCE PROFILE (AUTO-INFERRED) ===== (Must be defined before FaceAnalysisResponseSchema)
 export const PresentationTypeSchema = z.enum(['male-presenting', 'female-presenting', 'ambiguous']);
 export type PresentationType = z.infer<typeof PresentationTypeSchema>;
 
@@ -243,7 +235,7 @@ export const AppearanceProfileSchema = z.object({
 });
 export type AppearanceProfile = z.infer<typeof AppearanceProfileSchema>;
 
-// ===== HARMONY INDEX (GOLDEN RATIO / PHI-BASED) =====
+// ===== HARMONY INDEX (GOLDEN RATIO / PHI-BASED) ===== (Must be defined before FaceAnalysisResponseSchema)
 export const HarmonyIndexSchema = z.object({
   score10: z.number().min(0).max(10), // Overall harmony/proportion score
   confidence: ConfidenceSchema,
@@ -278,14 +270,22 @@ export const HarmonyIndexSchema = z.object({
 });
 export type HarmonyIndex = z.infer<typeof HarmonyIndexSchema>;
 
-// ===== POTENTIAL RANGE (MIN/MAX) =====
-export const PotentialRangeSchema = z.object({
-  min: z.number().min(0).max(10),
-  max: z.number().min(0).max(10),
-  confidence: ConfidenceSchema.optional(),
-  note: z.string().optional(),
+// Full response schema - UPDATED with AppearanceProfile and HarmonyIndex
+export const FaceAnalysisResponseSchema = z.object({
+  photoQuality: PhotoQualitySchema,
+  overall: OverallSchema,
+  potential: PotentialSchema,
+  potentialRange: PotentialRangeSchema.optional(), // min/max potential range
+  features: z.array(FeatureSchema),
+  harmony: HarmonySchema,
+  harmonyIndex: HarmonyIndexSchema.optional(), // Golden ratio / phi-based harmony
+  symmetry: SymmetrySchema.optional(),
+  hair: HairSchema,
+  safety: SafetySchema,
+  tier: TierSchema,
+  appearanceProfile: AppearanceProfileSchema.optional(), // Auto-inferred appearance
 });
-export type PotentialRange = z.infer<typeof PotentialRangeSchema>;
+export type FaceAnalysisResponse = z.infer<typeof FaceAnalysisResponseSchema>;
 
 // Request types (gender now optional - auto-inferred)
 export type Gender = 'male' | 'female';

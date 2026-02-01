@@ -6,9 +6,11 @@ import {
   ScrollView,
   SafeAreaView,
   Dimensions,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
 import Animated, {
   useAnimatedStyle,
   withDelay,
@@ -33,6 +35,7 @@ export default function FaceAnalyzerHome() {
     gender,
     setGender,
     resetScansIfNeeded,
+    setFrontPhotoUri,
   } = useAppStore();
 
   const titleScale = useSharedValue(0);
@@ -81,6 +84,29 @@ export default function FaceAnalyzerHome() {
       return;
     }
     router.push('/capture-front');
+  };
+
+  const handleUploadPhoto = async () => {
+    if (!canScan) {
+      router.push('/upgrade');
+      return;
+    }
+    
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [3, 4],
+        quality: 0.8,
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        setFrontPhotoUri(result.assets[0].uri);
+        router.push('/capture-side');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to pick image. Please try again.');
+    }
   };
 
   const features = [
@@ -267,12 +293,21 @@ export default function FaceAnalyzerHome() {
 
       {/* Bottom CTA */}
       <View style={styles.bottomCta}>
-        <Button
-          title={canScan ? 'Start Analysis' : 'Upgrade to Scan'}
-          onPress={handleStartScan}
-          size="large"
-          fullWidth
-        />
+        <View style={styles.ctaButtons}>
+          <Button
+            title={canScan ? '📷 Camera' : 'Upgrade to Scan'}
+            onPress={handleStartScan}
+            size="large"
+            style={styles.ctaButtonHalf}
+          />
+          <Button
+            title="📁 Upload"
+            onPress={handleUploadPhoto}
+            size="large"
+            variant="secondary"
+            style={styles.ctaButtonHalf}
+          />
+        </View>
         {!canScan && (
           <Text style={styles.ctaHint}>
             You've used all your free scans today
@@ -518,6 +553,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     borderTopWidth: 1,
     borderTopColor: colors.border,
+  },
+  ctaButtons: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+  ctaButtonHalf: {
+    flex: 1,
   },
   ctaHint: {
     fontSize: 12,

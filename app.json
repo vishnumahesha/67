@@ -50,7 +50,8 @@
           "photosPermission": "Allow Face Analyzer to access your photos for analysis."
         }
       ],
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "scheme": "faceanalyzer"
   }
