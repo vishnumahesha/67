@@ -853,30 +853,236 @@
       color: var(--success);
     }
 
-    .gender-selector {
+    /* Gender override (hidden by default) */
+    .gender-override-container {
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 1rem;
       margin-bottom: 2rem;
-    }
-
-    .gender-btn {
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem;
       background: var(--surface);
-      color: var(--text-secondary);
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s;
+      border-radius: 12px;
+      font-size: 0.9rem;
     }
 
-    .gender-btn.active {
-      border-color: var(--primary);
-      background: rgba(139, 92, 246, 0.2);
+    .gender-override-container.hidden {
+      display: none;
+    }
+
+    .override-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    #gender-override-select {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: var(--surface-light);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text);
-      box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+      font-size: 0.9rem;
+    }
+
+    #gender-override-select:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ====== APPEARANCE PROFILE CARD ====== */
+    .appearance-profile-card {
+      background: linear-gradient(135deg, var(--surface), rgba(6, 182, 212, 0.1));
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+
+    .appearance-profile-card.hidden {
+      display: none;
+    }
+
+    .appearance-profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .appearance-profile-header h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hide-appearance-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .hide-appearance-toggle input {
+      cursor: pointer;
+    }
+
+    .appearance-profile-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .appearance-stat {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .appearance-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .appearance-stat-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .confidence-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .confidence-pill.high {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--success);
+    }
+
+    .confidence-pill.medium {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+
+    .confidence-pill.low {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--error);
+    }
+
+    .dimorphism-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--surface-light);
+      margin-top: 0.5rem;
+    }
+
+    .dimorphism-bar .masc {
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      transition: width 0.5s ease;
+    }
+
+    .dimorphism-bar .fem {
+      background: linear-gradient(90deg, #ec4899, #f472b6);
+      transition: width 0.5s ease;
+    }
+
+    .dimorphism-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .appearance-disclaimer {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .appearance-uncertain {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      color: var(--warning);
+      font-size: 0.9rem;
+    }
+
+    /* ====== HARMONY INDEX CARD ====== */
+    .harmony-index-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .harmony-index-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .harmony-index-header h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .harmony-score {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .harmony-components {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .harmony-component {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      background: var(--surface-light);
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+
+    .harmony-component-score {
+      font-weight: 600;
+      color: var(--accent);
     }
 
     /* Optional inputs for body scan */
@@ -3283,6 +3489,21 @@
         padding: 0.4rem 0.6rem;
       }
 
+      /* Appearance Profile mobile */
+      .appearance-profile-content {
+        grid-template-columns: 1fr;
+      }
+
+      .appearance-profile-header {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+
+      .harmony-components {
+        grid-template-columns: 1fr;
+      }
+
       .style-grid {
         grid-template-columns: 1fr;
       }
@@ -3651,9 +3872,18 @@
         </div>
       </div>
 
-      <div class="gender-selector">
-        <button class="gender-btn active" data-gender="male">👨 Male</button>
-        <button class="gender-btn" data-gender="female">👩 Female</button>
+      <!-- Gender selector removed - now auto-inferred from photo -->
+      <!-- Hidden advanced setting for manual override -->
+      <div class="gender-override-container hidden" id="gender-override-container">
+        <label class="override-label">
+          <input type="checkbox" id="enable-gender-override">
+          Manual appearance override
+        </label>
+        <select id="gender-override-select" disabled>
+          <option value="">Auto-detect</option>
+          <option value="male">Male-presenting</option>
+          <option value="female">Female-presenting</option>
+        </select>
       </div>
 
       <button class="analyze-btn" id="analyze-btn" disabled>
@@ -3719,6 +3949,35 @@
         </div>
       </div>
 
+      <!-- Appearance Profile Card (Auto-inferred) -->
+      <div class="appearance-profile-card" id="appearance-profile-card">
+        <div class="appearance-profile-header">
+          <h4>🎭 Appearance Profile</h4>
+          <label class="hide-appearance-toggle">
+            <input type="checkbox" id="hide-appearance-toggle">
+            <span>Hide estimates</span>
+          </label>
+        </div>
+        <div id="appearance-profile-content">
+          <!-- Content populated by JS -->
+        </div>
+        <div class="appearance-disclaimer">
+          <span>ℹ️</span>
+          <span>Estimates based on this photo; lighting and angle can affect results.</span>
+        </div>
+      </div>
+
+      <!-- Harmony Index Card -->
+      <div class="harmony-index-card" id="harmony-index-card">
+        <div class="harmony-index-header">
+          <h4>📐 Harmony Index</h4>
+          <span class="harmony-score" id="harmony-score">—</span>
+        </div>
+        <div class="harmony-components" id="harmony-components">
+          <!-- Components populated by JS -->
+        </div>
+      </div>
+
       <div class="overall-score" id="overall-score-section">
         <!-- Dual Score Display -->
         <div class="dual-score-container">
@@ -3772,6 +4031,71 @@
         <div class="calibration-note">
           <span>📊</span>
           <span id="calibration-note">Scores use realistic distribution where 5.5 is average. Most people score 4.5-6.5.</span>
+        </div>
+
+        <!-- Best Version CTA - Only for Face Analysis -->
+        <div class="best-version-cta" id="best-version-cta" style="display: none;">
+          <div class="best-version-inner">
+            <div class="best-version-glow"></div>
+            <div class="best-version-icon">✨</div>
+            <div class="best-version-content">
+              <h4>See Your Best Version!</h4>
+              <p>AI-enhanced photo with optimized lighting, skin & styling</p>
+            </div>
+            <span class="best-version-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Best Version Modal -->
+      <div class="best-version-modal" id="best-version-modal">
+        <div class="best-version-modal-backdrop"></div>
+        <div class="best-version-modal-content">
+          <button class="best-version-close" id="best-version-close">×</button>
+          
+          <!-- Loading State -->
+          <div class="best-version-loading" id="best-version-loading">
+            <div class="best-version-loading-image" id="best-version-loading-image"></div>
+            <div class="best-version-loading-spinner"></div>
+            <h3>Creating Your Best Version</h3>
+            <p class="best-version-loading-text" id="best-version-loading-text">Analyzing your features...</p>
+            <div class="best-version-progress">
+              <div class="best-version-progress-dot active"></div>
+              <div class="best-version-progress-dot"></div>
+              <div class="best-version-progress-dot"></div>
+              <div class="best-version-progress-dot"></div>
+              <div class="best-version-progress-dot"></div>
+            </div>
+          </div>
+
+          <!-- Results State -->
+          <div class="best-version-results" id="best-version-results" style="display: none;">
+            <h3>✨ Your Best Version</h3>
+            
+            <div class="best-version-toggle">
+              <button class="best-version-toggle-btn active" data-view="after">After ✨</button>
+              <button class="best-version-toggle-btn" data-view="before">Before</button>
+            </div>
+            
+            <div class="best-version-image-container">
+              <img id="best-version-image" src="" alt="Best Version" />
+              <div class="best-version-badge" id="best-version-badge">Enhanced</div>
+            </div>
+
+            <div class="best-version-fallback-notice" id="best-version-fallback-notice" style="display: none;">
+              <span>ℹ️</span>
+              <span>Demo Mode: Showing your enhancement plan (AI image generation coming soon)</span>
+            </div>
+
+            <div class="best-version-changes">
+              <h4>🎯 Enhancements Applied</h4>
+              <div class="best-version-changes-list" id="best-version-changes-list">
+                <!-- Changes populated by JS -->
+              </div>
+            </div>
+
+            <button class="best-version-retry" id="best-version-retry">Try Another Photo</button>
+          </div>
         </div>
       </div>
 
@@ -3986,8 +4310,9 @@
     // State
     let frontImage = null;
     let sideImage = null;
-    let selectedGender = 'male';
+    let genderOverride = null; // Now auto-inferred, this is for manual override only
     let currentScanType = 'face'; // 'face' or 'body'
+    let hideAppearanceEstimates = localStorage.getItem('hideAppearance') === 'true';
     // For local testing use: 'http://localhost:3001'
     // For mobile/public testing, use the tunnel URL:
     const API_URL = 'http://localhost:3001';
@@ -4125,8 +4450,39 @@
     const loadingOverlay = document.getElementById('loading');
     const resultsSection = document.getElementById('results');
     const uploadSection = document.getElementById('upload');
-    const genderBtns = document.querySelectorAll('.gender-btn');
     const newScanBtn = document.getElementById('new-scan-btn');
+    
+    // Gender override elements (hidden advanced setting)
+    const genderOverrideCheckbox = document.getElementById('enable-gender-override');
+    const genderOverrideSelect = document.getElementById('gender-override-select');
+    
+    // Hide appearance toggle
+    const hideAppearanceToggle = document.getElementById('hide-appearance-toggle');
+    if (hideAppearanceToggle) {
+      hideAppearanceToggle.checked = hideAppearanceEstimates;
+      hideAppearanceToggle.addEventListener('change', function() {
+        hideAppearanceEstimates = this.checked;
+        localStorage.setItem('hideAppearance', hideAppearanceEstimates);
+        const card = document.getElementById('appearance-profile-card');
+        if (card) {
+          card.classList.toggle('hidden', hideAppearanceEstimates);
+        }
+      });
+    }
+    
+    // Gender override handlers
+    if (genderOverrideCheckbox && genderOverrideSelect) {
+      genderOverrideCheckbox.addEventListener('change', function() {
+        genderOverrideSelect.disabled = !this.checked;
+        if (!this.checked) {
+          genderOverrideSelect.value = '';
+          genderOverride = null;
+        }
+      });
+      genderOverrideSelect.addEventListener('change', function() {
+        genderOverride = this.value || null;
+      });
+    }
 
     // Convert file to base64
     function fileToBase64(file) {
@@ -4210,13 +4566,7 @@
     });
 
     // Gender selection
-    genderBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        genderBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedGender = btn.dataset.gender;
-      });
-    });
+    // Gender buttons removed - now auto-inferred from photo
 
     // Analyze
     analyzeBtn.addEventListener('click', async () => {
@@ -4255,12 +4605,17 @@
         const requestBody = {
             frontImage,
             sideImage,
-            gender: selectedGender,
             premiumEnabled: false,
         };
 
+        // Add gender override only if manually set
+        if (genderOverride) {
+          requestBody.gender = genderOverride;
+        }
+
         // Add body-specific inputs
         if (currentScanType === 'body') {
+          requestBody.gender = genderOverride || 'male'; // Body still needs gender for workout recommendations
           requestBody.height = document.getElementById('height-input').value;
           requestBody.weight = document.getElementById('weight-input').value;
           requestBody.gymAccess = document.getElementById('gym-input').value;
@@ -4463,6 +4818,12 @@
       confidenceBadge.className = `confidence-badge ${confidence}`;
       const confidenceLabels = { low: 'Low Confidence', medium: 'Medium Confidence', high: 'High Confidence' };
       document.getElementById('confidence-text').textContent = confidenceLabels[confidence];
+
+      // Show Best Version CTA for face analysis only
+      const bestVersionCta = document.getElementById('best-version-cta');
+      if (bestVersionCta) {
+        bestVersionCta.style.display = isBody ? 'none' : 'block';
+      }
 
       // Top 3 Levers
       const leversContainer = document.getElementById('levers-container');
@@ -4891,7 +5252,20 @@
 
     // Generate style recommendations
     function generateStyleRecommendations(data) {
-      const gender = data.inputs?.gender || selectedGender || 'male';
+      // Use appearance profile presentation for gender-specific recommendations
+      const profile = data.appearanceProfile;
+      let gender = 'male'; // fallback
+      if (profile) {
+        if (profile.presentation === 'female-presenting' && profile.confidence >= 0.65) {
+          gender = 'female';
+        } else if (profile.presentation === 'male-presenting' && profile.confidence >= 0.65) {
+          gender = 'male';
+        }
+      }
+      // Manual override takes precedence
+      if (genderOverride) {
+        gender = genderOverride;
+      }
       const features = data.features || [];
       
       // Find relevant features
@@ -5200,6 +5574,154 @@
       };
     }
 
+    // ====== APPEARANCE PROFILE DISPLAY ======
+    function displayAppearanceProfile(data) {
+      const card = document.getElementById('appearance-profile-card');
+      const content = document.getElementById('appearance-profile-content');
+      
+      if (!card || !content) return;
+      
+      // Hide if toggle is on
+      if (hideAppearanceEstimates) {
+        card.classList.add('hidden');
+        return;
+      }
+      
+      card.classList.remove('hidden');
+      
+      const profile = data.appearanceProfile;
+      
+      // If no profile or low confidence, show uncertain state
+      if (!profile || profile.confidence < 0.4) {
+        content.innerHTML = `
+          <div class="appearance-uncertain">
+            ⚠️ Uncertain — retake photo for better estimate
+          </div>
+        `;
+        return;
+      }
+      
+      // Format presentation label
+      const presentationLabels = {
+        'male-presenting': 'Male-Presenting',
+        'female-presenting': 'Female-Presenting',
+        'ambiguous': 'Ambiguous'
+      };
+      
+      // Get confidence level
+      const confLevel = profile.confidence >= 0.8 ? 'high' : profile.confidence >= 0.6 ? 'medium' : 'low';
+      const confPercent = Math.round(profile.confidence * 100);
+      
+      // Build age display
+      let ageDisplay = '—';
+      if (profile.ageRange && profile.ageConfidence >= 0.65) {
+        ageDisplay = `${profile.ageRange.min}–${profile.ageRange.max}`;
+      }
+      
+      // Masculinity/femininity values
+      const masc = profile.masculinityFemininity?.masculinity || 50;
+      const fem = profile.masculinityFemininity?.femininity || 50;
+      const total = masc + fem;
+      const mascWidth = (masc / total) * 100;
+      const femWidth = (fem / total) * 100;
+      
+      content.innerHTML = `
+        <div class="appearance-profile-content">
+          <div class="appearance-stat">
+            <div class="appearance-stat-label">Presentation</div>
+            <div class="appearance-stat-value">
+              ${presentationLabels[profile.presentation] || 'Unknown'}
+              <span class="confidence-pill ${confLevel}">${confPercent}%</span>
+            </div>
+          </div>
+          <div class="appearance-stat">
+            <div class="appearance-stat-label">Estimated Age Range</div>
+            <div class="appearance-stat-value">${ageDisplay}</div>
+          </div>
+          <div class="appearance-stat">
+            <div class="appearance-stat-label">Dimorphism Score</div>
+            <div class="appearance-stat-value">${(profile.dimorphismScore10 || 5).toFixed(1)}/10</div>
+          </div>
+          <div class="appearance-stat">
+            <div class="appearance-stat-label">Presentation Balance</div>
+            <div class="dimorphism-bar">
+              <div class="masc" style="width: ${mascWidth}%"></div>
+              <div class="fem" style="width: ${femWidth}%"></div>
+            </div>
+            <div class="dimorphism-labels">
+              <span>Masculine ${Math.round(masc)}%</span>
+              <span>Feminine ${Math.round(fem)}%</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    
+    // ====== HARMONY INDEX DISPLAY ======
+    function displayHarmonyIndex(data) {
+      const card = document.getElementById('harmony-index-card');
+      const scoreEl = document.getElementById('harmony-score');
+      const componentsEl = document.getElementById('harmony-components');
+      
+      if (!card || !scoreEl || !componentsEl) return;
+      
+      const harmonyIndex = data.harmonyIndex;
+      
+      if (!harmonyIndex) {
+        // Use legacy harmony if available
+        if (data.harmony) {
+          scoreEl.textContent = (data.harmony.rating10 || 5.5).toFixed(1) + '/10';
+          componentsEl.innerHTML = `
+            <div class="harmony-component">
+              <span>Overall Harmony</span>
+              <span class="harmony-component-score">${(data.harmony.rating10 || 5.5).toFixed(1)}</span>
+            </div>
+          `;
+        }
+        return;
+      }
+      
+      // Display overall score
+      scoreEl.textContent = (harmonyIndex.overall10 || 5.5).toFixed(1) + '/10';
+      
+      // Display components
+      const components = harmonyIndex.components || {};
+      const componentLabels = {
+        facialSymmetry: 'Facial Symmetry',
+        facialThirds: 'Facial Thirds',
+        horizontalFifths: 'Horizontal Fifths',
+        goldenRatioProximity: 'Golden Ratio',
+        eyeSpacing: 'Eye Spacing',
+        noseToMouthRatio: 'Nose/Mouth Ratio',
+        jawToFaceRatio: 'Jaw/Face Ratio'
+      };
+      
+      let html = '';
+      for (const [key, value] of Object.entries(components)) {
+        if (value && typeof value.score10 === 'number') {
+          const label = componentLabels[key] || key;
+          const confIcon = value.confidence >= 0.7 ? '🟢' : value.confidence >= 0.4 ? '🟡' : '🔴';
+          html += `
+            <div class="harmony-component">
+              <span>${confIcon} ${label}</span>
+              <span class="harmony-component-score">${value.score10.toFixed(1)}</span>
+            </div>
+          `;
+        }
+      }
+      
+      if (!html) {
+        html = `
+          <div class="harmony-component">
+            <span>Proportional Harmony</span>
+            <span class="harmony-component-score">${(harmonyIndex.overall10 || 5.5).toFixed(1)}</span>
+          </div>
+        `;
+      }
+      
+      componentsEl.innerHTML = html;
+    }
+
     // Enhanced displayResults - integrate new features
     const originalDisplayResults = displayResults;
     displayResults = function(data, isDemo = false) {
@@ -5208,6 +5730,12 @@
       
       // Call original
       originalDisplayResults(data, isDemo);
+      
+      // Display appearance profile (new)
+      displayAppearanceProfile(data);
+      
+      // Display harmony index (new)
+      displayHarmonyIndex(data);
       
       // Display delta breakdown
       displayDeltaBreakdown(data);
@@ -5700,8 +6228,209 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeRecommendModal();
+        closeBestVersionModal();
       }
     });
+
+    // ============================================
+    // BEST VERSION GENERATOR
+    // ============================================
+    
+    const BEST_VERSION_LOADING_MESSAGES = [
+      'Analyzing your features...',
+      'Enhancing lighting...',
+      'Refining skin texture...',
+      'Optimizing hair styling...',
+      'Adding finishing touches...',
+      'Almost there...'
+    ];
+
+    let bestVersionLoadingInterval = null;
+    let bestVersionMessageIndex = 0;
+    let currentOriginalImage = null;
+    let currentEnhancedImage = null;
+
+    // Best Version CTA click handler
+    document.getElementById('best-version-cta')?.addEventListener('click', function() {
+      openBestVersionModal();
+    });
+
+    // Close button handler
+    document.getElementById('best-version-close')?.addEventListener('click', function() {
+      closeBestVersionModal();
+    });
+
+    // Backdrop click handler
+    document.querySelector('.best-version-modal-backdrop')?.addEventListener('click', function() {
+      closeBestVersionModal();
+    });
+
+    // Retry button handler
+    document.getElementById('best-version-retry')?.addEventListener('click', function() {
+      closeBestVersionModal();
+    });
+
+    // Toggle buttons
+    document.querySelectorAll('.best-version-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const view = this.dataset.view;
+        document.querySelectorAll('.best-version-toggle-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        
+        const img = document.getElementById('best-version-image');
+        const badge = document.getElementById('best-version-badge');
+        
+        if (view === 'before' && currentOriginalImage) {
+          img.src = currentOriginalImage;
+          badge.style.display = 'none';
+        } else if (view === 'after' && currentEnhancedImage) {
+          img.src = currentEnhancedImage;
+          badge.style.display = 'flex';
+        }
+      });
+    });
+
+    function openBestVersionModal() {
+      const modal = document.getElementById('best-version-modal');
+      const loading = document.getElementById('best-version-loading');
+      const results = document.getElementById('best-version-results');
+      
+      modal.classList.add('active');
+      loading.style.display = 'block';
+      results.style.display = 'none';
+      
+      // Set loading image to current uploaded image (using global frontImage variable)
+      if (frontImage) {
+        document.getElementById('best-version-loading-image').style.backgroundImage = 
+          `url(data:image/jpeg;base64,${frontImage})`;
+        currentOriginalImage = `data:image/jpeg;base64,${frontImage}`;
+      }
+      
+      // Start loading animation
+      bestVersionMessageIndex = 0;
+      updateLoadingMessage();
+      bestVersionLoadingInterval = setInterval(() => {
+        bestVersionMessageIndex = (bestVersionMessageIndex + 1) % BEST_VERSION_LOADING_MESSAGES.length;
+        updateLoadingMessage();
+      }, 2500);
+      
+      // Generate best version
+      generateBestVersion();
+    }
+
+    function updateLoadingMessage() {
+      const textEl = document.getElementById('best-version-loading-text');
+      if (textEl) {
+        textEl.textContent = BEST_VERSION_LOADING_MESSAGES[bestVersionMessageIndex];
+      }
+      
+      // Update progress dots
+      document.querySelectorAll('.best-version-progress-dot').forEach((dot, idx) => {
+        dot.classList.toggle('active', idx <= bestVersionMessageIndex);
+      });
+    }
+
+    function closeBestVersionModal() {
+      const modal = document.getElementById('best-version-modal');
+      if (modal) {
+        modal.classList.remove('active');
+      }
+      
+      if (bestVersionLoadingInterval) {
+        clearInterval(bestVersionLoadingInterval);
+        bestVersionLoadingInterval = null;
+      }
+    }
+
+    async function generateBestVersion() {
+      try {
+        const response = await fetch(`${API_URL}/api/best-version`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            image: frontImage
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error');
+        }
+
+        const data = await response.json();
+        showBestVersionResults(data);
+        
+      } catch (error) {
+        console.error('Best version generation error:', error);
+        // Show fallback results
+        showBestVersionResults({
+          resultImageUrl: null,
+          changes: [
+            'Enhanced skin clarity with improved texture and even tone',
+            'Optimized lighting for a more flattering appearance',
+            'Refined hair styling for better face framing',
+            'Subtle under-eye brightening',
+            'Improved overall color balance and warmth'
+          ],
+          debug: {
+            usedProvider: 'fallback',
+            fallbackMode: true
+          }
+        });
+      }
+    }
+
+    function showBestVersionResults(data) {
+      // Stop loading animation
+      if (bestVersionLoadingInterval) {
+        clearInterval(bestVersionLoadingInterval);
+        bestVersionLoadingInterval = null;
+      }
+
+      const loading = document.getElementById('best-version-loading');
+      const results = document.getElementById('best-version-results');
+      const img = document.getElementById('best-version-image');
+      const fallbackNotice = document.getElementById('best-version-fallback-notice');
+      const changesList = document.getElementById('best-version-changes-list');
+      
+      // Set images
+      if (data.resultImageUrl) {
+        // Handle both relative and absolute URLs
+        currentEnhancedImage = data.resultImageUrl.startsWith('http') 
+          ? data.resultImageUrl 
+          : `${API_URL}${data.resultImageUrl}`;
+      } else {
+        currentEnhancedImage = currentOriginalImage;
+      }
+      
+      img.src = currentEnhancedImage;
+      
+      // Show/hide fallback notice
+      if (data.debug?.fallbackMode) {
+        fallbackNotice.style.display = 'flex';
+      } else {
+        fallbackNotice.style.display = 'none';
+      }
+      
+      // Populate changes list
+      changesList.innerHTML = data.changes.map((change, idx) => `
+        <div class="best-version-change-item">
+          <span class="best-version-change-number">${idx + 1}</span>
+          <span class="best-version-change-text">${change}</span>
+        </div>
+      `).join('');
+      
+      // Reset toggle to "After"
+      document.querySelectorAll('.best-version-toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === 'after');
+      });
+      document.getElementById('best-version-badge').style.display = 'flex';
+      
+      // Show results
+      loading.style.display = 'none';
+      results.style.display = 'block';
+    }
   </script>
 
   <!-- Recommendation Modal -->

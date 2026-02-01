@@ -1,9 +1,17 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { generateEnhancementPrompt } from './providers/geminiText.js';
+import { generateEnhancedImage } from './providers/imagen.js';
+import { saveImage, getUploadsDir } from './providers/storage.js';
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,11 +28,15 @@ const genAI = GEMINI_API_KEY ? new GoogleGenerativeAI(GEMINI_API_KEY) : null;
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
+// Serve uploaded images
+app.use('/uploads', express.static(getUploadsDir()));
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // THE HONESTY PATCH - enforces realistic, calibrated scoring
+// UPDATED: Now includes appearance profile inference and harmony index
 const SYSTEM_PROMPT = `You are a facial aesthetics analyzer. You must be HONEST and SPECIFIC without being harsh.
 Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
 
@@ -50,9 +62,33 @@ Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
    - "Visible mandibular angle creating shadow, decent definition" IS evidence
    - If you can't see evidence, lower confidence
 
-4. COMPUTE POTENTIAL (this is key):
+4. AUTO-INFER APPEARANCE PROFILE (new):
+   - Analyze facial features to infer presentation
+   - Output: male-presenting, female-presenting, or ambiguous
+   - Confidence: 0-1 (how certain you are)
+   - Age range estimate: {min, max} only if confidence >= 0.65
+   - Dimorphism score: 0-10 (how strongly features align with typical patterns)
+   - Masculinity/Femininity: two 0-100 values (can both be moderate for androgynous faces)
+   - DO NOT use harsh language - this is informational only
+   - If confidence is low, state "uncertain" and don't let it affect scoring heavily
+
+5. COMPUTE HARMONY INDEX (Golden Ratio / Phi):
+   - Analyze proportional harmony based on:
+     * Facial symmetry (left/right balance)
+     * Facial thirds (forehead:nose:chin ratio, ideal ~1:1:1)
+     * Horizontal fifths (eye spacing, face divided into 5 equal parts)
+     * Golden ratio proximity (1.618 for key ratios)
+     * Eye spacing relative to eye width
+     * Nose width relative to eye spacing
+     * Mouth width relative to nose width
+   - Compute deviation from "ideal" proportions
+   - Score 0-10 based on harmony (closer to golden proportions = higher)
+   - If measurements unreliable due to photo angle, lower confidence
+
+6. COMPUTE POTENTIAL (this is key):
    - currentScore10: how they look NOW in these photos
    - potentialScore10: realistic after HIGH-ROI improvements
+   - potentialRange: {min, max} for realistic range
    - Calculate: potentialScore = currentScore + sum(improvement_deltas)
    - Realistic deltas:
      * Hair fix: +0.2 to +0.8
@@ -64,7 +100,7 @@ Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
    - Cap potential at 10.0
    - ALWAYS identify top 3 levers with specific deltas
 
-5. CONFIDENCE & LIMITATIONS:
+7. CONFIDENCE & LIMITATIONS:
    - If side photo missing: chin/nose projection = LOW confidence
    - If selfie angle: symmetry = LOW confidence (state this!)
    - If lighting uneven: cheekbone/jaw = MEDIUM confidence
@@ -73,11 +109,23 @@ Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
 ===== TONE RULES =====
 - Neutral and constructive
 - NO insults, NO "kind face" cope
-- Frame weaknesses as "holding back" not "flaws"
+- Frame weaknesses as "whatLimitsIt" not "flaws" or "imperfections"
 - State facts without sugar-coating
+- NEVER use harsh language about appearance profile
 
 ===== REQUIRED JSON STRUCTURE =====
 {
+  "appearanceProfile": {
+    "presentation": "male-presenting|female-presenting|ambiguous",
+    "confidence": 0.0-1.0,
+    "ageRange": {"min": number, "max": number} or null (if confidence < 0.65),
+    "ageConfidence": 0.0-1.0 or null,
+    "dimorphismScore10": 0-10 (how strongly features align with typical patterns),
+    "masculinityFemininity": {
+      "masculinity": 0-100,
+      "femininity": 0-100
+    }
+  },
   "photoQuality": {
     "score": 0-100,
     "issues": ["side_missing", "angle_distortion", etc],
@@ -86,10 +134,25 @@ Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
   "overall": {
     "currentScore10": HONEST_NUMBER (most people 4.5-6.5),
     "potentialScore10": currentScore + deltas (realistic),
+    "potentialRange": {"min": number, "max": number},
     "ceilingScore10": null or number (premium only, theoretical max with procedures),
     "confidence": "low|medium|high",
     "summary": "2-3 sentence SPECIFIC summary about THIS person's face",
     "calibrationNote": "explain what the scores mean in context"
+  },
+  "harmonyIndex": {
+    "overall10": 0-10 (based on golden ratio proximity),
+    "confidence": "low|medium|high",
+    "components": {
+      "facialSymmetry": {"score10": number, "confidence": 0-1, "note": ""},
+      "facialThirds": {"score10": number, "confidence": 0-1, "note": ""},
+      "horizontalFifths": {"score10": number, "confidence": 0-1, "note": ""},
+      "goldenRatioProximity": {"score10": number, "confidence": 0-1, "note": ""},
+      "eyeSpacing": {"score10": number, "confidence": 0-1, "note": ""},
+      "noseToMouthRatio": {"score10": number, "confidence": 0-1, "note": ""},
+      "jawToFaceRatio": {"score10": number, "confidence": 0-1, "note": ""}
+    },
+    "deviationNotes": ["specific deviation 1", "specific deviation 2"]
   },
   "potential": {
     "totalPossibleGain": sum of all deltas,
@@ -163,13 +226,20 @@ Output STRICT JSON ONLY. No markdown. No extra text. No code blocks.
   "safety": {
     "disclaimer": "Scores reflect aesthetic guidelines, not personal worth. Beauty is subjective.",
     "tone": "neutral",
-    "scoringContext": "We use honest calibration: 5.5 is average, most people score 4.5-6.5. A 7+ is notably above average."
+    "scoringContext": "We use honest calibration: 5.5 is average, most people score 4.5-6.5. A 7+ is notably above average.",
+    "appearanceProfileDisclaimer": "Appearance estimates based on this photo; lighting and angle can affect results."
   },
   "tier": {
     "isPremium": boolean,
     "depth": "free|premium"
   }
 }
+
+===== APPEARANCE PROFILE SCORING WEIGHTS =====
+Based on inferred presentation (confidence >= 0.65), adjust scoring emphasis:
+- Male-presenting: emphasize jawline definition, facial width, brow ridge
+- Female-presenting: emphasize facial harmony, skin quality, eye area
+- Ambiguous/low confidence: use neutral balanced weights
 
 ===== TIER DIFFERENCES =====
 FREE tier:
@@ -179,6 +249,7 @@ FREE tier:
 - 3-5 total fixes
 - No proOptions
 - No ceilingScore10
+- Basic harmonyIndex
 
 PREMIUM tier:
 - All features including: eyebrows, chin, neck_posture, detailed symmetry
@@ -187,7 +258,8 @@ PREMIUM tier:
 - proOptions with procedural treatments (info only)
 - ceilingScore10 with disclaimer
 - Facial thirds analysis
-- Full asymmetry breakdown`;
+- Full asymmetry breakdown
+- Detailed harmonyIndex components`;
 
 app.post('/api/face/analyze', async (req, res) => {
   try {
@@ -198,14 +270,15 @@ app.post('/api/face/analyze', async (req, res) => {
       });
     }
 
-    const { frontImage, sideImage, gender, premiumEnabled } = req.body;
+    // Gender is now optional - will be auto-inferred
+    const { frontImage, sideImage, gender: genderOverride, premiumEnabled } = req.body;
 
     if (!frontImage) {
       return res.status(400).json({ error: 'Front image is required' });
     }
 
     const tier = premiumEnabled ? 'premium' : 'free';
-    console.log(`Analyzing face - Gender: ${gender}, Tier: ${tier}, Side photo: ${!!sideImage}`);
+    console.log(`Analyzing face - Tier: ${tier}, Side photo: ${!!sideImage}, Gender override: ${genderOverride || 'none'}`);
 
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
@@ -263,17 +336,27 @@ Rules:
       });
     }
 
+    // Build the user prompt - gender is now auto-inferred
     const userPrompt = `${SYSTEM_PROMPT}
 
 ===== CURRENT ANALYSIS REQUEST =====
-Gender: ${gender}
 Tier: ${tier}
 Side photo: ${sideImage ? 'YES - can assess chin projection' : 'NO - mark chin/nose projection as LOW confidence'}
+${genderOverride ? `Gender override: ${genderOverride} (use this for scoring weights)` : 'Gender: AUTO-INFER from facial features (output in appearanceProfile)'}
+
+===== IMPORTANT: APPEARANCE PROFILE =====
+You MUST infer and output the "appearanceProfile" object:
+- Analyze facial features to determine presentation (male-presenting/female-presenting/ambiguous)
+- Provide confidence (0-1)
+- Estimate age range ONLY if confidence >= 0.65
+- Calculate dimorphism score (0-10)
+- Calculate masculinity/femininity (both 0-100, can be moderate for androgynous)
+- BE RESPECTFUL - this is informational, not judgmental
 
 ${tier === 'free' ? `
 FREE TIER - Analyze these features only:
 - skin, eye_area, nose, lips, cheekbones, jawline
-- Plus harmony, symmetry, hair
+- Plus harmony, symmetry, hair, harmonyIndex (basic)
 - 1-2 notes per feature, no subFeatures
 - 3-5 total improvement deltas
 - No proOptions
@@ -286,6 +369,7 @@ PREMIUM TIER - Full analysis:
 - Include ceilingScore10
 - Facial thirds analysis
 - Full asymmetry details
+- Full harmonyIndex with all components
 `}
 
 REMEMBER:
@@ -294,6 +378,8 @@ REMEMBER:
 3. Provide EVIDENCE - cite specific visible cues
 4. Calculate POTENTIAL - show realistic improvement path with deltas
 5. Top 3 levers are the most important output - make them actionable
+6. AUTO-INFER appearance profile - output in appearanceProfile object
+7. Calculate HARMONY INDEX - based on golden ratio and facial proportions
 
 Now analyze the photo and return ONLY the JSON object.`;
 
@@ -315,6 +401,34 @@ Now analyze the photo and return ONLY the JSON object.`;
 
     // POST-PROCESSING: Apply calibration curve to prevent score inflation
     parsedResponse = applyCalibration(parsedResponse);
+
+    // Ensure appearance profile exists with fallback
+    if (!parsedResponse.appearanceProfile) {
+      parsedResponse.appearanceProfile = {
+        presentation: 'ambiguous',
+        confidence: 0.3,
+        ageRange: null,
+        ageConfidence: null,
+        dimorphismScore10: 5.0,
+        masculinityFemininity: { masculinity: 50, femininity: 50 }
+      };
+    }
+
+    // Apply gender override if provided
+    if (genderOverride) {
+      parsedResponse.appearanceProfile.presentation = genderOverride === 'male' ? 'male-presenting' : 'female-presenting';
+      parsedResponse.appearanceProfile.confidence = 1.0; // Manual override = full confidence
+    }
+
+    // Ensure harmony index exists
+    if (!parsedResponse.harmonyIndex) {
+      parsedResponse.harmonyIndex = {
+        overall10: parsedResponse.harmony?.rating10 || 5.5,
+        confidence: 'medium',
+        components: {},
+        deviationNotes: []
+      };
+    }
 
     // Ensure tier info is correct
     parsedResponse.tier = {
@@ -338,8 +452,12 @@ Now analyze the photo and return ONLY the JSON object.`;
       );
     }
 
+    // Log appearance profile inference
+    const ap = parsedResponse.appearanceProfile;
+    console.log(`Appearance Profile: ${ap.presentation} (conf: ${ap.confidence?.toFixed(2)}), Age: ${ap.ageRange ? `${ap.ageRange.min}-${ap.ageRange.max}` : 'N/A'}`);
     console.log('Analysis complete - Current:', parsedResponse.overall?.currentScore10?.toFixed(1), 
-                'Potential:', parsedResponse.overall?.potentialScore10?.toFixed(1));
+                'Potential:', parsedResponse.overall?.potentialScore10?.toFixed(1),
+                'Harmony:', parsedResponse.harmonyIndex?.overall10?.toFixed(1));
     res.json(parsedResponse);
   } catch (error) {
     console.error('Analysis error:', error);
@@ -744,10 +862,113 @@ function applyBodyCalibration(response) {
   return response;
 }
 
+// ====== BEST VERSION GENERATOR ENDPOINT ======
+app.post('/api/best-version', async (req, res) => {
+  try {
+    if (!GEMINI_API_KEY) {
+      return res.status(503).json({
+        error: 'API key not configured',
+        message: 'GEMINI_API_KEY not set. Get your FREE key from https://aistudio.google.com/apikey'
+      });
+    }
+
+    const { image } = req.body;
+
+    if (!image) {
+      return res.status(400).json({ error: 'Image is required' });
+    }
+
+    console.log('🎨 Best Version Generator - Starting...');
+
+    // Step 1: Generate enhancement prompt using Gemini
+    console.log('  → Generating enhancement prompt...');
+    const promptResult = await generateEnhancementPrompt(image, GEMINI_API_KEY);
+    console.log('  ✓ Enhancement prompt generated');
+    console.log('  → Changes:', promptResult.changes);
+
+    // Step 2: Try to generate enhanced image
+    console.log('  → Attempting image generation...');
+    const imageResult = await generateEnhancedImage(
+      image,
+      promptResult.imagenPrompt,
+      GEMINI_API_KEY
+    );
+
+    let resultImageUrl = null;
+    let usedProvider = 'fallback';
+
+    if (imageResult.success && imageResult.imageBase64) {
+      // Save the generated image
+      console.log(`  ✓ Image generated via ${imageResult.provider}`);
+      const saved = saveImage(imageResult.imageBase64);
+      resultImageUrl = saved.url;
+      usedProvider = imageResult.provider;
+    } else {
+      console.log('  ⚠️ Image generation not available, using fallback mode');
+      // In fallback mode, save the original image and return enhancement plan
+      const saved = saveImage(image, 'original');
+      resultImageUrl = saved.url;
+      usedProvider = 'fallback';
+    }
+
+    console.log('🎨 Best Version Generator - Complete');
+
+    res.json({
+      resultImageUrl,
+      changes: promptResult.changes,
+      imagenPrompt: promptResult.imagenPrompt,
+      debug: {
+        usedProvider,
+        imageGenerationAvailable: imageResult.success,
+        fallbackMode: !imageResult.success,
+      }
+    });
+
+  } catch (error) {
+    console.error('Best Version Generator error:', error);
+    res.status(500).json({
+      error: 'Generation failed',
+      message: error.message
+    });
+  }
+});
+
+// Demo fallback endpoint - always returns mock data
+app.post('/api/best-version/demo', async (req, res) => {
+  const { image } = req.body;
+  
+  // Simulate processing delay
+  await new Promise(resolve => setTimeout(resolve, 2000));
+  
+  // Save original as result (demo mode)
+  let resultImageUrl = null;
+  if (image) {
+    const saved = saveImage(image, 'demo');
+    resultImageUrl = saved.url;
+  }
+  
+  res.json({
+    resultImageUrl,
+    changes: [
+      'Enhanced skin clarity with improved texture and even tone',
+      'Optimized lighting for a more flattering appearance',
+      'Refined hair styling for better face framing',
+      'Subtle under-eye brightening',
+      'Improved overall color balance and warmth'
+    ],
+    debug: {
+      usedProvider: 'demo',
+      imageGenerationAvailable: false,
+      fallbackMode: true,
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`\n✨ Aesthetics Analyzer server running on port ${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/health`);
   console.log(`   Face analysis: POST http://localhost:${PORT}/api/face/analyze`);
-  console.log(`   Body analysis: POST http://localhost:${PORT}/api/body/analyze\n`);
+  console.log(`   Body analysis: POST http://localhost:${PORT}/api/body/analyze`);
+  console.log(`   Best Version: POST http://localhost:${PORT}/api/best-version\n`);
   console.log('📊 Scoring calibration active - honest scores, no inflation');
 });

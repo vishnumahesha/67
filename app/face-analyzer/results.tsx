@@ -14,11 +14,13 @@ import {
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import DualScoreRing from './components/DualScoreRing';
 import FeatureCard from './components/FeatureCard';
 import TopLeversSection from './components/TopLeversSection';
 import FeatureDetailModal from './components/FeatureDetailModal';
+import { useAppStore } from '../../store/useAppStore';
 
 const COLORS = {
   bg: '#0a0a0f',
@@ -261,10 +263,19 @@ export default function FaceAnalyzerResultsScreen() {
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [selectedFeature, setSelectedFeature] = useState<typeof MOCK_RESULT.features[0] | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  
+  const frontPhotoUri = useAppStore((state) => state.frontPhotoUri);
 
   const handleFeaturePress = (feature: typeof MOCK_RESULT.features[0]) => {
     setSelectedFeature(feature);
     setModalVisible(true);
+  };
+
+  const handleBestVersion = () => {
+    router.push({
+      pathname: '/best-version',
+      params: { imageUri: frontPhotoUri || '' },
+    });
   };
 
   const totalPotentialGain = MOCK_RESULT.topLevers.reduce((sum, l) => sum + l.deltaMax, 0);
@@ -331,6 +342,33 @@ export default function FaceAnalyzerResultsScreen() {
             <View style={styles.summaryCard}>
               <Text style={styles.summaryText}>{MOCK_RESULT.overall.summary}</Text>
             </View>
+
+            {/* Best Version CTA */}
+            <TouchableOpacity 
+              style={styles.bestVersionCard}
+              onPress={handleBestVersion}
+              activeOpacity={0.85}
+            >
+              <LinearGradient
+                colors={['#a855f7', '#6366f1']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.bestVersionGradient}
+              >
+                <View style={styles.bestVersionContent}>
+                  <View style={styles.bestVersionIconContainer}>
+                    <Ionicons name="sparkles" size={24} color="#fff" />
+                  </View>
+                  <View style={styles.bestVersionTextContainer}>
+                    <Text style={styles.bestVersionTitle}>See Your Best Version!</Text>
+                    <Text style={styles.bestVersionSubtitle}>
+                      AI-enhanced photo with optimized lighting, skin & styling
+                    </Text>
+                  </View>
+                  <Ionicons name="chevron-forward" size={22} color="rgba(255,255,255,0.8)" />
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
 
             {/* Face shape */}
             <View style={styles.faceShapeCard}>
@@ -590,6 +628,46 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: COLORS.textSecondary,
     lineHeight: 24,
+  },
+  // Best Version Card
+  bestVersionCard: {
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginBottom: 4,
+  },
+  bestVersionGradient: {
+    padding: 1,
+    borderRadius: 16,
+  },
+  bestVersionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: 15,
+    padding: 16,
+    gap: 14,
+  },
+  bestVersionIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  bestVersionTextContainer: {
+    flex: 1,
+  },
+  bestVersionTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#fff',
+    marginBottom: 4,
+  },
+  bestVersionSubtitle: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.8)',
+    lineHeight: 18,
   },
   faceShapeCard: {
     flexDirection: 'row',
