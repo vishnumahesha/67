@@ -17,7 +17,7 @@ import {
   PhotoQualityWarnings,
   FeatureDetailModal,
   Button,
-  AppearanceProfileCard,
+  Top3Levers,
 } from '@/components';
 import { CONFIDENCE_LABELS, SCORE_CONTEXT } from '@/constants';
 import { useAppStore } from '@/store/useAppStore';
@@ -146,40 +146,16 @@ export default function ResultsScreen() {
           )}
         </Animated.View>
 
-        {/* See Your Best Version CTA - Section 2 */}
-        <Animated.View entering={FadeIn.delay(300)} style={styles.bestVersionSection}>
-          <TouchableOpacity 
-            style={styles.bestVersionCard}
-            onPress={() => router.push('/best-version')}
-            activeOpacity={0.85}
-          >
-            <View style={styles.bestVersionGlow} />
-            <View style={styles.bestVersionContent}>
-              <View style={styles.bestVersionLeft}>
-                <Text style={styles.bestVersionIcon}>✨</Text>
-                <View>
-                  <Text style={styles.bestVersionTitle}>See Your Best Version</Text>
-                  <Text style={styles.bestVersionSubtitle}>
-                    AI-generated visualization of your potential
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.bestVersionArrow}>
-                <Text style={styles.bestVersionArrowText}>→</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-
-        {/* Appearance Profile & Harmony Index - Section 3 (Collapsible) */}
-        <Animated.View entering={FadeIn.delay(350)}>
-          <AppearanceProfileCard
-            appearanceProfile={result.appearanceProfile}
-            harmonyIndex={result.harmonyIndex}
+        {/* Top 3 Levers - THE KEY FEATURE */}
+        <Animated.View entering={FadeIn.delay(400)} style={styles.leversSection}>
+          <Top3Levers
+            levers={result.potential.top3Levers}
+            totalGain={result.potential.totalPossibleGain}
+            timelineToFull={result.potential.timelineToFullPotential}
           />
         </Animated.View>
 
-        {/* Photo Quality - Section 4 */}
+        {/* Photo Quality */}
         <Animated.View entering={FadeIn.delay(500)} style={styles.qualitySection}>
           <ConfidenceBadge
             confidence={result.overall.confidence}
@@ -201,7 +177,7 @@ export default function ResultsScreen() {
           )}
         </Animated.View>
 
-        {/* Feature Ratings - Section 6 */}
+        {/* Feature Ratings */}
         <View style={styles.featuresSection}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Feature Breakdown</Text>
@@ -290,6 +266,35 @@ export default function ResultsScreen() {
             </Animated.View>
           </View>
         </View>
+
+        {/* Improvement Deltas (Premium) */}
+        {premiumEnabled && result.potential.deltas.length > 0 && (
+          <View style={styles.deltasSection}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>All Improvement Opportunities</Text>
+              <Text style={styles.sectionSubtitle}>
+                Ranked by impact potential
+              </Text>
+            </View>
+            <View style={styles.deltasList}>
+              {result.potential.deltas.map((delta, idx) => (
+                <View key={delta.lever} style={styles.deltaCard}>
+                  <View style={styles.deltaHeader}>
+                    <Text style={styles.deltaLever}>{delta.lever}</Text>
+                    <View style={styles.deltaBadge}>
+                      <Text style={styles.deltaBadgeText}>+{delta.delta.toFixed(1)}</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.deltaIssue}>{delta.currentIssue}</Text>
+                  <View style={styles.deltaFooter}>
+                    <Text style={styles.deltaTimeline}>⏱️ {delta.timeline}</Text>
+                    <Text style={styles.deltaDifficulty}>{delta.difficulty}</Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
 
         {/* Premium Upsell */}
         {!premiumEnabled && (
@@ -454,66 +459,7 @@ const styles = StyleSheet.create({
   },
   qualitySection: {
     gap: spacing.sm,
-    marginBottom: spacing.lg,
-  },
-  bestVersionSection: {
     marginBottom: spacing.xl,
-  },
-  bestVersionCard: {
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-    borderWidth: 1,
-    borderColor: colors.borderAccent,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  bestVersionGlow: {
-    position: 'absolute',
-    top: -50,
-    right: -50,
-    width: 150,
-    height: 150,
-    backgroundColor: colors.primary,
-    opacity: 0.1,
-    borderRadius: 75,
-  },
-  bestVersionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  bestVersionLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    flex: 1,
-  },
-  bestVersionIcon: {
-    fontSize: 32,
-  },
-  bestVersionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  bestVersionSubtitle: {
-    fontSize: 13,
-    color: colors.textMuted,
-  },
-  bestVersionArrow: {
-    width: 40,
-    height: 40,
-    backgroundColor: colors.primary,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bestVersionArrowText: {
-    fontSize: 20,
-    color: colors.background,
-    fontWeight: '700',
   },
   limitationsBox: {
     backgroundColor: colors.surface,

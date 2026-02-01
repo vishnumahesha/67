@@ -10,4 +10,3 @@ export { GenderSwitch } from './GenderSwitch';
 export { PremiumBanner } from './PremiumBanner';
 export { FeatureDetailModal } from './FeatureDetailModal';
 export { Top3Levers } from './Top3Levers';
-export { AppearanceProfileCard } from './AppearanceProfileCard';

@@ -3590,6 +3590,272 @@
       animation: fadeIn 0.3s ease;
     }
 
+    /* ====== APPEARANCE PROFILE CARD ====== */
+    .appearance-profile-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(139, 92, 246, 0.08) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .appearance-profile-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
+    }
+
+    .appearance-profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .appearance-profile-header h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hide-appearance-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .hide-appearance-toggle input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .appearance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .appearance-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+    }
+
+    .appearance-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    .appearance-item-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .appearance-item-value {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .appearance-item-value > span:first-child {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .confidence-pill {
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .confidence-pill.high {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10B981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .confidence-pill.medium {
+      background: rgba(245, 158, 11, 0.15);
+      color: #F59E0B;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .confidence-pill.low {
+      background: rgba(239, 68, 68, 0.15);
+      color: #EF4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* Dimorphism Bar */
+    .dimorphism-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .dimorphism-bar {
+      margin: 0.75rem 0 0.5rem;
+    }
+
+    .dimorphism-bar-container {
+      position: relative;
+      height: 8px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 50%, #EC4899 100%);
+      border-radius: 4px;
+      opacity: 0.7;
+    }
+
+    .dimorphism-marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 16px;
+      height: 16px;
+      background: var(--text);
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+      transition: left 0.3s ease;
+    }
+
+    .dimorphism-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ====== HARMONY INDEX CARD ====== */
+    .harmony-index-card {
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(6, 182, 212, 0.08) 100%);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .harmony-index-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #10B981, var(--accent));
+    }
+
+    .harmony-index-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .harmony-index-header h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .harmony-score-badge {
+      background: linear-gradient(135deg, var(--accent), #10B981);
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .harmony-components {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .harmony-component {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+    }
+
+    .harmony-component:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(6, 182, 212, 0.2);
+    }
+
+    .harmony-component-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .harmony-component-score {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+
+    .harmony-component-note {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .harmony-bar {
+      margin-top: 0.5rem;
+      height: 4px;
+      background: var(--surface-light);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .harmony-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #10B981);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
     /* Mobile Responsiveness */
     @media (max-width: 968px) {
       .hero-container {
@@ -3763,6 +4029,944 @@
     .gender-selector {
       display: none !important;
     }
+
+    /* ============================================
+       AUTHENTICATION STYLES
+       ============================================ */
+    
+    .auth-container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .auth-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .auth-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+    }
+
+    .auth-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--text), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .auth-subtitle {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-label-icon {
+      font-size: 1rem;
+    }
+
+    .form-input {
+      background: var(--surface-light);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      color: var(--text);
+      font-size: 1rem;
+      font-family: 'Outfit', sans-serif;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+      background: rgba(30, 30, 46, 0.8);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+    }
+
+    .form-error {
+      color: var(--error);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .password-input-container {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .password-toggle:hover {
+      color: var(--text);
+    }
+
+    .auth-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .remember-me input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .remember-me span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .forgot-password:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .auth-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
+    }
+
+    .auth-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .auth-btn.loading {
+      pointer-events: none;
+    }
+
+    .auth-btn.loading::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .auth-divider span {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .social-login {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: var(--surface-light);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .social-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(30, 30, 46, 0.8);
+      transform: translateY(-2px);
+    }
+
+    .social-btn .icon {
+      font-size: 1.25rem;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .auth-footer-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .auth-footer-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .auth-footer-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .auth-success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      color: var(--success);
+      font-weight: 500;
+      display: none;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    .auth-success.show {
+      display: block;
+    }
+
+    /* Password strength bar */
+    .password-strength-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.25rem;
+    }
+
+    .password-strength-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--error);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* User Menu (when logged in) */
+    .user-menu {
+      position: relative;
+    }
+
+    .user-menu-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 0.5rem 1rem 0.5rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .user-menu-btn:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .user-name {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .user-menu-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 0.5rem;
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      min-width: 220px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+
+    .user-menu:hover .user-menu-dropdown {
+      display: block;
+      animation: dropdownFadeIn 0.2s ease-out;
+    }
+
+    .user-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .user-menu-item:hover {
+      background: var(--surface-light);
+    }
+
+    .user-menu-item.danger {
+      color: var(--error);
+    }
+
+    .user-menu-item .icon {
+      font-size: 1.1rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    .user-menu-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 0.25rem 0;
+    }
+
+    .user-subscription-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .user-subscription-badge.free {
+      background: rgba(113, 113, 122, 0.2);
+      color: var(--text-muted);
+    }
+
+    .user-subscription-badge.premium {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2));
+      color: #FBBF24;
+    }
+
+    /* ============================================
+       SUBSCRIPTION STYLES
+       ============================================ */
+
+    .subscription-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .subscription-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .subscription-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--primary);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .subscription-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subscription-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .pricing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .pricing-toggle-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .pricing-toggle-label.active {
+      color: var(--text);
+    }
+
+    .pricing-toggle-switch {
+      width: 60px;
+      height: 32px;
+      background: var(--surface-light);
+      border-radius: 50px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .pricing-toggle-switch.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    }
+
+    .pricing-toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .pricing-toggle-switch.active::after {
+      transform: translateX(28px);
+    }
+
+    .pricing-save {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border-radius: 24px;
+      padding: 2.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 0 60px rgba(139, 92, 246, 0.2);
+    }
+
+    .pricing-card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light));
+      border-radius: 24px 24px 0 0;
+    }
+
+    .pricing-popular {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .pricing-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .pricing-plan {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-description {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      min-height: 48px;
+    }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-currency {
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .pricing-amount {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .pricing-card.featured .pricing-amount {
+      background: linear-gradient(135deg, var(--primary-light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pricing-period {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .pricing-original {
+      text-decoration: line-through;
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 2rem 0;
+      padding: 0;
+    }
+
+    .pricing-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .pricing-feature:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-feature-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .pricing-feature-icon.check {
+      color: var(--success);
+    }
+
+    .pricing-feature-icon.cross {
+      color: var(--text-muted);
+    }
+
+    .pricing-feature-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .pricing-feature-text.disabled {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .pricing-btn {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .pricing-btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .pricing-btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.5);
+    }
+
+    .pricing-btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .pricing-btn.secondary:hover {
+      border-color: var(--primary);
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .pricing-guarantee {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pricing-guarantee-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .pricing-guarantee-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-guarantee-text {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* FAQ Section */
+    .subscription-faq {
+      max-width: 700px;
+      margin: 4rem auto 0;
+    }
+
+    .faq-title {
+      text-align: center;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .faq-question:hover {
+      background: var(--surface-light);
+    }
+
+    .faq-question h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .faq-toggle {
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      transition: transform 0.3s;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      padding: 0 1.5rem 1.25rem;
+      max-height: 200px;
+    }
+
+    .faq-answer p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Auth nav buttons */
+    .auth-nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-signin-btn {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+    }
+
+    .nav-signin-btn:hover {
+      color: var(--primary);
+    }
+
+    .nav-signup-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+    }
+
+    .nav-signup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+    }
+
+    /* Responsive Auth & Subscription */
+    @media (max-width: 768px) {
+      .auth-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .auth-title {
+        font-size: 1.75rem;
+      }
+
+      .social-login {
+        flex-direction: column;
+      }
+
+      .pricing-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .subscription-title {
+        font-size: 2.25rem;
+      }
+
+      .pricing-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .auth-nav-buttons {
+        display: none;
+      }
+
+      .user-menu {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -3778,7 +4982,39 @@
         <li><a href="#" data-page="home" class="active">Home</a></li>
         <li><a href="#" data-page="features">Features</a></li>
         <li><a href="#" data-page="how-it-works">How it Works</a></li>
+        <li><a href="#" data-page="subscription">Pricing</a></li>
       </ul>
+      
+      <!-- Auth buttons (shown when logged out) -->
+      <div class="auth-nav-buttons" id="auth-nav-logged-out">
+        <button class="nav-signin-btn" data-page="signin">Sign In</button>
+        <button class="nav-signup-btn" data-page="signup">Sign Up</button>
+      </div>
+      
+      <!-- User menu (shown when logged in) -->
+      <div class="user-menu" id="auth-nav-logged-in" style="display: none;">
+        <button class="user-menu-btn">
+          <div class="user-avatar" id="user-avatar">U</div>
+          <span class="user-name" id="user-name">User</span>
+        </button>
+        <div class="user-menu-dropdown">
+          <div style="padding: 1rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-weight: 600; margin-bottom: 0.25rem;" id="user-email-display">user@example.com</div>
+            <span class="user-subscription-badge free" id="user-plan-badge">Free Plan</span>
+          </div>
+          <a href="#" class="user-menu-item" data-page="subscription">
+            <span class="icon">💎</span> Subscription
+          </a>
+          <a href="#" class="user-menu-item" onclick="showPage('analyze')">
+            <span class="icon">📊</span> My Scans
+          </a>
+          <div class="user-menu-divider"></div>
+          <button class="user-menu-item danger" onclick="handleLogout()">
+            <span class="icon">🚪</span> Sign Out
+          </button>
+        </div>
+      </div>
+      
       <div class="scan-dropdown">
         <button class="scan-dropdown-btn">
           Start Scan ▾
@@ -4011,6 +5247,403 @@
       <a href="#" data-page="analyze" data-scan-type="body" class="btn btn-body" style="margin-left: 1rem;">Start Body Analysis →</a>
     </div>
   </section>
+  </div>
+
+  <!-- SIGN IN PAGE -->
+  <div class="page-section" id="page-signin">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <span class="auth-icon">🔐</span>
+          <h1 class="auth-title">Welcome Back</h1>
+          <p class="auth-subtitle">Sign in to access your account and continue your journey</p>
+        </div>
+        
+        <div class="auth-success" id="signin-success">
+          ✅ Successfully signed in! Redirecting...
+        </div>
+        
+        <form class="auth-form" id="signin-form" onsubmit="handleSignIn(event)">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">📧</span>
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              class="form-input" 
+              id="signin-email"
+              placeholder="Enter your email"
+              required
+            >
+            <span class="form-error" id="signin-email-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">🔒</span>
+              Password
+            </label>
+            <div class="password-input-container">
+              <input 
+                type="password" 
+                class="form-input" 
+                id="signin-password"
+                placeholder="Enter your password"
+                required
+              >
+              <button type="button" class="password-toggle" onclick="togglePassword('signin-password', this)">
+                👁️
+              </button>
+            </div>
+            <span class="form-error" id="signin-password-error"></span>
+          </div>
+          
+          <div class="auth-options">
+            <label class="remember-me">
+              <input type="checkbox" id="signin-remember">
+              <span>Remember me</span>
+            </label>
+            <a href="#" class="forgot-password">Forgot password?</a>
+          </div>
+          
+          <button type="submit" class="auth-btn" id="signin-btn">
+            <span>Sign In</span>
+            <span>→</span>
+          </button>
+        </form>
+        
+        <div class="auth-divider">
+          <span>or continue with</span>
+        </div>
+        
+        <div class="social-login">
+          <button class="social-btn" onclick="socialLogin('google')">
+            <span class="icon">🔵</span>
+            <span>Google</span>
+          </button>
+          <button class="social-btn" onclick="socialLogin('apple')">
+            <span class="icon">🍎</span>
+            <span>Apple</span>
+          </button>
+        </div>
+        
+        <div class="auth-footer">
+          <p class="auth-footer-text">
+            Don't have an account? 
+            <a href="#" class="auth-footer-link" data-page="signup">Sign up for free</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGN UP PAGE -->
+  <div class="page-section" id="page-signup">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <span class="auth-icon">✨</span>
+          <h1 class="auth-title">Create Account</h1>
+          <p class="auth-subtitle">Join thousands unlocking their true potential</p>
+        </div>
+        
+        <div class="auth-success" id="signup-success">
+          ✅ Account created successfully! Redirecting...
+        </div>
+        
+        <form class="auth-form" id="signup-form" onsubmit="handleSignUp(event)">
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">👤</span>
+              Full Name
+            </label>
+            <input 
+              type="text" 
+              class="form-input" 
+              id="signup-name"
+              placeholder="Enter your full name"
+              required
+            >
+            <span class="form-error" id="signup-name-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">📧</span>
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              class="form-input" 
+              id="signup-email"
+              placeholder="Enter your email"
+              required
+            >
+            <span class="form-error" id="signup-email-error"></span>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">🔒</span>
+              Password
+            </label>
+            <div class="password-input-container">
+              <input 
+                type="password" 
+                class="form-input" 
+                id="signup-password"
+                placeholder="Create a strong password"
+                required
+                minlength="8"
+              >
+              <button type="button" class="password-toggle" onclick="togglePassword('signup-password', this)">
+                👁️
+              </button>
+            </div>
+            <span class="form-error" id="signup-password-error"></span>
+            <div style="margin-top: 0.5rem;">
+              <div class="password-strength-bar" id="password-strength-bar">
+                <div class="password-strength-fill" id="password-strength-fill"></div>
+              </div>
+              <span style="color: var(--text-muted); font-size: 0.8rem;" id="password-strength-text">Min 8 characters</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">
+              <span class="form-label-icon">🔒</span>
+              Confirm Password
+            </label>
+            <div class="password-input-container">
+              <input 
+                type="password" 
+                class="form-input" 
+                id="signup-confirm-password"
+                placeholder="Confirm your password"
+                required
+              >
+              <button type="button" class="password-toggle" onclick="togglePassword('signup-confirm-password', this)">
+                👁️
+              </button>
+            </div>
+            <span class="form-error" id="signup-confirm-error"></span>
+          </div>
+          
+          <label class="remember-me" style="margin-top: 0.5rem;">
+            <input type="checkbox" id="signup-terms" required>
+            <span>I agree to the <a href="#" style="color: var(--primary);">Terms of Service</a> and <a href="#" style="color: var(--primary);">Privacy Policy</a></span>
+          </label>
+          
+          <button type="submit" class="auth-btn" id="signup-btn">
+            <span>Create Account</span>
+            <span>→</span>
+          </button>
+        </form>
+        
+        <div class="auth-divider">
+          <span>or continue with</span>
+        </div>
+        
+        <div class="social-login">
+          <button class="social-btn" onclick="socialLogin('google')">
+            <span class="icon">🔵</span>
+            <span>Google</span>
+          </button>
+          <button class="social-btn" onclick="socialLogin('apple')">
+            <span class="icon">🍎</span>
+            <span>Apple</span>
+          </button>
+        </div>
+        
+        <div class="auth-footer">
+          <p class="auth-footer-text">
+            Already have an account? 
+            <a href="#" class="auth-footer-link" data-page="signin">Sign in here</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUBSCRIPTION PAGE -->
+  <div class="page-section" id="page-subscription">
+    <div class="subscription-container">
+      <div class="subscription-header">
+        <div class="subscription-badge">
+          <span>💎</span> Choose Your Plan
+        </div>
+        <h1 class="subscription-title">Unlock Your Full Potential</h1>
+        <p class="subscription-subtitle">
+          Get personalized AI-powered analysis and recommendations to become the best version of yourself
+        </p>
+      </div>
+      
+      <div class="pricing-toggle">
+        <span class="pricing-toggle-label active" id="monthly-label">Monthly</span>
+        <div class="pricing-toggle-switch" id="pricing-toggle" onclick="togglePricing()"></div>
+        <span class="pricing-toggle-label" id="yearly-label">Yearly</span>
+        <span class="pricing-save">Save 40%</span>
+      </div>
+      
+      <div class="pricing-cards">
+        <!-- FREE PLAN -->
+        <div class="pricing-card">
+          <span class="pricing-icon">🌟</span>
+          <h2 class="pricing-plan">Free</h2>
+          <p class="pricing-description">Perfect for getting started and exploring our AI analysis</p>
+          <div class="pricing-price">
+            <span class="pricing-currency">$</span>
+            <span class="pricing-amount">0</span>
+          </div>
+          <span class="pricing-period">Forever free</span>
+          
+          <ul class="pricing-features">
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">3 face scans per day</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Basic facial analysis</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Overall attractiveness score</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Basic improvement tips</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon cross">✗</span>
+              <span class="pricing-feature-text disabled">Unlimited scans</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon cross">✗</span>
+              <span class="pricing-feature-text disabled">Body analysis</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon cross">✗</span>
+              <span class="pricing-feature-text disabled">AI-generated "Best Version"</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon cross">✗</span>
+              <span class="pricing-feature-text disabled">Personalized action plans</span>
+            </li>
+          </ul>
+          
+          <button class="pricing-btn secondary" id="free-plan-btn" onclick="selectPlan('free')">
+            Current Plan
+          </button>
+        </div>
+        
+        <!-- PREMIUM PLAN -->
+        <div class="pricing-card featured">
+          <span class="pricing-popular">Most Popular</span>
+          <span class="pricing-icon">👑</span>
+          <h2 class="pricing-plan">Premium</h2>
+          <p class="pricing-description">Unlock everything to maximize your potential transformation</p>
+          <div class="pricing-price">
+            <span class="pricing-currency">$</span>
+            <span class="pricing-amount" id="premium-price">12</span>
+          </div>
+          <span class="pricing-period" id="premium-period">/month</span>
+          <div class="pricing-original" id="premium-original" style="display: none;">$144/year → $86/year</div>
+          
+          <ul class="pricing-features">
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text"><strong>Unlimited</strong> face & body scans</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Advanced facial feature analysis</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Current + Potential scores</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text"><strong>Full body composition</strong> analysis</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text"><strong>AI "Best Version"</strong> visualization</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Personalized 90-day action plans</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Progress tracking dashboard</span>
+            </li>
+            <li class="pricing-feature">
+              <span class="pricing-feature-icon check">✓</span>
+              <span class="pricing-feature-text">Priority support & updates</span>
+            </li>
+          </ul>
+          
+          <button class="pricing-btn primary" id="premium-plan-btn" onclick="selectPlan('premium')">
+            Upgrade to Premium →
+          </button>
+        </div>
+      </div>
+      
+      <div class="pricing-guarantee">
+        <span class="pricing-guarantee-icon">🛡️</span>
+        <h3 class="pricing-guarantee-title">30-Day Money-Back Guarantee</h3>
+        <p class="pricing-guarantee-text">
+          Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love the results.
+        </p>
+      </div>
+      
+      <div class="subscription-faq">
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h4>What's included in the Premium plan?</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Premium includes unlimited face and body scans, AI-generated "Best Version" visualizations showing your potential, detailed facial feature analysis, full body composition analysis, personalized 90-day action plans, progress tracking, and priority support.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h4>Can I cancel anytime?</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! You can cancel your subscription at any time. If you cancel, you'll still have access to Premium features until the end of your billing period. No hidden fees or penalties.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h4>How accurate is the AI analysis?</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Our AI has been trained on millions of data points and uses advanced computer vision to provide accurate assessments. The analysis is based on established aesthetic principles and provides actionable insights for improvement.</p>
+          </div>
+        </div>
+        
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h4>Is my data private and secure?</h4>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Absolutely. We take privacy seriously. Your photos are processed securely and are never shared with third parties. You can delete your data at any time from your account settings.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ANALYZE PAGE -->
@@ -4380,8 +6013,40 @@
         </div>
       </div>
 
+      <!-- Delta Breakdown -->
+      <div class="delta-breakdown" id="delta-breakdown">
+        <h4>📈 Your Improvement Potential Breakdown</h4>
+        <div id="delta-items">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Top 3 Levers -->
+      <div class="top-levers">
+        <div class="top-levers-header">
+          <h3>🎯 Your Top 3 Levers <span>Highest-impact improvements</span></h3>
+          <div class="total-gain-badge">
+            <span class="total-gain-value" id="total-gain">+1.4</span>
+            <span class="total-gain-label">total</span>
+          </div>
+        </div>
+        <div id="levers-container">
+          <!-- Levers populated by JS -->
+        </div>
+        <div class="timeline-note">
+          <span>⏱️ Full potential in <strong id="timeline-to-full">12-16 weeks</strong></span>
+        </div>
+      </div>
+
       <div class="features-results" id="features-results">
         <!-- Features will be populated by JS -->
+      </div>
+
+      <div class="top-fixes" id="top-fixes-section">
+        <h3>🛠️ All Improvement Opportunities</h3>
+        <div id="fixes-container">
+          <!-- Fixes will be populated by JS -->
+        </div>
       </div>
 
       </div><!-- End TAB: Overview -->
@@ -4564,6 +6229,415 @@
     // For local testing use: 'http://localhost:3001'
     // For mobile/public testing, use the tunnel URL:
     const API_URL = 'http://localhost:3001';
+
+    // ============================================
+    // AUTHENTICATION STATE & FUNCTIONS
+    // ============================================
+    
+    // Auth state
+    let currentUser = null;
+    let isYearlyPricing = false;
+    
+    // Initialize auth state from localStorage
+    function initAuthState() {
+      const savedUser = localStorage.getItem('lifemax_user');
+      if (savedUser) {
+        try {
+          currentUser = JSON.parse(savedUser);
+          updateAuthUI();
+        } catch (e) {
+          localStorage.removeItem('lifemax_user');
+        }
+      }
+    }
+    
+    // Update UI based on auth state
+    function updateAuthUI() {
+      const loggedOutNav = document.getElementById('auth-nav-logged-out');
+      const loggedInNav = document.getElementById('auth-nav-logged-in');
+      const userAvatar = document.getElementById('user-avatar');
+      const userName = document.getElementById('user-name');
+      const userEmailDisplay = document.getElementById('user-email-display');
+      const userPlanBadge = document.getElementById('user-plan-badge');
+      const freePlanBtn = document.getElementById('free-plan-btn');
+      const premiumPlanBtn = document.getElementById('premium-plan-btn');
+      
+      if (currentUser) {
+        // User is logged in
+        if (loggedOutNav) loggedOutNav.style.display = 'none';
+        if (loggedInNav) loggedInNav.style.display = 'block';
+        
+        // Set user info
+        const initials = currentUser.name ? currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : 'U';
+        if (userAvatar) userAvatar.textContent = initials;
+        if (userName) userName.textContent = currentUser.name || 'User';
+        if (userEmailDisplay) userEmailDisplay.textContent = currentUser.email;
+        
+        // Update subscription badge
+        if (userPlanBadge) {
+          if (currentUser.plan === 'premium') {
+            userPlanBadge.textContent = '👑 Premium';
+            userPlanBadge.className = 'user-subscription-badge premium';
+          } else {
+            userPlanBadge.textContent = 'Free Plan';
+            userPlanBadge.className = 'user-subscription-badge free';
+          }
+        }
+        
+        // Update pricing buttons
+        if (freePlanBtn && premiumPlanBtn) {
+          if (currentUser.plan === 'premium') {
+            freePlanBtn.textContent = 'Downgrade';
+            freePlanBtn.classList.remove('secondary');
+            freePlanBtn.classList.add('secondary');
+            premiumPlanBtn.textContent = '✓ Current Plan';
+            premiumPlanBtn.disabled = true;
+          } else {
+            freePlanBtn.textContent = '✓ Current Plan';
+            freePlanBtn.disabled = true;
+            premiumPlanBtn.textContent = 'Upgrade to Premium →';
+            premiumPlanBtn.disabled = false;
+          }
+        }
+      } else {
+        // User is logged out
+        if (loggedOutNav) loggedOutNav.style.display = 'flex';
+        if (loggedInNav) loggedInNav.style.display = 'none';
+        
+        // Reset pricing buttons
+        if (freePlanBtn) {
+          freePlanBtn.textContent = 'Get Started Free';
+          freePlanBtn.disabled = false;
+        }
+        if (premiumPlanBtn) {
+          premiumPlanBtn.textContent = 'Upgrade to Premium →';
+          premiumPlanBtn.disabled = false;
+        }
+      }
+    }
+    
+    // Toggle password visibility
+    function togglePassword(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+    
+    // Validate email format
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    
+    // Check password strength
+    function checkPasswordStrength(password) {
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (password.length >= 12) strength++;
+      if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+      if (/\d/.test(password)) strength++;
+      if (/[^a-zA-Z0-9]/.test(password)) strength++;
+      return strength;
+    }
+    
+    // Handle sign in
+    function handleSignIn(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      const emailError = document.getElementById('signin-email-error');
+      const passwordError = document.getElementById('signin-password-error');
+      const successMsg = document.getElementById('signin-success');
+      const btn = document.getElementById('signin-btn');
+      
+      // Clear previous errors
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      document.getElementById('signin-email').classList.remove('error');
+      document.getElementById('signin-password').classList.remove('error');
+      
+      // Validate
+      let isValid = true;
+      
+      if (!email || !isValidEmail(email)) {
+        emailError.textContent = '⚠️ Please enter a valid email address';
+        document.getElementById('signin-email').classList.add('error');
+        isValid = false;
+      }
+      
+      if (!password || password.length < 6) {
+        passwordError.textContent = '⚠️ Password must be at least 6 characters';
+        document.getElementById('signin-password').classList.add('error');
+        isValid = false;
+      }
+      
+      if (!isValid) return;
+      
+      // Simulate loading
+      btn.classList.add('loading');
+      btn.innerHTML = '<span>Signing in...</span>';
+      
+      // Check if user exists in localStorage (simulated database)
+      setTimeout(() => {
+        const users = JSON.parse(localStorage.getItem('lifemax_users') || '{}');
+        
+        if (users[email] && users[email].password === password) {
+          // Success
+          currentUser = {
+            email: email,
+            name: users[email].name,
+            plan: users[email].plan || 'free',
+            createdAt: users[email].createdAt
+          };
+          localStorage.setItem('lifemax_user', JSON.stringify(currentUser));
+          
+          successMsg.classList.add('show');
+          btn.innerHTML = '<span>✓ Signed In!</span>';
+          
+          setTimeout(() => {
+            updateAuthUI();
+            showPage('home');
+            successMsg.classList.remove('show');
+            btn.classList.remove('loading');
+            btn.innerHTML = '<span>Sign In</span><span>→</span>';
+            // Reset form
+            document.getElementById('signin-form').reset();
+          }, 1500);
+        } else {
+          // Error
+          btn.classList.remove('loading');
+          btn.innerHTML = '<span>Sign In</span><span>→</span>';
+          passwordError.textContent = '⚠️ Invalid email or password';
+          document.getElementById('signin-password').classList.add('error');
+        }
+      }, 1000);
+    }
+    
+    // Handle sign up
+    function handleSignUp(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+      
+      const nameError = document.getElementById('signup-name-error');
+      const emailError = document.getElementById('signup-email-error');
+      const passwordError = document.getElementById('signup-password-error');
+      const confirmError = document.getElementById('signup-confirm-error');
+      const successMsg = document.getElementById('signup-success');
+      const btn = document.getElementById('signup-btn');
+      
+      // Clear previous errors
+      nameError.textContent = '';
+      emailError.textContent = '';
+      passwordError.textContent = '';
+      confirmError.textContent = '';
+      document.querySelectorAll('#signup-form .form-input').forEach(el => el.classList.remove('error'));
+      
+      // Validate
+      let isValid = true;
+      
+      if (!name || name.length < 2) {
+        nameError.textContent = '⚠️ Please enter your name';
+        document.getElementById('signup-name').classList.add('error');
+        isValid = false;
+      }
+      
+      if (!email || !isValidEmail(email)) {
+        emailError.textContent = '⚠️ Please enter a valid email address';
+        document.getElementById('signup-email').classList.add('error');
+        isValid = false;
+      }
+      
+      if (!password || password.length < 8) {
+        passwordError.textContent = '⚠️ Password must be at least 8 characters';
+        document.getElementById('signup-password').classList.add('error');
+        isValid = false;
+      }
+      
+      if (password !== confirmPassword) {
+        confirmError.textContent = '⚠️ Passwords do not match';
+        document.getElementById('signup-confirm-password').classList.add('error');
+        isValid = false;
+      }
+      
+      if (!isValid) return;
+      
+      // Simulate loading
+      btn.classList.add('loading');
+      btn.innerHTML = '<span>Creating account...</span>';
+      
+      setTimeout(() => {
+        // Check if user already exists
+        const users = JSON.parse(localStorage.getItem('lifemax_users') || '{}');
+        
+        if (users[email]) {
+          btn.classList.remove('loading');
+          btn.innerHTML = '<span>Create Account</span><span>→</span>';
+          emailError.textContent = '⚠️ An account with this email already exists';
+          document.getElementById('signup-email').classList.add('error');
+          return;
+        }
+        
+        // Create new user
+        users[email] = {
+          name: name,
+          password: password,
+          plan: 'free',
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem('lifemax_users', JSON.stringify(users));
+        
+        // Auto sign in
+        currentUser = {
+          email: email,
+          name: name,
+          plan: 'free',
+          createdAt: users[email].createdAt
+        };
+        localStorage.setItem('lifemax_user', JSON.stringify(currentUser));
+        
+        successMsg.classList.add('show');
+        btn.innerHTML = '<span>✓ Account Created!</span>';
+        
+        setTimeout(() => {
+          updateAuthUI();
+          showPage('home');
+          successMsg.classList.remove('show');
+          btn.classList.remove('loading');
+          btn.innerHTML = '<span>Create Account</span><span>→</span>';
+          // Reset form
+          document.getElementById('signup-form').reset();
+        }, 1500);
+      }, 1000);
+    }
+    
+    // Handle logout
+    function handleLogout() {
+      currentUser = null;
+      localStorage.removeItem('lifemax_user');
+      updateAuthUI();
+      showPage('home');
+    }
+    
+    // Social login (simulated)
+    function socialLogin(provider) {
+      alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login coming soon! Please use email/password for now.`);
+    }
+    
+    // ============================================
+    // SUBSCRIPTION FUNCTIONS
+    // ============================================
+    
+    // Toggle pricing period
+    function togglePricing() {
+      isYearlyPricing = !isYearlyPricing;
+      const toggle = document.getElementById('pricing-toggle');
+      const monthlyLabel = document.getElementById('monthly-label');
+      const yearlyLabel = document.getElementById('yearly-label');
+      const premiumPrice = document.getElementById('premium-price');
+      const premiumPeriod = document.getElementById('premium-period');
+      const premiumOriginal = document.getElementById('premium-original');
+      
+      if (isYearlyPricing) {
+        toggle.classList.add('active');
+        monthlyLabel.classList.remove('active');
+        yearlyLabel.classList.add('active');
+        premiumPrice.textContent = '7';
+        premiumPeriod.textContent = '/month (billed yearly)';
+        premiumOriginal.style.display = 'block';
+      } else {
+        toggle.classList.remove('active');
+        monthlyLabel.classList.add('active');
+        yearlyLabel.classList.remove('active');
+        premiumPrice.textContent = '12';
+        premiumPeriod.textContent = '/month';
+        premiumOriginal.style.display = 'none';
+      }
+    }
+    
+    // Select plan
+    function selectPlan(plan) {
+      if (!currentUser) {
+        // Redirect to sign up
+        showPage('signup');
+        return;
+      }
+      
+      if (plan === 'premium' && currentUser.plan !== 'premium') {
+        // Simulate upgrade
+        if (confirm('Upgrade to Premium for ' + (isYearlyPricing ? '$84/year' : '$12/month') + '?\n\nThis is a demo - no actual payment will be processed.')) {
+          currentUser.plan = 'premium';
+          localStorage.setItem('lifemax_user', JSON.stringify(currentUser));
+          
+          // Update in users database too
+          const users = JSON.parse(localStorage.getItem('lifemax_users') || '{}');
+          if (users[currentUser.email]) {
+            users[currentUser.email].plan = 'premium';
+            localStorage.setItem('lifemax_users', JSON.stringify(users));
+          }
+          
+          updateAuthUI();
+          alert('🎉 Welcome to Premium! You now have unlimited access to all features.');
+        }
+      } else if (plan === 'free' && currentUser.plan === 'premium') {
+        // Simulate downgrade
+        if (confirm('Are you sure you want to downgrade to the Free plan? You will lose access to premium features.')) {
+          currentUser.plan = 'free';
+          localStorage.setItem('lifemax_user', JSON.stringify(currentUser));
+          
+          // Update in users database too
+          const users = JSON.parse(localStorage.getItem('lifemax_users') || '{}');
+          if (users[currentUser.email]) {
+            users[currentUser.email].plan = 'free';
+            localStorage.setItem('lifemax_users', JSON.stringify(users));
+          }
+          
+          updateAuthUI();
+          alert('Your plan has been changed to Free. Premium features will be disabled.');
+        }
+      }
+    }
+    
+    // Toggle FAQ item
+    function toggleFaq(element) {
+      element.classList.toggle('open');
+    }
+    
+    // Password strength indicator for signup
+    document.addEventListener('DOMContentLoaded', function() {
+      const passwordInput = document.getElementById('signup-password');
+      const strengthFill = document.getElementById('password-strength-fill');
+      const strengthText = document.getElementById('password-strength-text');
+      
+      if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+          const strength = checkPasswordStrength(this.value);
+          const colors = ['#EF4444', '#F59E0B', '#FBBF24', '#10B981', '#8B5CF6'];
+          const texts = ['Very weak', 'Weak', 'Fair', 'Good', 'Strong'];
+          const widths = ['20%', '40%', '60%', '80%', '100%'];
+          
+          if (strengthFill) {
+            strengthFill.style.width = widths[strength] || '0%';
+            strengthFill.style.background = colors[strength] || '#EF4444';
+          }
+          if (strengthText) {
+            strengthText.textContent = this.value.length === 0 ? 'Min 8 characters' : texts[strength] || 'Very weak';
+            strengthText.style.color = colors[strength] || 'var(--text-muted)';
+          }
+        });
+      }
+      
+      // Initialize auth state
+      initAuthState();
+    });
 
     // Scroll to top on page load
     window.onload = function() {
