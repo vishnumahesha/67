@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Scoring weights, reference ranges, and potential delta caps for face analyzer",
+    "calibration_target": {
+      "mean": 5.5,
+      "std": 1.2,
+      "note": "Scores should follow normal distribution. 68% of people score 4.3-6.7"
+    }
+  },
+
+  "pillar_weights": {
+    "neutral": {
+      "structure": 0.35,
+      "features": 0.30,
+      "skin_presentation": 0.20,
+      "harmony": 0.15
+    },
+    "masculine_leaning": {
+      "structure": 0.40,
+      "features": 0.28,
+      "skin_presentation": 0.17,
+      "harmony": 0.15
+    },
+    "feminine_leaning": {
+      "structure": 0.30,
+      "features": 0.33,
+      "skin_presentation": 0.22,
+      "harmony": 0.15
+    }
+  },
+
+  "pillar_trait_mapping": {
+    "structure": [
+      "face_shape_class", "face_width_to_height", "face_tapering",
+      "jaw_width", "jaw_definition", "jaw_angle", "chin_shape", "chin_projection",
+      "cheekbone_prominence", "cheekbone_width", "midface_ratio"
+    ],
+    "features": [
+      "eye_shape", "eye_size", "eye_spacing", "canthal_tilt", "eye_symmetry",
+      "brow_shape", "brow_thickness", "brow_position", "brow_grooming",
+      "nose_length", "nose_width", "nose_bridge", "nose_tip", "nose_symmetry",
+      "lip_fullness", "lip_ratio", "lip_definition", "mouth_width", "philtrum_length"
+    ],
+    "skin_presentation": [
+      "skin_texture", "skin_tone_evenness", "skin_clarity", "skin_hydration",
+      "under_eye_darkness", "under_eye_puffiness",
+      "hair_health", "hair_density", "hair_style_fit", "hair_framing",
+      "brow_grooming", "facial_hair_grooming"
+    ],
+    "harmony": [
+      "overall_harmony", "vertical_symmetry", "horizontal_thirds",
+      "golden_ratio_adherence", "proportion_harmony"
+    ]
+  },
+
+  "reference_ranges": {
+    "ratios": {
+      "eye_spacing_ratio": { "ideal_min": 0.28, "ideal_max": 0.35, "population_mean": 0.31, "population_std": 0.04 },
+      "nose_width_ratio": { "ideal_min": 0.22, "ideal_max": 0.30, "population_mean": 0.26, "population_std": 0.03 },
+      "mouth_width_ratio": { "ideal_min": 0.38, "ideal_max": 0.50, "population_mean": 0.44, "population_std": 0.05 },
+      "face_width_to_height": { "ideal_min": 0.62, "ideal_max": 0.72, "population_mean": 0.67, "population_std": 0.05 },
+      "jaw_to_cheek_ratio": { "ideal_min": 0.75, "ideal_max": 0.90, "population_mean": 0.82, "population_std": 0.06 },
+      "philtrum_ratio": { "ideal_min": 0.28, "ideal_max": 0.38, "population_mean": 0.33, "population_std": 0.04 },
+      "midface_ratio": { "ideal_min": 0.30, "ideal_max": 0.36, "population_mean": 0.33, "population_std": 0.03 },
+      "upper_to_lower_lip": { "ideal_min": 0.40, "ideal_max": 0.60, "population_mean": 0.50, "population_std": 0.08 }
+    },
+    "angles": {
+      "canthal_tilt": { "ideal_min": 2, "ideal_max": 8, "population_mean": 4, "population_std": 3, "unit": "degrees" },
+      "jaw_angle": { "ideal_min": 110, "ideal_max": 130, "population_mean": 120, "population_std": 8, "unit": "degrees" },
+      "nasolabial_angle": { "ideal_min": 90, "ideal_max": 115, "population_mean": 102, "population_std": 10, "unit": "degrees" },
+      "cervicomental_angle": { "ideal_min": 105, "ideal_max": 120, "population_mean": 112, "population_std": 8, "unit": "degrees" }
+    }
+  },
+
+  "potential_deltas": {
+    "description": "Maximum realistic improvement deltas by lever. Output as range (min to max).",
+    "levers": {
+      "skin_routine": {
+        "min_delta": 0.2,
+        "max_delta": 1.0,
+        "timeline": "8_12_weeks",
+        "confidence_multiplier": 0.8,
+        "applies_to_traits": ["skin_texture", "skin_tone_evenness", "skin_clarity", "skin_hydration", "skin_glow"],
+        "actions": ["basic_skincare_am", "basic_skincare_pm", "spf_daily", "hydration"]
+      },
+      "under_eye_care": {
+        "min_delta": 0.1,
+        "max_delta": 0.6,
+        "timeline": "2_4_weeks",
+        "confidence_multiplier": 0.7,
+        "applies_to_traits": ["under_eye_darkness", "under_eye_puffiness", "under_eye_area"],
+        "actions": ["sleep_consistency", "eye_cream", "reduce_sodium", "cold_compress"]
+      },
+      "brow_grooming": {
+        "min_delta": 0.1,
+        "max_delta": 0.5,
+        "timeline": "today",
+        "confidence_multiplier": 0.9,
+        "applies_to_traits": ["brow_shape", "brow_grooming", "brow_symmetry"],
+        "actions": ["brow_cleanup", "brow_shaping", "brow_fill"]
+      },
+      "hair_styling": {
+        "min_delta": 0.2,
+        "max_delta": 0.8,
+        "timeline": "today",
+        "confidence_multiplier": 0.85,
+        "applies_to_traits": ["hair_style_fit", "hair_framing", "hair_health"],
+        "actions": ["haircut_for_face_shape", "styling_products", "hair_care_routine"]
+      },
+      "facial_hair": {
+        "min_delta": 0.1,
+        "max_delta": 0.5,
+        "timeline": "2_4_weeks",
+        "confidence_multiplier": 0.8,
+        "applies_to_traits": ["facial_hair_grooming", "facial_hair_style", "jaw_definition"],
+        "actions": ["beard_shaping", "stubble_maintenance", "clean_shave"],
+        "condition": "has_facial_hair"
+      },
+      "posture_correction": {
+        "min_delta": 0.1,
+        "max_delta": 0.4,
+        "timeline": "2_4_weeks",
+        "confidence_multiplier": 0.7,
+        "applies_to_traits": ["jaw_definition", "submental_area", "neck_length", "posture_presentation"],
+        "actions": ["chin_tucks", "wall_angels", "ergonomic_setup"]
+      },
+      "photo_optimization": {
+        "min_delta": 0.1,
+        "max_delta": 0.3,
+        "timeline": "today",
+        "confidence_multiplier": 0.9,
+        "applies_to_traits": ["photo_angle_optimization", "lighting_quality", "camera_distance"],
+        "actions": ["natural_lighting", "back_camera", "eye_level", "step_back"]
+      },
+      "lip_care": {
+        "min_delta": 0.05,
+        "max_delta": 0.3,
+        "timeline": "2_4_weeks",
+        "confidence_multiplier": 0.7,
+        "applies_to_traits": ["lip_color", "lip_definition"],
+        "actions": ["lip_balm", "exfoliation", "hydration"]
+      },
+      "body_composition": {
+        "min_delta": 0.2,
+        "max_delta": 0.6,
+        "timeline": "8_12_weeks",
+        "confidence_multiplier": 0.6,
+        "applies_to_traits": ["jaw_definition", "cheek_fullness", "submental_area"],
+        "actions": ["caloric_deficit", "strength_training", "cardio"],
+        "note": "Only suggest if visible indicators; no assumptions"
+      }
+    }
+  },
+
+  "scoring_functions": {
+    "ratio_to_score": {
+      "description": "Convert a ratio measurement to 0-10 score based on distance from ideal range",
+      "algorithm": "If within ideal range: 7-10 based on center proximity. Outside: penalize by std deviations from ideal edge.",
+      "formula_pseudo": "within_ideal ? 7 + 3*(1 - dist_to_center/range_half) : 7 - 2*stds_from_edge"
+    },
+    "confidence_damping": {
+      "description": "Reduce extreme scores when confidence is low",
+      "formula_pseudo": "damped_score = mean + (raw_score - mean) * confidence_factor",
+      "confidence_factors": { "high": 1.0, "medium": 0.75, "low": 0.5 }
+    },
+    "photo_quality_damping": {
+      "description": "Further reduce extremes when photo quality is poor",
+      "formula_pseudo": "if quality < 0.6: score = lerp(5.5, score, quality / 0.6)"
+    },
+    "overall_score_calc": {
+      "description": "Weighted average of pillar scores",
+      "formula_pseudo": "sum(pillar_score * pillar_weight) for all pillars",
+      "post_processing": "Apply calibration to ensure mean ~5.5, std ~1.2"
+    }
+  },
+
+  "photo_quality_weights": {
+    "brightness": 0.20,
+    "sharpness": 0.25,
+    "face_size": 0.15,
+    "head_tilt": 0.15,
+    "occlusion": 0.15,
+    "expression": 0.10
+  },
+
+  "photo_quality_thresholds": {
+    "block_below": 0.35,
+    "warn_below": 0.60,
+    "good_above": 0.75
+  },
+
+  "confidence_rules": {
+    "base_confidence": "medium",
+    "upgrade_to_high": [
+      "front_photo_quality > 0.75",
+      "side_photo_provided && side_quality > 0.6",
+      "neutral_expression",
+      "no_occlusions"
+    ],
+    "downgrade_to_low": [
+      "photo_quality < 0.5",
+      "significant_head_tilt",
+      "harsh_shadows",
+      "blurry_image",
+      "hair_covering_features"
+    ]
+  },
+
+  "feature_ui_mapping": {
+    "eyes": ["eye_shape", "eye_size", "eye_spacing", "canthal_tilt", "eye_symmetry", "under_eye_area"],
+    "brows": ["brow_shape", "brow_thickness", "brow_symmetry", "brow_position", "brow_grooming"],
+    "nose": ["nose_length", "nose_width", "nose_bridge", "nose_tip", "nose_symmetry", "nose_projection"],
+    "lips": ["lip_fullness", "lip_ratio", "lip_definition", "mouth_width", "lip_symmetry", "philtrum_length"],
+    "cheekbones": ["cheekbone_prominence", "cheekbone_width", "midface_ratio", "cheek_fullness"],
+    "jawline": ["jaw_width", "jaw_definition", "jaw_angle", "jaw_symmetry", "chin_shape", "chin_projection"],
+    "skin": ["skin_texture", "skin_tone_evenness", "skin_clarity", "under_eye_darkness"],
+    "hair": ["hair_style_fit", "hair_framing", "hair_health", "hair_density"],
+    "harmony": ["overall_harmony", "vertical_symmetry", "proportion_harmony", "golden_ratio_adherence"]
+  },
+
+  "action_library": {
+    "skincare": [
+      {
+        "key": "basic_skincare_am",
+        "title": "Morning Skincare Routine",
+        "type": "routine",
+        "difficulty": "easy",
+        "timeline": "2_4_weeks",
+        "cost": "low",
+        "steps": ["Gentle cleanser", "Moisturizer", "SPF 30+ daily"],
+        "expected_delta": 0.3
+      },
+      {
+        "key": "basic_skincare_pm",
+        "title": "Evening Skincare Routine",
+        "type": "routine",
+        "difficulty": "easy",
+        "timeline": "2_4_weeks",
+        "cost": "low",
+        "steps": ["Oil-based cleanser if wearing SPF", "Gentle cleanser", "Moisturizer"],
+        "expected_delta": 0.2
+      },
+      {
+        "key": "retinol_intro",
+        "title": "Introduce Retinol (Gradual)",
+        "type": "routine",
+        "difficulty": "medium",
+        "timeline": "8_12_weeks",
+        "cost": "medium",
+        "steps": ["Start 1x/week", "Increase to 2-3x/week over month", "Always use SPF next day"],
+        "expected_delta": 0.4,
+        "caution": "Start low concentration; patch test first"
+      }
+    ],
+    "grooming": [
+      {
+        "key": "brow_cleanup",
+        "title": "Brow Cleanup",
+        "type": "grooming",
+        "difficulty": "easy",
+        "timeline": "today",
+        "cost": "free",
+        "steps": ["Brush brows up", "Trim only longest strays", "Clean up stray hairs below arch", "Do NOT over-pluck"],
+        "expected_delta": 0.2
+      },
+      {
+        "key": "professional_brow_shape",
+        "title": "Professional Brow Shaping",
+        "type": "grooming",
+        "difficulty": "easy",
+        "timeline": "today",
+        "cost": "low",
+        "steps": ["Find experienced brow specialist", "Request natural enhancement", "Maintain shape at home"],
+        "expected_delta": 0.3
+      }
+    ],
+    "hair": [
+      {
+        "key": "haircut_consultation",
+        "title": "Face-Shape Haircut",
+        "type": "styling",
+        "difficulty": "easy",
+        "timeline": "today",
+        "cost": "medium",
+        "steps": ["Research styles for your face shape", "Bring reference photos", "Ask stylist opinion"],
+        "expected_delta": 0.4
+      }
+    ],
+    "posture": [
+      {
+        "key": "chin_tucks",
+        "title": "Chin Tuck Exercises",
+        "type": "exercise",
+        "difficulty": "easy",
+        "timeline": "2_4_weeks",
+        "cost": "free",
+        "steps": ["2 sets of 10 reps daily", "Hold 2-3 seconds each", "Keep movement small and controlled"],
+        "expected_delta": 0.15
+      }
+    ],
+    "lifestyle": [
+      {
+        "key": "sleep_optimization",
+        "title": "Sleep Consistency",
+        "type": "lifestyle",
+        "difficulty": "medium",
+        "timeline": "2_4_weeks",
+        "cost": "free",
+        "steps": ["Fixed wake time", "7-9 hours target", "No screens 1hr before bed", "Cool dark room"],
+        "expected_delta": 0.2
+      },
+      {
+        "key": "hydration",
+        "title": "Increase Hydration",
+        "type": "lifestyle",
+        "difficulty": "easy",
+        "timeline": "2_4_weeks",
+        "cost": "free",
+        "steps": ["8 glasses water daily", "Reduce caffeine", "Limit alcohol"],
+        "expected_delta": 0.1
+      }
+    ],
+    "photo": [
+      {
+        "key": "better_photos",
+        "title": "Optimize Photo Taking",
+        "type": "immediate",
+        "difficulty": "easy",
+        "timeline": "today",
+        "cost": "free",
+        "steps": ["Face natural window light", "Use back camera", "Hold at eye level", "Step back 3-4 feet"],
+        "expected_delta": 0.2
+      }
+    ]
+  },
+
+  "style_recommendations": {
+    "by_face_shape": {
+      "oval": {
+        "haircuts": ["Most styles work", "Avoid covering forehead completely", "Can experiment freely"],
+        "glasses": ["Most frame shapes work", "Avoid overly large frames"],
+        "facial_hair": ["Most styles work", "Match to personal style"]
+      },
+      "round": {
+        "haircuts": ["Add height on top", "Avoid full sides", "Angular styles work well"],
+        "glasses": ["Angular/rectangular frames", "Avoid round frames"],
+        "facial_hair": ["Defined jawline beard", "Avoid rounded beard shapes"]
+      },
+      "square": {
+        "haircuts": ["Softer styles", "Side-swept looks", "Avoid boxy cuts"],
+        "glasses": ["Round or oval frames", "Thin frames work well"],
+        "facial_hair": ["Rounded beard styles", "Soften jaw angles"]
+      },
+      "heart": {
+        "haircuts": ["Width at jaw level", "Side-swept bangs", "Avoid excessive top volume"],
+        "glasses": ["Bottom-heavy frames", "Light colored frames"],
+        "facial_hair": ["Fuller at chin", "Light stubble at temples"]
+      },
+      "oblong": {
+        "haircuts": ["Add width at sides", "Bangs can shorten face", "Avoid excessive length"],
+        "glasses": ["Wide frames", "Decorative temples"],
+        "facial_hair": ["Fuller sides", "Avoid long goatees"]
+      },
+      "diamond": {
+        "haircuts": ["Width at forehead/chin", "Side-swept styles", "Fringe options"],
+        "glasses": ["Cat-eye or oval", "Rimless work well"],
+        "facial_hair": ["Width at chin", "Defined lines"]
+      }
+    }
+  }
+}
