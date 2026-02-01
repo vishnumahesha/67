@@ -25,6 +25,9 @@ import {
   ScoringInput,
   RatioMeasurement,
   SymmetryScore,
+  AppearanceProfile,
+  HarmonyIndex,
+  PotentialRange,
 } from './types';
 import {
   computePhotoQuality,
@@ -350,13 +353,27 @@ export async function analyzeFace(input: AnalysisInput): Promise<FaceAnalysisRes
   // Step 2: Generate measurements (in production, would use actual landmark detection)
   const measurements = generateMockMeasurements();
 
-  // Step 3: Run scoring pipeline
+  // Step 3: Mock appearance profile (in production, this comes from Gemini inference)
+  // This is a fallback for local/offline mode
+  const mockAppearanceProfile: AppearanceProfile = {
+    presentation: 'ambiguous',
+    confidence: 0.5,
+    ageRange: { min: 20, max: 35 },
+    ageConfidence: 0.6,
+    dimorphismScore10: 5,
+    masculinityFemininity: { masculinity: 50, femininity: 50 },
+    faceShape: { label: 'oval', confidence: 0.7 },
+    photoLimitation: 'Mock data - actual inference happens server-side',
+  };
+
+  // Step 4: Run scoring pipeline with appearance profile
   const scoringInput: ScoringInput = {
     measurements,
     photoQuality,
     sideProvided: !!sideImage,
     sexMode,
     stylePreference,
+    appearanceProfile: mockAppearanceProfile,
   };
 
   const scoringOutput = runScoringPipeline(scoringInput);
@@ -390,7 +407,15 @@ export async function analyzeFace(input: AnalysisInput): Promise<FaceAnalysisRes
     ],
   };
 
-  // Step 9: Assemble final response
+  // Step 9: Build potential range
+  const potentialRange: PotentialRange = {
+    min: scoringOutput.overallPotential.min,
+    max: scoringOutput.overallPotential.max,
+    confidence: photoQuality.score > 0.7 ? 'medium' : 'low',
+    note: scoringOutput.overallPotential.assumptions.join('; '),
+  };
+
+  // Step 10: Assemble final response
   const response: FaceAnalysisResponse = {
     analysisId: generateId(),
     timestamp: new Date().toISOString(),
@@ -399,7 +424,10 @@ export async function analyzeFace(input: AnalysisInput): Promise<FaceAnalysisRes
     overall,
     pillarScores: scoringOutput.pillarScores,
     topLevers: scoringOutput.topLevers,
+    potentialRange,
     faceShape,
+    appearanceProfile: mockAppearanceProfile,
+    harmonyIndex: scoringOutput.harmonyIndex,
     measurements,
     features,
     styleTips,

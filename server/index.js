@@ -54,6 +54,10 @@ Return this exact JSON structure:
       "masculinity": 0-100,
       "femininity": 0-100
     },
+    "faceShape": {
+      "label": "oval" | "round" | "square" | "diamond" | "heart" | "oblong",
+      "confidence": 0.0-1.0
+    },
     "photoLimitation": "string if angle/lighting affects estimate" or null
   }
 }
@@ -64,7 +68,13 @@ RULES:
 3. If age is very uncertain, set ageRange to null
 4. masculinity + femininity don't need to sum to 100 - both can be present
 5. dimorphismScore10: 10 = strongly pronounced features, 5 = neutral, 1 = opposite to presentation
-6. Be honest about confidence - photo angle/lighting often makes this uncertain`;
+6. Face shape should be determined by jaw width, face length, and cheekbone prominence
+7. Be honest about confidence - photo angle/lighting often makes this uncertain
+
+PRIVACY/SAFETY:
+- If subject appears to be under 18 (ageRange.max < 18), set dimorphismScore10 to null
+- If subject appears to be under 18, set masculinityFemininity to null
+- Only provide faceShape and general harmony notes for minors`;
 
 // THE HONESTY PATCH - enforces realistic, calibrated scoring
 const SYSTEM_PROMPT = `You are a facial aesthetics analyzer. You must be HONEST and SPECIFIC without being harsh.
@@ -368,6 +378,7 @@ Rules:
         ageConfidence: null,
         dimorphismScore10: 5,
         masculinityFemininity: { masculinity: 50, femininity: 50 },
+        faceShape: { label: 'oval', confidence: 0.3 },
         photoLimitation: 'Could not reliably infer from photo'
       };
     }

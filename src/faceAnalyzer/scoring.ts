@@ -24,6 +24,10 @@ import type {
   ScoringOutput,
   OverallScore,
   Fix,
+  AppearanceProfile,
+  HarmonyIndex,
+  HarmonyComponent,
+  RatioSignal,
 } from './types';
 
 // ============ CONSTANTS ============
@@ -198,14 +202,213 @@ function valueToZscore(value: number, refMean: number, refStd: number): number {
   return (value - refMean) / refStd;
 }
 
+// ============ APPEARANCE-BASED WEIGHT SELECTION ============
+
+const APPEARANCE_CONFIDENCE_THRESHOLD = 0.65;
+
+/**
+ * Determine style preference from appearance profile (confidence-gated)
+ * Falls back to 'neutral' if confidence is too low
+ */
+export function getStylePreferenceFromAppearance(
+  appearanceProfile?: AppearanceProfile,
+  manualOverride?: SexMode
+): StylePreference {
+  // Manual override takes precedence
+  if (manualOverride && manualOverride !== 'auto') {
+    return manualOverride === 'male' ? 'masculine_leaning' : 'feminine_leaning';
+  }
+
+  // No appearance profile = neutral
+  if (!appearanceProfile) {
+    return 'neutral';
+  }
+
+  // Low confidence = neutral (don't influence scoring)
+  if (appearanceProfile.confidence < APPEARANCE_CONFIDENCE_THRESHOLD) {
+    return 'neutral';
+  }
+
+  // High confidence = use inferred presentation
+  switch (appearanceProfile.presentation) {
+    case 'male-presenting':
+      return 'masculine_leaning';
+    case 'female-presenting':
+      return 'feminine_leaning';
+    default:
+      return 'neutral';
+  }
+}
+
+// ============ HARMONY INDEX COMPUTATION ============
+
+const GOLDEN_RATIO = 1.618;
+const IDEAL_FACIAL_THIRDS = [0.33, 0.33, 0.34]; // Upper, middle, lower
+const IDEAL_HORIZONTAL_FIFTHS = 0.20; // Each fifth should be ~20%
+
+/**
+ * Compute harmony index based on golden ratio and facial proportions
+ */
+export function computeHarmonyIndex(
+  measurements: Measurements,
+  photoQuality: PhotoQuality
+): HarmonyIndex {
+  const components: HarmonyIndex['components'] = {};
+  const ratioSignals: RatioSignal[] = [];
+  let totalScore = 0;
+  let componentCount = 0;
+
+  // 1. Facial Symmetry
+  const symmetry = measurements.symmetry;
+  const symmetryScore = symmetry.overall * 10;
+  const symmetryDeviation = (1 - symmetry.overall) * 100;
+  components.facialSymmetry = {
+    score10: parseFloat(symmetryScore.toFixed(1)),
+    deviationPct: parseFloat(symmetryDeviation.toFixed(1)),
+    note: symmetryScore >= 7 ? 'Good bilateral symmetry' : 
+          symmetryScore >= 5 ? 'Normal asymmetry levels' : 
+          'Some asymmetry detected (may be photo angle)',
+  };
+  totalScore += symmetryScore;
+  componentCount++;
+
+  // 2. Eye Spacing Ratio (relative to face width)
+  const eyeSpacing = measurements.ratios.find(r => r.key === 'eye_spacing_ratio');
+  if (eyeSpacing) {
+    const eyeIdealMin = 0.28;
+    const eyeIdealMax = 0.35;
+    const eyeStatus = eyeSpacing.value >= eyeIdealMin && eyeSpacing.value <= eyeIdealMax ? 'good' :
+                      Math.abs(eyeSpacing.value - 0.315) < 0.05 ? 'ok' : 'off';
+    const eyeScore = eyeStatus === 'good' ? 7.5 : eyeStatus === 'ok' ? 5.5 : 4.0;
+    
+    ratioSignals.push({
+      key: 'eye_spacing',
+      label: 'Eye Spacing',
+      value: parseFloat(eyeSpacing.value.toFixed(3)),
+      band: [eyeIdealMin, eyeIdealMax],
+      status: eyeStatus,
+      confidence: eyeSpacing.confidence,
+    });
+    
+    totalScore += eyeScore;
+    componentCount++;
+  }
+
+  // 3. Nose Width Ratio
+  const noseWidth = measurements.ratios.find(r => r.key === 'nose_width_ratio');
+  if (noseWidth) {
+    const noseIdealMin = 0.22;
+    const noseIdealMax = 0.30;
+    const noseStatus = noseWidth.value >= noseIdealMin && noseWidth.value <= noseIdealMax ? 'good' :
+                       Math.abs(noseWidth.value - 0.26) < 0.04 ? 'ok' : 'off';
+    const noseScore = noseStatus === 'good' ? 7.0 : noseStatus === 'ok' ? 5.5 : 4.0;
+    
+    ratioSignals.push({
+      key: 'nose_width',
+      label: 'Nose Width',
+      value: parseFloat(noseWidth.value.toFixed(3)),
+      band: [noseIdealMin, noseIdealMax],
+      status: noseStatus,
+      confidence: noseWidth.confidence,
+    });
+    
+    totalScore += noseScore;
+    componentCount++;
+  }
+
+  // 4. Mouth Width Ratio
+  const mouthWidth = measurements.ratios.find(r => r.key === 'mouth_width_ratio');
+  if (mouthWidth) {
+    const mouthIdealMin = 0.38;
+    const mouthIdealMax = 0.50;
+    const mouthStatus = mouthWidth.value >= mouthIdealMin && mouthWidth.value <= mouthIdealMax ? 'good' :
+                        Math.abs(mouthWidth.value - 0.44) < 0.06 ? 'ok' : 'off';
+    const mouthScore = mouthStatus === 'good' ? 7.0 : mouthStatus === 'ok' ? 5.5 : 4.0;
+    
+    ratioSignals.push({
+      key: 'mouth_width',
+      label: 'Mouth Width',
+      value: parseFloat(mouthWidth.value.toFixed(3)),
+      band: [mouthIdealMin, mouthIdealMax],
+      status: mouthStatus,
+      confidence: mouthWidth.confidence,
+    });
+    
+    totalScore += mouthScore;
+    componentCount++;
+  }
+
+  // 5. Jaw to Face Width (lower face proportion)
+  const jawRatio = measurements.ratios.find(r => r.key === 'jaw_to_face_width_ratio' || r.key === 'jaw_to_cheek_ratio');
+  if (jawRatio) {
+    const jawIdealMin = 0.75;
+    const jawIdealMax = 0.90;
+    const jawStatus = jawRatio.value >= jawIdealMin && jawRatio.value <= jawIdealMax ? 'good' :
+                      Math.abs(jawRatio.value - 0.82) < 0.08 ? 'ok' : 'off';
+    const jawScore = jawStatus === 'good' ? 7.0 : jawStatus === 'ok' ? 5.5 : 4.0;
+    
+    ratioSignals.push({
+      key: 'jaw_ratio',
+      label: 'Jaw Proportion',
+      value: parseFloat(jawRatio.value.toFixed(3)),
+      band: [jawIdealMin, jawIdealMax],
+      status: jawStatus,
+      confidence: jawRatio.confidence,
+    });
+    
+    totalScore += jawScore;
+    componentCount++;
+  }
+
+  // 6. Face Width to Height (golden ratio proximity)
+  const faceRatio = measurements.ratios.find(r => r.key === 'face_width_to_height');
+  if (faceRatio) {
+    // Ideal face ratio is often cited as ~1.618 (golden ratio) or ~0.62-0.72
+    const idealRatio = 1 / GOLDEN_RATIO; // ~0.618
+    const deviation = Math.abs(faceRatio.value - idealRatio);
+    const goldenScore = deviation < 0.05 ? 8.0 : deviation < 0.10 ? 6.5 : deviation < 0.15 ? 5.0 : 4.0;
+    
+    components.goldenRatioProximity = {
+      score10: parseFloat(goldenScore.toFixed(1)),
+      deviationPct: parseFloat((deviation * 100).toFixed(1)),
+      note: goldenScore >= 7 ? 'Close to golden ratio proportions' :
+            goldenScore >= 5 ? 'Within normal proportional range' :
+            'Proportions deviate from classical ideals',
+    };
+    
+    totalScore += goldenScore;
+    componentCount++;
+  }
+
+  // Calculate overall harmony score
+  const rawHarmonyScore = componentCount > 0 ? totalScore / componentCount : 5.5;
+  
+  // Apply photo quality dampening
+  const dampedScore = calibrateScore(rawHarmonyScore, photoQuality.score);
+  
+  // Determine overall confidence
+  const lowConfidenceCount = ratioSignals.filter(r => r.confidence === 'low').length;
+  const overallConfidence: ConfidenceLevel = 
+    photoQuality.score < 0.5 || lowConfidenceCount > 2 ? 'low' :
+    photoQuality.score < 0.7 || lowConfidenceCount > 0 ? 'medium' : 'high';
+
+  return {
+    score10: parseFloat(dampedScore.toFixed(1)),
+    confidence: overallConfidence,
+    components,
+    ratioSignals: ratioSignals.slice(0, 5), // Max 5 signals
+  };
+}
+
 // ============ SCORING METRICS TO TRAITS ============
 
 interface ScoreMetricsInput {
   measurements: Measurements;
   photoQuality: PhotoQuality;
   sideProvided: boolean;
-  sexMode: SexMode;
+  sexMode?: SexMode;
   stylePreference: StylePreference;
+  appearanceProfile?: AppearanceProfile;
 }
 
 interface TraitScoringResult {
@@ -226,15 +429,25 @@ const REFERENCE_RANGES: Record<string, { male: { mean: number; std: number }; fe
 };
 
 export function scoreMetricsToTraits(input: ScoreMetricsInput): TraitScoringResult[] {
-  const { measurements, photoQuality, sideProvided, sexMode } = input;
+  const { measurements, photoQuality, sideProvided, sexMode, appearanceProfile } = input;
   const results: TraitScoringResult[] = [];
+
+  // Determine effective sex mode for reference ranges
+  // Use appearance profile if available and confident, otherwise fallback
+  let effectiveSexMode: 'male' | 'female' = 'male'; // default
+  
+  if (sexMode && sexMode !== 'auto') {
+    effectiveSexMode = sexMode;
+  } else if (appearanceProfile && appearanceProfile.confidence >= APPEARANCE_CONFIDENCE_THRESHOLD) {
+    effectiveSexMode = appearanceProfile.presentation === 'female-presenting' ? 'female' : 'male';
+  }
 
   // Score each ratio measurement
   for (const ratio of measurements.ratios) {
     const ref = REFERENCE_RANGES[ratio.key];
     if (!ref) continue;
 
-    const refData = ref[sexMode];
+    const refData = ref[effectiveSexMode];
     const z = valueToZscore(ratio.value, refData.mean, refData.std);
 
     // Invert z for metrics where lower is better (deviation metrics)
@@ -539,7 +752,7 @@ interface TopLeversInput {
   traitScores: TraitScoringResult[];
   photoQuality: PhotoQuality;
   sideProvided: boolean;
-  sexMode: SexMode;
+  sexMode: 'male' | 'female';
 }
 
 // Map low-scoring traits to relevant levers
@@ -838,8 +1051,15 @@ function lerp(a: number, b: number, t: number): number {
 
 // ============ MAIN SCORING PIPELINE ============
 
-export function runScoringPipeline(input: ScoringInput): ScoringOutput {
-  const { measurements, photoQuality, sideProvided, sexMode, stylePreference } = input;
+export interface ScoringOutputExtended extends ScoringOutput {
+  harmonyIndex?: HarmonyIndex;
+}
+
+export function runScoringPipeline(input: ScoringInput): ScoringOutputExtended {
+  const { measurements, photoQuality, sideProvided, sexMode, stylePreference, appearanceProfile } = input;
+
+  // Determine effective style preference from appearance (confidence-gated)
+  const effectiveStylePreference = getStylePreferenceFromAppearance(appearanceProfile, sexMode);
 
   // Step 1: Score metrics to traits
   const traitScores = scoreMetricsToTraits({
@@ -847,7 +1067,8 @@ export function runScoringPipeline(input: ScoringInput): ScoringOutput {
     photoQuality,
     sideProvided,
     sexMode,
-    stylePreference,
+    stylePreference: effectiveStylePreference,
+    appearanceProfile,
   });
 
   // Step 2: Compute overall score
@@ -855,15 +1076,19 @@ export function runScoringPipeline(input: ScoringInput): ScoringOutput {
     traitScores,
     photoQuality,
     sideProvided,
-    stylePreference,
+    stylePreference: effectiveStylePreference,
   });
 
-  // Step 3: Select top levers
+  // Step 3: Select top levers (use 'male' as default if no sexMode)
+  const effectiveSexMode: 'male' | 'female' = 
+    sexMode && sexMode !== 'auto' ? sexMode :
+    appearanceProfile?.presentation === 'female-presenting' ? 'female' : 'male';
+    
   const topLevers = selectTopLevers({
     traitScores,
     photoQuality,
     sideProvided,
-    sexMode,
+    sexMode: effectiveSexMode,
   });
 
   // Step 4: Compute potential range
@@ -873,6 +1098,9 @@ export function runScoringPipeline(input: ScoringInput): ScoringOutput {
     selectedLevers: selectedLeverKeys,
     photoQuality,
   });
+
+  // Step 5: Compute harmony index
+  const harmonyIndex = computeHarmonyIndex(measurements, photoQuality);
 
   // Convert trait scores to TraitScore format
   const formattedTraitScores: TraitScore[] = traitScores.map((t) => ({
@@ -890,6 +1118,7 @@ export function runScoringPipeline(input: ScoringInput): ScoringOutput {
     overallPotential: potentialRange,
     topLevers,
     calibrationApplied: photoQuality.score < QUALITY_LIGHT_DAMPEN_BELOW,
+    harmonyIndex,
   };
 }
 
@@ -902,4 +1131,6 @@ export default {
   selectTopLevers,
   computeFeatureScores,
   runScoringPipeline,
+  computeHarmonyIndex,
+  getStylePreferenceFromAppearance,
 };

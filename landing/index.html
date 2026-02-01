@@ -4815,14 +4815,22 @@
       }
     });
 
-    // Gender selection
-    genderBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        genderBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedGender = btn.dataset.gender;
+    // Hide appearance estimates toggle
+    if (hideAppearanceToggle) {
+      hideAppearanceToggle.addEventListener('change', (e) => {
+        hideAppearanceEstimates = e.target.checked;
+        const content = document.getElementById('appearance-profile-content');
+        if (content) {
+          content.style.display = hideAppearanceEstimates ? 'none' : 'block';
+        }
+        localStorage.setItem('hideAppearanceEstimates', hideAppearanceEstimates);
       });
-    });
+      const savedPref = localStorage.getItem('hideAppearanceEstimates');
+      if (savedPref === 'true') {
+        hideAppearanceToggle.checked = true;
+        hideAppearanceEstimates = true;
+      }
+    }
 
     // Analyze
     analyzeBtn.addEventListener('click', async () => {

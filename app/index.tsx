@@ -90,6 +90,10 @@ export default function FaceAnalyzerHome() {
     { icon: '⚖️', title: 'Facial Harmony', desc: 'Analysis of proportions and symmetry' },
   ];
 
+  const handleCalorieTracker = () => {
+    router.push('/calorie-tracker');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -174,6 +178,40 @@ export default function FaceAnalyzerHome() {
               </View>
             </View>
           </View>
+        </View>
+
+        {/* Calorie Tracker Feature */}
+        <View style={styles.calorieTrackerSection}>
+          <View style={styles.calorieTrackerHeader}>
+            <Text style={styles.calorieTrackerEmoji}>🍽️</Text>
+            <View>
+              <Text style={styles.calorieTrackerTitle}>Calorie Tracker</Text>
+              <Text style={styles.calorieTrackerSubtitle}>AI-Powered Nutrition</Text>
+            </View>
+          </View>
+          <Text style={styles.calorieTrackerDesc}>
+            Snap a photo of your food and get instant calorie and macro estimates with AI
+          </Text>
+          <View style={styles.calorieTrackerFeatures}>
+            <View style={styles.ctFeature}>
+              <Text style={styles.ctFeatureIcon}>📸</Text>
+              <Text style={styles.ctFeatureText}>Photo Scan</Text>
+            </View>
+            <View style={styles.ctFeature}>
+              <Text style={styles.ctFeatureIcon}>📊</Text>
+              <Text style={styles.ctFeatureText}>Track Macros</Text>
+            </View>
+            <View style={styles.ctFeature}>
+              <Text style={styles.ctFeatureIcon}>🎯</Text>
+              <Text style={styles.ctFeatureText}>Daily Goals</Text>
+            </View>
+          </View>
+          <Button
+            title="Open Calorie Tracker"
+            onPress={handleCalorieTracker}
+            variant="secondary"
+            fullWidth
+          />
         </View>
 
         {/* Disclaimer */}
@@ -358,6 +396,57 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceLight,
     marginLeft: 15,
     marginVertical: spacing.xs,
+  },
+  calorieTrackerSection: {
+    marginTop: spacing.xl,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.md,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.borderAccent,
+  },
+  calorieTrackerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    marginBottom: spacing.sm,
+  },
+  calorieTrackerEmoji: {
+    fontSize: 36,
+  },
+  calorieTrackerTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.text,
+  },
+  calorieTrackerSubtitle: {
+    fontSize: 13,
+    color: colors.primary,
+    fontWeight: '500',
+  },
+  calorieTrackerDesc: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 20,
+    marginBottom: spacing.md,
+  },
+  calorieTrackerFeatures: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  ctFeature: {
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+  ctFeatureIcon: {
+    fontSize: 24,
+  },
+  ctFeatureText: {
+    fontSize: 12,
+    color: colors.textMuted,
+    fontWeight: '500',
   },
   disclaimer: {
     flexDirection: 'row',

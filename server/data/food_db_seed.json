@@ -1,0 +1,1252 @@
+{
+  "foods": [
+    {
+      "id": "chicken_breast",
+      "name": "Chicken Breast",
+      "aliases": ["grilled chicken", "chicken", "chicken fillet"],
+      "category": "protein",
+      "per_100g": { "calories": 165, "protein_g": 31, "carbs_g": 0, "fat_g": 3.6, "fiber_g": 0, "sodium_mg": 74 },
+      "common_portions": [{ "name": "breast", "grams": 150 }, { "name": "slice", "grams": 30 }]
+    },
+    {
+      "id": "chicken_thigh",
+      "name": "Chicken Thigh",
+      "aliases": ["dark meat chicken"],
+      "category": "protein",
+      "per_100g": { "calories": 209, "protein_g": 26, "carbs_g": 0, "fat_g": 10.9, "fiber_g": 0, "sodium_mg": 84 },
+      "common_portions": [{ "name": "thigh", "grams": 110 }]
+    },
+    {
+      "id": "chicken_wing",
+      "name": "Chicken Wing",
+      "aliases": ["buffalo wing", "wing"],
+      "category": "protein",
+      "per_100g": { "calories": 203, "protein_g": 30.5, "carbs_g": 0, "fat_g": 8.1, "fiber_g": 0, "sodium_mg": 82 },
+      "common_portions": [{ "name": "wing", "grams": 35 }]
+    },
+    {
+      "id": "beef_steak",
+      "name": "Beef Steak",
+      "aliases": ["steak", "sirloin", "ribeye", "filet"],
+      "category": "protein",
+      "per_100g": { "calories": 271, "protein_g": 26, "carbs_g": 0, "fat_g": 18, "fiber_g": 0, "sodium_mg": 54 },
+      "common_portions": [{ "name": "steak", "grams": 225 }]
+    },
+    {
+      "id": "ground_beef",
+      "name": "Ground Beef",
+      "aliases": ["beef mince", "hamburger meat", "minced beef"],
+      "category": "protein",
+      "per_100g": { "calories": 250, "protein_g": 26, "carbs_g": 0, "fat_g": 15, "fiber_g": 0, "sodium_mg": 72 },
+      "common_portions": [{ "name": "patty", "grams": 113 }]
+    },
+    {
+      "id": "pork_chop",
+      "name": "Pork Chop",
+      "aliases": ["pork loin", "pork steak"],
+      "category": "protein",
+      "per_100g": { "calories": 231, "protein_g": 25, "carbs_g": 0, "fat_g": 14, "fiber_g": 0, "sodium_mg": 62 },
+      "common_portions": [{ "name": "chop", "grams": 150 }]
+    },
+    {
+      "id": "bacon",
+      "name": "Bacon",
+      "aliases": ["streaky bacon", "pork bacon"],
+      "category": "protein",
+      "per_100g": { "calories": 541, "protein_g": 37, "carbs_g": 1.4, "fat_g": 42, "fiber_g": 0, "sodium_mg": 1717 },
+      "common_portions": [{ "name": "slice", "grams": 8 }, { "name": "strip", "grams": 12 }]
+    },
+    {
+      "id": "salmon",
+      "name": "Salmon",
+      "aliases": ["atlantic salmon", "grilled salmon", "baked salmon"],
+      "category": "protein",
+      "per_100g": { "calories": 208, "protein_g": 20, "carbs_g": 0, "fat_g": 13, "fiber_g": 0, "sodium_mg": 59 },
+      "common_portions": [{ "name": "fillet", "grams": 170 }]
+    },
+    {
+      "id": "tuna",
+      "name": "Tuna",
+      "aliases": ["tuna steak", "ahi tuna", "canned tuna"],
+      "category": "protein",
+      "per_100g": { "calories": 132, "protein_g": 28, "carbs_g": 0, "fat_g": 1.3, "fiber_g": 0, "sodium_mg": 50 },
+      "common_portions": [{ "name": "can", "grams": 165 }, { "name": "steak", "grams": 150 }]
+    },
+    {
+      "id": "shrimp",
+      "name": "Shrimp",
+      "aliases": ["prawns", "grilled shrimp"],
+      "category": "protein",
+      "per_100g": { "calories": 99, "protein_g": 24, "carbs_g": 0.2, "fat_g": 0.3, "fiber_g": 0, "sodium_mg": 111 },
+      "common_portions": [{ "name": "piece", "grams": 6 }, { "name": "serving", "grams": 85 }]
+    },
+    {
+      "id": "tilapia",
+      "name": "Tilapia",
+      "aliases": ["white fish", "tilapia fillet"],
+      "category": "protein",
+      "per_100g": { "calories": 96, "protein_g": 20, "carbs_g": 0, "fat_g": 1.7, "fiber_g": 0, "sodium_mg": 52 },
+      "common_portions": [{ "name": "fillet", "grams": 115 }]
+    },
+    {
+      "id": "cod",
+      "name": "Cod",
+      "aliases": ["atlantic cod", "cod fillet"],
+      "category": "protein",
+      "per_100g": { "calories": 82, "protein_g": 18, "carbs_g": 0, "fat_g": 0.7, "fiber_g": 0, "sodium_mg": 54 },
+      "common_portions": [{ "name": "fillet", "grams": 180 }]
+    },
+    {
+      "id": "eggs",
+      "name": "Eggs",
+      "aliases": ["whole egg", "fried egg", "scrambled eggs", "boiled egg"],
+      "category": "protein",
+      "per_100g": { "calories": 155, "protein_g": 13, "carbs_g": 1.1, "fat_g": 11, "fiber_g": 0, "sodium_mg": 124 },
+      "common_portions": [{ "name": "large egg", "grams": 50 }, { "name": "medium egg", "grams": 44 }]
+    },
+    {
+      "id": "egg_white",
+      "name": "Egg White",
+      "aliases": ["egg whites"],
+      "category": "protein",
+      "per_100g": { "calories": 52, "protein_g": 11, "carbs_g": 0.7, "fat_g": 0.2, "fiber_g": 0, "sodium_mg": 166 },
+      "common_portions": [{ "name": "white from 1 egg", "grams": 33 }]
+    },
+    {
+      "id": "tofu",
+      "name": "Tofu",
+      "aliases": ["bean curd", "firm tofu", "silken tofu"],
+      "category": "protein",
+      "per_100g": { "calories": 76, "protein_g": 8, "carbs_g": 1.9, "fat_g": 4.8, "fiber_g": 0.3, "sodium_mg": 7 },
+      "common_portions": [{ "name": "block", "grams": 350 }, { "name": "slice", "grams": 50 }]
+    },
+    {
+      "id": "turkey_breast",
+      "name": "Turkey Breast",
+      "aliases": ["turkey", "sliced turkey", "roast turkey"],
+      "category": "protein",
+      "per_100g": { "calories": 135, "protein_g": 30, "carbs_g": 0, "fat_g": 0.7, "fiber_g": 0, "sodium_mg": 46 },
+      "common_portions": [{ "name": "slice", "grams": 28 }, { "name": "breast", "grams": 200 }]
+    },
+    {
+      "id": "lamb_chop",
+      "name": "Lamb Chop",
+      "aliases": ["lamb", "lamb cutlet"],
+      "category": "protein",
+      "per_100g": { "calories": 294, "protein_g": 25, "carbs_g": 0, "fat_g": 21, "fiber_g": 0, "sodium_mg": 65 },
+      "common_portions": [{ "name": "chop", "grams": 85 }]
+    },
+    {
+      "id": "ham",
+      "name": "Ham",
+      "aliases": ["sliced ham", "deli ham"],
+      "category": "protein",
+      "per_100g": { "calories": 145, "protein_g": 21, "carbs_g": 1.5, "fat_g": 5.5, "fiber_g": 0, "sodium_mg": 1203 },
+      "common_portions": [{ "name": "slice", "grams": 28 }]
+    },
+    {
+      "id": "white_rice",
+      "name": "White Rice",
+      "aliases": ["rice", "steamed rice", "jasmine rice", "basmati rice"],
+      "category": "carbs",
+      "per_100g": { "calories": 130, "protein_g": 2.7, "carbs_g": 28, "fat_g": 0.3, "fiber_g": 0.4, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup cooked", "grams": 158 }]
+    },
+    {
+      "id": "brown_rice",
+      "name": "Brown Rice",
+      "aliases": ["whole grain rice"],
+      "category": "carbs",
+      "per_100g": { "calories": 111, "protein_g": 2.6, "carbs_g": 23, "fat_g": 0.9, "fiber_g": 1.8, "sodium_mg": 5 },
+      "common_portions": [{ "name": "cup cooked", "grams": 195 }]
+    },
+    {
+      "id": "pasta",
+      "name": "Pasta",
+      "aliases": ["spaghetti", "penne", "fettuccine", "noodles", "macaroni"],
+      "category": "carbs",
+      "per_100g": { "calories": 131, "protein_g": 5, "carbs_g": 25, "fat_g": 1.1, "fiber_g": 1.8, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup cooked", "grams": 140 }]
+    },
+    {
+      "id": "bread_white",
+      "name": "White Bread",
+      "aliases": ["bread", "sandwich bread", "toast"],
+      "category": "carbs",
+      "per_100g": { "calories": 265, "protein_g": 9, "carbs_g": 49, "fat_g": 3.2, "fiber_g": 2.7, "sodium_mg": 491 },
+      "common_portions": [{ "name": "slice", "grams": 30 }]
+    },
+    {
+      "id": "bread_whole_wheat",
+      "name": "Whole Wheat Bread",
+      "aliases": ["whole grain bread", "wheat bread", "brown bread"],
+      "category": "carbs",
+      "per_100g": { "calories": 247, "protein_g": 13, "carbs_g": 41, "fat_g": 3.4, "fiber_g": 7, "sodium_mg": 400 },
+      "common_portions": [{ "name": "slice", "grams": 32 }]
+    },
+    {
+      "id": "tortilla_flour",
+      "name": "Flour Tortilla",
+      "aliases": ["tortilla", "wrap", "burrito wrap"],
+      "category": "carbs",
+      "per_100g": { "calories": 312, "protein_g": 8, "carbs_g": 52, "fat_g": 8, "fiber_g": 3.1, "sodium_mg": 617 },
+      "common_portions": [{ "name": "large tortilla", "grams": 64 }, { "name": "small tortilla", "grams": 35 }]
+    },
+    {
+      "id": "tortilla_corn",
+      "name": "Corn Tortilla",
+      "aliases": ["taco shell"],
+      "category": "carbs",
+      "per_100g": { "calories": 218, "protein_g": 6, "carbs_g": 44, "fat_g": 2.9, "fiber_g": 6, "sodium_mg": 20 },
+      "common_portions": [{ "name": "tortilla", "grams": 26 }]
+    },
+    {
+      "id": "potato",
+      "name": "Potato",
+      "aliases": ["baked potato", "boiled potato", "russet potato"],
+      "category": "carbs",
+      "per_100g": { "calories": 77, "protein_g": 2, "carbs_g": 17, "fat_g": 0.1, "fiber_g": 2.2, "sodium_mg": 6 },
+      "common_portions": [{ "name": "medium potato", "grams": 150 }, { "name": "large potato", "grams": 300 }]
+    },
+    {
+      "id": "sweet_potato",
+      "name": "Sweet Potato",
+      "aliases": ["yam", "baked sweet potato"],
+      "category": "carbs",
+      "per_100g": { "calories": 86, "protein_g": 1.6, "carbs_g": 20, "fat_g": 0.1, "fiber_g": 3, "sodium_mg": 55 },
+      "common_portions": [{ "name": "medium sweet potato", "grams": 130 }]
+    },
+    {
+      "id": "french_fries",
+      "name": "French Fries",
+      "aliases": ["fries", "chips", "potato fries"],
+      "category": "carbs",
+      "per_100g": { "calories": 312, "protein_g": 3.4, "carbs_g": 41, "fat_g": 15, "fiber_g": 3.8, "sodium_mg": 210 },
+      "common_portions": [{ "name": "small order", "grams": 70 }, { "name": "medium order", "grams": 117 }, { "name": "large order", "grams": 150 }]
+    },
+    {
+      "id": "oatmeal",
+      "name": "Oatmeal",
+      "aliases": ["oats", "porridge", "rolled oats"],
+      "category": "carbs",
+      "per_100g": { "calories": 68, "protein_g": 2.4, "carbs_g": 12, "fat_g": 1.4, "fiber_g": 1.7, "sodium_mg": 49 },
+      "common_portions": [{ "name": "cup cooked", "grams": 234 }]
+    },
+    {
+      "id": "quinoa",
+      "name": "Quinoa",
+      "aliases": ["cooked quinoa"],
+      "category": "carbs",
+      "per_100g": { "calories": 120, "protein_g": 4.4, "carbs_g": 21, "fat_g": 1.9, "fiber_g": 2.8, "sodium_mg": 7 },
+      "common_portions": [{ "name": "cup cooked", "grams": 185 }]
+    },
+    {
+      "id": "bagel",
+      "name": "Bagel",
+      "aliases": ["plain bagel", "everything bagel"],
+      "category": "carbs",
+      "per_100g": { "calories": 257, "protein_g": 10, "carbs_g": 50, "fat_g": 1.5, "fiber_g": 2.3, "sodium_mg": 480 },
+      "common_portions": [{ "name": "bagel", "grams": 98 }]
+    },
+    {
+      "id": "croissant",
+      "name": "Croissant",
+      "aliases": ["butter croissant"],
+      "category": "carbs",
+      "per_100g": { "calories": 406, "protein_g": 8, "carbs_g": 45, "fat_g": 21, "fiber_g": 2.6, "sodium_mg": 315 },
+      "common_portions": [{ "name": "croissant", "grams": 67 }]
+    },
+    {
+      "id": "muffin",
+      "name": "Muffin",
+      "aliases": ["blueberry muffin", "chocolate muffin", "bran muffin"],
+      "category": "carbs",
+      "per_100g": { "calories": 377, "protein_g": 6, "carbs_g": 52, "fat_g": 16, "fiber_g": 2.3, "sodium_mg": 352 },
+      "common_portions": [{ "name": "muffin", "grams": 113 }]
+    },
+    {
+      "id": "pancakes",
+      "name": "Pancakes",
+      "aliases": ["pancake", "flapjacks", "hotcakes"],
+      "category": "carbs",
+      "per_100g": { "calories": 227, "protein_g": 6, "carbs_g": 28, "fat_g": 10, "fiber_g": 1, "sodium_mg": 439 },
+      "common_portions": [{ "name": "pancake", "grams": 76 }]
+    },
+    {
+      "id": "waffle",
+      "name": "Waffle",
+      "aliases": ["belgian waffle"],
+      "category": "carbs",
+      "per_100g": { "calories": 291, "protein_g": 8, "carbs_g": 33, "fat_g": 14, "fiber_g": 1.6, "sodium_mg": 511 },
+      "common_portions": [{ "name": "waffle", "grams": 75 }]
+    },
+    {
+      "id": "cereal_granola",
+      "name": "Granola",
+      "aliases": ["granola cereal"],
+      "category": "carbs",
+      "per_100g": { "calories": 489, "protein_g": 15, "carbs_g": 53, "fat_g": 24, "fiber_g": 11, "sodium_mg": 26 },
+      "common_portions": [{ "name": "cup", "grams": 61 }]
+    },
+    {
+      "id": "broccoli",
+      "name": "Broccoli",
+      "aliases": ["steamed broccoli", "broccoli florets"],
+      "category": "vegetables",
+      "per_100g": { "calories": 34, "protein_g": 2.8, "carbs_g": 7, "fat_g": 0.4, "fiber_g": 2.6, "sodium_mg": 33 },
+      "common_portions": [{ "name": "cup chopped", "grams": 91 }, { "name": "stalk", "grams": 150 }]
+    },
+    {
+      "id": "spinach",
+      "name": "Spinach",
+      "aliases": ["baby spinach", "raw spinach", "cooked spinach"],
+      "category": "vegetables",
+      "per_100g": { "calories": 23, "protein_g": 2.9, "carbs_g": 3.6, "fat_g": 0.4, "fiber_g": 2.2, "sodium_mg": 79 },
+      "common_portions": [{ "name": "cup raw", "grams": 30 }, { "name": "cup cooked", "grams": 180 }]
+    },
+    {
+      "id": "kale",
+      "name": "Kale",
+      "aliases": ["curly kale", "lacinato kale"],
+      "category": "vegetables",
+      "per_100g": { "calories": 49, "protein_g": 4.3, "carbs_g": 9, "fat_g": 0.9, "fiber_g": 3.6, "sodium_mg": 38 },
+      "common_portions": [{ "name": "cup chopped", "grams": 67 }]
+    },
+    {
+      "id": "lettuce",
+      "name": "Lettuce",
+      "aliases": ["romaine", "iceberg", "mixed greens", "salad greens"],
+      "category": "vegetables",
+      "per_100g": { "calories": 15, "protein_g": 1.4, "carbs_g": 2.9, "fat_g": 0.2, "fiber_g": 1.3, "sodium_mg": 28 },
+      "common_portions": [{ "name": "cup shredded", "grams": 47 }]
+    },
+    {
+      "id": "tomato",
+      "name": "Tomato",
+      "aliases": ["cherry tomato", "roma tomato", "grape tomato"],
+      "category": "vegetables",
+      "per_100g": { "calories": 18, "protein_g": 0.9, "carbs_g": 3.9, "fat_g": 0.2, "fiber_g": 1.2, "sodium_mg": 5 },
+      "common_portions": [{ "name": "medium tomato", "grams": 123 }, { "name": "cherry tomato", "grams": 17 }]
+    },
+    {
+      "id": "cucumber",
+      "name": "Cucumber",
+      "aliases": ["sliced cucumber"],
+      "category": "vegetables",
+      "per_100g": { "calories": 15, "protein_g": 0.7, "carbs_g": 3.6, "fat_g": 0.1, "fiber_g": 0.5, "sodium_mg": 2 },
+      "common_portions": [{ "name": "cup sliced", "grams": 104 }]
+    },
+    {
+      "id": "carrot",
+      "name": "Carrot",
+      "aliases": ["baby carrot", "carrots"],
+      "category": "vegetables",
+      "per_100g": { "calories": 41, "protein_g": 0.9, "carbs_g": 10, "fat_g": 0.2, "fiber_g": 2.8, "sodium_mg": 69 },
+      "common_portions": [{ "name": "medium carrot", "grams": 61 }, { "name": "cup chopped", "grams": 128 }]
+    },
+    {
+      "id": "bell_pepper",
+      "name": "Bell Pepper",
+      "aliases": ["red pepper", "green pepper", "yellow pepper", "capsicum"],
+      "category": "vegetables",
+      "per_100g": { "calories": 31, "protein_g": 1, "carbs_g": 6, "fat_g": 0.3, "fiber_g": 2.1, "sodium_mg": 4 },
+      "common_portions": [{ "name": "medium pepper", "grams": 119 }, { "name": "cup chopped", "grams": 149 }]
+    },
+    {
+      "id": "onion",
+      "name": "Onion",
+      "aliases": ["white onion", "red onion", "yellow onion"],
+      "category": "vegetables",
+      "per_100g": { "calories": 40, "protein_g": 1.1, "carbs_g": 9, "fat_g": 0.1, "fiber_g": 1.7, "sodium_mg": 4 },
+      "common_portions": [{ "name": "medium onion", "grams": 110 }, { "name": "cup chopped", "grams": 160 }]
+    },
+    {
+      "id": "mushroom",
+      "name": "Mushroom",
+      "aliases": ["white mushroom", "cremini", "button mushroom", "portobello"],
+      "category": "vegetables",
+      "per_100g": { "calories": 22, "protein_g": 3.1, "carbs_g": 3.3, "fat_g": 0.3, "fiber_g": 1, "sodium_mg": 5 },
+      "common_portions": [{ "name": "cup sliced", "grams": 70 }, { "name": "mushroom", "grams": 18 }]
+    },
+    {
+      "id": "zucchini",
+      "name": "Zucchini",
+      "aliases": ["courgette", "summer squash"],
+      "category": "vegetables",
+      "per_100g": { "calories": 17, "protein_g": 1.2, "carbs_g": 3.1, "fat_g": 0.3, "fiber_g": 1, "sodium_mg": 8 },
+      "common_portions": [{ "name": "medium zucchini", "grams": 196 }, { "name": "cup sliced", "grams": 113 }]
+    },
+    {
+      "id": "asparagus",
+      "name": "Asparagus",
+      "aliases": ["asparagus spears"],
+      "category": "vegetables",
+      "per_100g": { "calories": 20, "protein_g": 2.2, "carbs_g": 3.9, "fat_g": 0.1, "fiber_g": 2.1, "sodium_mg": 2 },
+      "common_portions": [{ "name": "spear", "grams": 16 }, { "name": "cup", "grams": 134 }]
+    },
+    {
+      "id": "green_beans",
+      "name": "Green Beans",
+      "aliases": ["string beans", "snap beans"],
+      "category": "vegetables",
+      "per_100g": { "calories": 31, "protein_g": 1.8, "carbs_g": 7, "fat_g": 0.1, "fiber_g": 3.4, "sodium_mg": 6 },
+      "common_portions": [{ "name": "cup", "grams": 100 }]
+    },
+    {
+      "id": "corn",
+      "name": "Corn",
+      "aliases": ["sweet corn", "corn on cob", "corn kernels"],
+      "category": "vegetables",
+      "per_100g": { "calories": 86, "protein_g": 3.3, "carbs_g": 19, "fat_g": 1.4, "fiber_g": 2.7, "sodium_mg": 15 },
+      "common_portions": [{ "name": "ear", "grams": 77 }, { "name": "cup", "grams": 145 }]
+    },
+    {
+      "id": "peas",
+      "name": "Peas",
+      "aliases": ["green peas", "garden peas"],
+      "category": "vegetables",
+      "per_100g": { "calories": 81, "protein_g": 5.4, "carbs_g": 14, "fat_g": 0.4, "fiber_g": 5.1, "sodium_mg": 5 },
+      "common_portions": [{ "name": "cup", "grams": 145 }]
+    },
+    {
+      "id": "cauliflower",
+      "name": "Cauliflower",
+      "aliases": ["cauliflower florets", "cauliflower rice"],
+      "category": "vegetables",
+      "per_100g": { "calories": 25, "protein_g": 1.9, "carbs_g": 5, "fat_g": 0.3, "fiber_g": 2, "sodium_mg": 30 },
+      "common_portions": [{ "name": "cup", "grams": 100 }]
+    },
+    {
+      "id": "cabbage",
+      "name": "Cabbage",
+      "aliases": ["green cabbage", "red cabbage", "napa cabbage"],
+      "category": "vegetables",
+      "per_100g": { "calories": 25, "protein_g": 1.3, "carbs_g": 6, "fat_g": 0.1, "fiber_g": 2.5, "sodium_mg": 18 },
+      "common_portions": [{ "name": "cup shredded", "grams": 89 }]
+    },
+    {
+      "id": "celery",
+      "name": "Celery",
+      "aliases": ["celery stalks"],
+      "category": "vegetables",
+      "per_100g": { "calories": 14, "protein_g": 0.7, "carbs_g": 3, "fat_g": 0.2, "fiber_g": 1.6, "sodium_mg": 80 },
+      "common_portions": [{ "name": "stalk", "grams": 40 }, { "name": "cup chopped", "grams": 101 }]
+    },
+    {
+      "id": "eggplant",
+      "name": "Eggplant",
+      "aliases": ["aubergine"],
+      "category": "vegetables",
+      "per_100g": { "calories": 25, "protein_g": 1, "carbs_g": 6, "fat_g": 0.2, "fiber_g": 3, "sodium_mg": 2 },
+      "common_portions": [{ "name": "cup cubed", "grams": 82 }]
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "aliases": ["red apple", "green apple", "gala apple", "fuji apple"],
+      "category": "fruits",
+      "per_100g": { "calories": 52, "protein_g": 0.3, "carbs_g": 14, "fat_g": 0.2, "fiber_g": 2.4, "sugar_g": 10, "sodium_mg": 1 },
+      "common_portions": [{ "name": "medium apple", "grams": 182 }, { "name": "small apple", "grams": 100 }]
+    },
+    {
+      "id": "banana",
+      "name": "Banana",
+      "aliases": ["ripe banana"],
+      "category": "fruits",
+      "per_100g": { "calories": 89, "protein_g": 1.1, "carbs_g": 23, "fat_g": 0.3, "fiber_g": 2.6, "sugar_g": 12, "sodium_mg": 1 },
+      "common_portions": [{ "name": "medium banana", "grams": 118 }, { "name": "small banana", "grams": 81 }]
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "aliases": ["navel orange", "mandarin", "clementine", "tangerine"],
+      "category": "fruits",
+      "per_100g": { "calories": 47, "protein_g": 0.9, "carbs_g": 12, "fat_g": 0.1, "fiber_g": 2.4, "sugar_g": 9, "sodium_mg": 0 },
+      "common_portions": [{ "name": "medium orange", "grams": 131 }]
+    },
+    {
+      "id": "strawberry",
+      "name": "Strawberries",
+      "aliases": ["strawberry", "fresh strawberries"],
+      "category": "fruits",
+      "per_100g": { "calories": 32, "protein_g": 0.7, "carbs_g": 8, "fat_g": 0.3, "fiber_g": 2, "sugar_g": 5, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup whole", "grams": 144 }, { "name": "strawberry", "grams": 12 }]
+    },
+    {
+      "id": "blueberry",
+      "name": "Blueberries",
+      "aliases": ["blueberry", "fresh blueberries"],
+      "category": "fruits",
+      "per_100g": { "calories": 57, "protein_g": 0.7, "carbs_g": 14, "fat_g": 0.3, "fiber_g": 2.4, "sugar_g": 10, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup", "grams": 148 }]
+    },
+    {
+      "id": "grapes",
+      "name": "Grapes",
+      "aliases": ["red grapes", "green grapes"],
+      "category": "fruits",
+      "per_100g": { "calories": 69, "protein_g": 0.7, "carbs_g": 18, "fat_g": 0.2, "fiber_g": 0.9, "sugar_g": 16, "sodium_mg": 2 },
+      "common_portions": [{ "name": "cup", "grams": 151 }]
+    },
+    {
+      "id": "watermelon",
+      "name": "Watermelon",
+      "aliases": ["fresh watermelon"],
+      "category": "fruits",
+      "per_100g": { "calories": 30, "protein_g": 0.6, "carbs_g": 8, "fat_g": 0.2, "fiber_g": 0.4, "sugar_g": 6, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup diced", "grams": 152 }, { "name": "wedge", "grams": 286 }]
+    },
+    {
+      "id": "mango",
+      "name": "Mango",
+      "aliases": ["fresh mango", "sliced mango"],
+      "category": "fruits",
+      "per_100g": { "calories": 60, "protein_g": 0.8, "carbs_g": 15, "fat_g": 0.4, "fiber_g": 1.6, "sugar_g": 14, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup sliced", "grams": 165 }]
+    },
+    {
+      "id": "pineapple",
+      "name": "Pineapple",
+      "aliases": ["fresh pineapple"],
+      "category": "fruits",
+      "per_100g": { "calories": 50, "protein_g": 0.5, "carbs_g": 13, "fat_g": 0.1, "fiber_g": 1.4, "sugar_g": 10, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup chunks", "grams": 165 }]
+    },
+    {
+      "id": "avocado",
+      "name": "Avocado",
+      "aliases": ["hass avocado", "guacamole"],
+      "category": "fruits",
+      "per_100g": { "calories": 160, "protein_g": 2, "carbs_g": 9, "fat_g": 15, "fiber_g": 7, "sodium_mg": 7 },
+      "common_portions": [{ "name": "half avocado", "grams": 68 }, { "name": "whole avocado", "grams": 136 }]
+    },
+    {
+      "id": "peach",
+      "name": "Peach",
+      "aliases": ["fresh peach", "nectarine"],
+      "category": "fruits",
+      "per_100g": { "calories": 39, "protein_g": 0.9, "carbs_g": 10, "fat_g": 0.3, "fiber_g": 1.5, "sugar_g": 8, "sodium_mg": 0 },
+      "common_portions": [{ "name": "medium peach", "grams": 150 }]
+    },
+    {
+      "id": "pear",
+      "name": "Pear",
+      "aliases": ["bartlett pear", "asian pear"],
+      "category": "fruits",
+      "per_100g": { "calories": 57, "protein_g": 0.4, "carbs_g": 15, "fat_g": 0.1, "fiber_g": 3.1, "sugar_g": 10, "sodium_mg": 1 },
+      "common_portions": [{ "name": "medium pear", "grams": 178 }]
+    },
+    {
+      "id": "raspberry",
+      "name": "Raspberries",
+      "aliases": ["raspberry", "fresh raspberries"],
+      "category": "fruits",
+      "per_100g": { "calories": 52, "protein_g": 1.2, "carbs_g": 12, "fat_g": 0.7, "fiber_g": 6.5, "sugar_g": 4, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup", "grams": 123 }]
+    },
+    {
+      "id": "milk_whole",
+      "name": "Whole Milk",
+      "aliases": ["milk", "full fat milk"],
+      "category": "dairy",
+      "per_100g": { "calories": 61, "protein_g": 3.2, "carbs_g": 4.8, "fat_g": 3.3, "sugar_g": 5, "sodium_mg": 43 },
+      "common_portions": [{ "name": "cup", "grams": 244 }]
+    },
+    {
+      "id": "milk_skim",
+      "name": "Skim Milk",
+      "aliases": ["nonfat milk", "fat free milk"],
+      "category": "dairy",
+      "per_100g": { "calories": 34, "protein_g": 3.4, "carbs_g": 5, "fat_g": 0.1, "sugar_g": 5, "sodium_mg": 42 },
+      "common_portions": [{ "name": "cup", "grams": 245 }]
+    },
+    {
+      "id": "yogurt_greek",
+      "name": "Greek Yogurt",
+      "aliases": ["plain greek yogurt", "strained yogurt"],
+      "category": "dairy",
+      "per_100g": { "calories": 59, "protein_g": 10, "carbs_g": 3.6, "fat_g": 0.7, "sugar_g": 3, "sodium_mg": 36 },
+      "common_portions": [{ "name": "cup", "grams": 245 }, { "name": "container", "grams": 170 }]
+    },
+    {
+      "id": "yogurt_regular",
+      "name": "Yogurt",
+      "aliases": ["plain yogurt", "fruit yogurt"],
+      "category": "dairy",
+      "per_100g": { "calories": 61, "protein_g": 3.5, "carbs_g": 4.7, "fat_g": 3.3, "sugar_g": 4.7, "sodium_mg": 46 },
+      "common_portions": [{ "name": "cup", "grams": 245 }]
+    },
+    {
+      "id": "cheese_cheddar",
+      "name": "Cheddar Cheese",
+      "aliases": ["cheddar", "sharp cheddar"],
+      "category": "dairy",
+      "per_100g": { "calories": 403, "protein_g": 25, "carbs_g": 1.3, "fat_g": 33, "sodium_mg": 621 },
+      "common_portions": [{ "name": "slice", "grams": 28 }, { "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "cheese_mozzarella",
+      "name": "Mozzarella",
+      "aliases": ["fresh mozzarella", "shredded mozzarella"],
+      "category": "dairy",
+      "per_100g": { "calories": 280, "protein_g": 28, "carbs_g": 2.2, "fat_g": 17, "sodium_mg": 627 },
+      "common_portions": [{ "name": "oz", "grams": 28 }, { "name": "cup shredded", "grams": 112 }]
+    },
+    {
+      "id": "cheese_parmesan",
+      "name": "Parmesan",
+      "aliases": ["parmigiano", "grated parmesan"],
+      "category": "dairy",
+      "per_100g": { "calories": 431, "protein_g": 38, "carbs_g": 4.1, "fat_g": 29, "sodium_mg": 1529 },
+      "common_portions": [{ "name": "tbsp grated", "grams": 5 }, { "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "cheese_cream",
+      "name": "Cream Cheese",
+      "aliases": ["philadelphia", "whipped cream cheese"],
+      "category": "dairy",
+      "per_100g": { "calories": 342, "protein_g": 6, "carbs_g": 4, "fat_g": 34, "sodium_mg": 321 },
+      "common_portions": [{ "name": "tbsp", "grams": 14.5 }, { "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "cheese_feta",
+      "name": "Feta Cheese",
+      "aliases": ["feta", "crumbled feta"],
+      "category": "dairy",
+      "per_100g": { "calories": 264, "protein_g": 14, "carbs_g": 4, "fat_g": 21, "sodium_mg": 917 },
+      "common_portions": [{ "name": "oz", "grams": 28 }, { "name": "cup crumbled", "grams": 150 }]
+    },
+    {
+      "id": "butter",
+      "name": "Butter",
+      "aliases": ["salted butter", "unsalted butter"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 717, "protein_g": 0.9, "carbs_g": 0.1, "fat_g": 81, "sodium_mg": 11 },
+      "common_portions": [{ "name": "tbsp", "grams": 14 }, { "name": "pat", "grams": 5 }]
+    },
+    {
+      "id": "olive_oil",
+      "name": "Olive Oil",
+      "aliases": ["extra virgin olive oil", "EVOO", "cooking oil"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 884, "protein_g": 0, "carbs_g": 0, "fat_g": 100, "sodium_mg": 2 },
+      "common_portions": [{ "name": "tbsp", "grams": 13.5 }, { "name": "tsp", "grams": 4.5 }]
+    },
+    {
+      "id": "coconut_oil",
+      "name": "Coconut Oil",
+      "aliases": ["virgin coconut oil"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 862, "protein_g": 0, "carbs_g": 0, "fat_g": 100, "sodium_mg": 0 },
+      "common_portions": [{ "name": "tbsp", "grams": 13.6 }]
+    },
+    {
+      "id": "mayonnaise",
+      "name": "Mayonnaise",
+      "aliases": ["mayo"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 680, "protein_g": 1, "carbs_g": 0.6, "fat_g": 75, "sodium_mg": 635 },
+      "common_portions": [{ "name": "tbsp", "grams": 13.8 }]
+    },
+    {
+      "id": "peanut_butter",
+      "name": "Peanut Butter",
+      "aliases": ["pb", "natural peanut butter"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 588, "protein_g": 25, "carbs_g": 20, "fat_g": 50, "fiber_g": 6, "sodium_mg": 17 },
+      "common_portions": [{ "name": "tbsp", "grams": 32 }]
+    },
+    {
+      "id": "almond_butter",
+      "name": "Almond Butter",
+      "aliases": ["almond spread"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 614, "protein_g": 21, "carbs_g": 19, "fat_g": 56, "fiber_g": 10, "sodium_mg": 7 },
+      "common_portions": [{ "name": "tbsp", "grams": 32 }]
+    },
+    {
+      "id": "almonds",
+      "name": "Almonds",
+      "aliases": ["raw almonds", "roasted almonds"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 579, "protein_g": 21, "carbs_g": 22, "fat_g": 50, "fiber_g": 12, "sodium_mg": 1 },
+      "common_portions": [{ "name": "oz", "grams": 28 }, { "name": "almond", "grams": 1.2 }]
+    },
+    {
+      "id": "walnuts",
+      "name": "Walnuts",
+      "aliases": ["walnut halves"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 654, "protein_g": 15, "carbs_g": 14, "fat_g": 65, "fiber_g": 7, "sodium_mg": 2 },
+      "common_portions": [{ "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "cashews",
+      "name": "Cashews",
+      "aliases": ["roasted cashews"],
+      "category": "fats_oils",
+      "per_100g": { "calories": 553, "protein_g": 18, "carbs_g": 30, "fat_g": 44, "fiber_g": 3, "sodium_mg": 12 },
+      "common_portions": [{ "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "coffee_black",
+      "name": "Black Coffee",
+      "aliases": ["coffee", "brewed coffee", "americano"],
+      "category": "beverages",
+      "per_100g": { "calories": 2, "protein_g": 0.3, "carbs_g": 0, "fat_g": 0, "sodium_mg": 5 },
+      "common_portions": [{ "name": "cup", "grams": 240 }]
+    },
+    {
+      "id": "coffee_latte",
+      "name": "Latte",
+      "aliases": ["cafe latte", "milk coffee"],
+      "category": "beverages",
+      "per_100g": { "calories": 29, "protein_g": 1.5, "carbs_g": 2.3, "fat_g": 1.6, "sodium_mg": 20 },
+      "common_portions": [{ "name": "small", "grams": 240 }, { "name": "medium", "grams": 360 }, { "name": "large", "grams": 480 }]
+    },
+    {
+      "id": "orange_juice",
+      "name": "Orange Juice",
+      "aliases": ["OJ", "fresh squeezed orange juice"],
+      "category": "beverages",
+      "per_100g": { "calories": 45, "protein_g": 0.7, "carbs_g": 10, "fat_g": 0.2, "sugar_g": 8, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup", "grams": 248 }, { "name": "small glass", "grams": 180 }]
+    },
+    {
+      "id": "soda",
+      "name": "Soda",
+      "aliases": ["cola", "coke", "pepsi", "soft drink"],
+      "category": "beverages",
+      "per_100g": { "calories": 41, "protein_g": 0, "carbs_g": 10.6, "fat_g": 0, "sugar_g": 10.6, "sodium_mg": 4 },
+      "common_portions": [{ "name": "can", "grams": 355 }, { "name": "bottle", "grams": 500 }]
+    },
+    {
+      "id": "beer",
+      "name": "Beer",
+      "aliases": ["lager", "ale", "draft beer"],
+      "category": "beverages",
+      "per_100g": { "calories": 43, "protein_g": 0.5, "carbs_g": 3.6, "fat_g": 0, "sodium_mg": 4 },
+      "common_portions": [{ "name": "bottle", "grams": 355 }, { "name": "pint", "grams": 473 }]
+    },
+    {
+      "id": "wine_red",
+      "name": "Red Wine",
+      "aliases": ["wine", "cabernet", "merlot"],
+      "category": "beverages",
+      "per_100g": { "calories": 85, "protein_g": 0.1, "carbs_g": 2.6, "fat_g": 0, "sodium_mg": 4 },
+      "common_portions": [{ "name": "glass", "grams": 150 }]
+    },
+    {
+      "id": "wine_white",
+      "name": "White Wine",
+      "aliases": ["chardonnay", "sauvignon blanc", "pinot grigio"],
+      "category": "beverages",
+      "per_100g": { "calories": 82, "protein_g": 0.1, "carbs_g": 2.6, "fat_g": 0, "sodium_mg": 5 },
+      "common_portions": [{ "name": "glass", "grams": 150 }]
+    },
+    {
+      "id": "smoothie",
+      "name": "Smoothie",
+      "aliases": ["fruit smoothie", "protein smoothie"],
+      "category": "beverages",
+      "per_100g": { "calories": 62, "protein_g": 1.8, "carbs_g": 12, "fat_g": 0.8, "sugar_g": 10, "sodium_mg": 18 },
+      "common_portions": [{ "name": "small", "grams": 300 }, { "name": "large", "grams": 500 }]
+    },
+    {
+      "id": "chips_potato",
+      "name": "Potato Chips",
+      "aliases": ["chips", "crisps", "lays"],
+      "category": "snacks",
+      "per_100g": { "calories": 536, "protein_g": 7, "carbs_g": 53, "fat_g": 35, "fiber_g": 4.4, "sodium_mg": 525 },
+      "common_portions": [{ "name": "small bag", "grams": 28 }, { "name": "serving", "grams": 28 }]
+    },
+    {
+      "id": "chips_tortilla",
+      "name": "Tortilla Chips",
+      "aliases": ["nachos", "corn chips"],
+      "category": "snacks",
+      "per_100g": { "calories": 489, "protein_g": 7, "carbs_g": 63, "fat_g": 23, "fiber_g": 5, "sodium_mg": 618 },
+      "common_portions": [{ "name": "serving", "grams": 28 }]
+    },
+    {
+      "id": "popcorn",
+      "name": "Popcorn",
+      "aliases": ["movie popcorn", "buttered popcorn", "plain popcorn"],
+      "category": "snacks",
+      "per_100g": { "calories": 387, "protein_g": 13, "carbs_g": 78, "fat_g": 4.5, "fiber_g": 15, "sodium_mg": 8 },
+      "common_portions": [{ "name": "cup popped", "grams": 8 }]
+    },
+    {
+      "id": "pretzels",
+      "name": "Pretzels",
+      "aliases": ["hard pretzels", "soft pretzel"],
+      "category": "snacks",
+      "per_100g": { "calories": 380, "protein_g": 10, "carbs_g": 80, "fat_g": 3.5, "fiber_g": 3, "sodium_mg": 1357 },
+      "common_portions": [{ "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "crackers",
+      "name": "Crackers",
+      "aliases": ["saltines", "wheat crackers"],
+      "category": "snacks",
+      "per_100g": { "calories": 421, "protein_g": 10, "carbs_g": 74, "fat_g": 9, "fiber_g": 2.9, "sodium_mg": 1072 },
+      "common_portions": [{ "name": "cracker", "grams": 3 }, { "name": "serving", "grams": 28 }]
+    },
+    {
+      "id": "trail_mix",
+      "name": "Trail Mix",
+      "aliases": ["mixed nuts", "nut mix"],
+      "category": "snacks",
+      "per_100g": { "calories": 462, "protein_g": 13, "carbs_g": 45, "fat_g": 29, "fiber_g": 5, "sodium_mg": 225 },
+      "common_portions": [{ "name": "oz", "grams": 28 }]
+    },
+    {
+      "id": "ketchup",
+      "name": "Ketchup",
+      "aliases": ["tomato ketchup", "catsup"],
+      "category": "condiments",
+      "per_100g": { "calories": 112, "protein_g": 1.7, "carbs_g": 26, "fat_g": 0.1, "sugar_g": 22, "sodium_mg": 907 },
+      "common_portions": [{ "name": "tbsp", "grams": 17 }, { "name": "packet", "grams": 9 }]
+    },
+    {
+      "id": "mustard",
+      "name": "Mustard",
+      "aliases": ["yellow mustard", "dijon mustard"],
+      "category": "condiments",
+      "per_100g": { "calories": 66, "protein_g": 4, "carbs_g": 6, "fat_g": 3, "sodium_mg": 1135 },
+      "common_portions": [{ "name": "tsp", "grams": 5 }, { "name": "tbsp", "grams": 15 }]
+    },
+    {
+      "id": "soy_sauce",
+      "name": "Soy Sauce",
+      "aliases": ["shoyu", "tamari"],
+      "category": "condiments",
+      "per_100g": { "calories": 53, "protein_g": 8, "carbs_g": 5, "fat_g": 0, "sodium_mg": 5493 },
+      "common_portions": [{ "name": "tbsp", "grams": 16 }]
+    },
+    {
+      "id": "salsa",
+      "name": "Salsa",
+      "aliases": ["pico de gallo", "tomato salsa"],
+      "category": "condiments",
+      "per_100g": { "calories": 36, "protein_g": 2, "carbs_g": 7, "fat_g": 0.2, "fiber_g": 2, "sodium_mg": 600 },
+      "common_portions": [{ "name": "tbsp", "grams": 16 }]
+    },
+    {
+      "id": "ranch_dressing",
+      "name": "Ranch Dressing",
+      "aliases": ["ranch", "buttermilk ranch"],
+      "category": "condiments",
+      "per_100g": { "calories": 463, "protein_g": 2, "carbs_g": 6, "fat_g": 48, "sodium_mg": 917 },
+      "common_portions": [{ "name": "tbsp", "grams": 15 }]
+    },
+    {
+      "id": "caesar_dressing",
+      "name": "Caesar Dressing",
+      "aliases": ["caesar salad dressing"],
+      "category": "condiments",
+      "per_100g": { "calories": 505, "protein_g": 2.4, "carbs_g": 3.9, "fat_g": 53, "sodium_mg": 804 },
+      "common_portions": [{ "name": "tbsp", "grams": 15 }]
+    },
+    {
+      "id": "italian_dressing",
+      "name": "Italian Dressing",
+      "aliases": ["vinaigrette"],
+      "category": "condiments",
+      "per_100g": { "calories": 290, "protein_g": 0.3, "carbs_g": 7.7, "fat_g": 29, "sodium_mg": 900 },
+      "common_portions": [{ "name": "tbsp", "grams": 15 }]
+    },
+    {
+      "id": "bbq_sauce",
+      "name": "BBQ Sauce",
+      "aliases": ["barbecue sauce"],
+      "category": "condiments",
+      "per_100g": { "calories": 172, "protein_g": 0.8, "carbs_g": 41, "fat_g": 0.6, "sugar_g": 33, "sodium_mg": 903 },
+      "common_portions": [{ "name": "tbsp", "grams": 18 }]
+    },
+    {
+      "id": "hot_sauce",
+      "name": "Hot Sauce",
+      "aliases": ["tabasco", "sriracha", "buffalo sauce"],
+      "category": "condiments",
+      "per_100g": { "calories": 11, "protein_g": 0.5, "carbs_g": 2, "fat_g": 0.4, "sodium_mg": 2643 },
+      "common_portions": [{ "name": "tsp", "grams": 5 }]
+    },
+    {
+      "id": "honey",
+      "name": "Honey",
+      "aliases": ["raw honey"],
+      "category": "condiments",
+      "per_100g": { "calories": 304, "protein_g": 0.3, "carbs_g": 82, "fat_g": 0, "sugar_g": 82, "sodium_mg": 4 },
+      "common_portions": [{ "name": "tbsp", "grams": 21 }]
+    },
+    {
+      "id": "maple_syrup",
+      "name": "Maple Syrup",
+      "aliases": ["pure maple syrup"],
+      "category": "condiments",
+      "per_100g": { "calories": 260, "protein_g": 0, "carbs_g": 67, "fat_g": 0.1, "sugar_g": 60, "sodium_mg": 12 },
+      "common_portions": [{ "name": "tbsp", "grams": 20 }]
+    },
+    {
+      "id": "sugar",
+      "name": "Sugar",
+      "aliases": ["white sugar", "granulated sugar", "table sugar"],
+      "category": "condiments",
+      "per_100g": { "calories": 387, "protein_g": 0, "carbs_g": 100, "fat_g": 0, "sugar_g": 100, "sodium_mg": 1 },
+      "common_portions": [{ "name": "tsp", "grams": 4 }, { "name": "tbsp", "grams": 12.5 }]
+    },
+    {
+      "id": "pizza_cheese",
+      "name": "Cheese Pizza",
+      "aliases": ["pizza", "margherita pizza", "pizza slice"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 266, "protein_g": 11, "carbs_g": 33, "fat_g": 10, "fiber_g": 2.3, "sodium_mg": 598 },
+      "common_portions": [{ "name": "slice", "grams": 107 }]
+    },
+    {
+      "id": "pizza_pepperoni",
+      "name": "Pepperoni Pizza",
+      "aliases": ["pepperoni slice"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 298, "protein_g": 13, "carbs_g": 30, "fat_g": 14, "fiber_g": 2, "sodium_mg": 683 },
+      "common_portions": [{ "name": "slice", "grams": 113 }]
+    },
+    {
+      "id": "burger",
+      "name": "Hamburger",
+      "aliases": ["cheeseburger", "beef burger", "burger"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 254, "protein_g": 15, "carbs_g": 21, "fat_g": 12, "fiber_g": 1.3, "sodium_mg": 394 },
+      "common_portions": [{ "name": "burger", "grams": 215 }]
+    },
+    {
+      "id": "hot_dog",
+      "name": "Hot Dog",
+      "aliases": ["frankfurter", "wiener"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 290, "protein_g": 11, "carbs_g": 23, "fat_g": 17, "sodium_mg": 810 },
+      "common_portions": [{ "name": "hot dog", "grams": 98 }]
+    },
+    {
+      "id": "burrito",
+      "name": "Burrito",
+      "aliases": ["beef burrito", "chicken burrito", "bean burrito"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 163, "protein_g": 7, "carbs_g": 19, "fat_g": 6.5, "fiber_g": 2, "sodium_mg": 432 },
+      "common_portions": [{ "name": "burrito", "grams": 272 }]
+    },
+    {
+      "id": "taco",
+      "name": "Taco",
+      "aliases": ["beef taco", "chicken taco", "fish taco"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 226, "protein_g": 10, "carbs_g": 20, "fat_g": 11, "fiber_g": 2, "sodium_mg": 383 },
+      "common_portions": [{ "name": "taco", "grams": 85 }]
+    },
+    {
+      "id": "sandwich",
+      "name": "Sandwich",
+      "aliases": ["sub sandwich", "deli sandwich"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 228, "protein_g": 12, "carbs_g": 25, "fat_g": 9, "fiber_g": 1.5, "sodium_mg": 550 },
+      "common_portions": [{ "name": "sandwich", "grams": 200 }]
+    },
+    {
+      "id": "grilled_cheese",
+      "name": "Grilled Cheese",
+      "aliases": ["cheese sandwich", "toasted cheese"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 315, "protein_g": 12, "carbs_g": 26, "fat_g": 18, "sodium_mg": 673 },
+      "common_portions": [{ "name": "sandwich", "grams": 140 }]
+    },
+    {
+      "id": "caesar_salad",
+      "name": "Caesar Salad",
+      "aliases": ["chicken caesar"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 127, "protein_g": 6, "carbs_g": 7, "fat_g": 9, "fiber_g": 1.5, "sodium_mg": 357 },
+      "common_portions": [{ "name": "side salad", "grams": 150 }, { "name": "entree salad", "grams": 300 }]
+    },
+    {
+      "id": "garden_salad",
+      "name": "Garden Salad",
+      "aliases": ["side salad", "house salad", "mixed salad"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 17, "protein_g": 1, "carbs_g": 3.3, "fat_g": 0.1, "fiber_g": 1.5, "sodium_mg": 10 },
+      "common_portions": [{ "name": "side", "grams": 100 }, { "name": "bowl", "grams": 200 }]
+    },
+    {
+      "id": "chicken_salad",
+      "name": "Chicken Salad",
+      "aliases": ["chicken salad sandwich filling"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 208, "protein_g": 16, "carbs_g": 4, "fat_g": 14, "sodium_mg": 400 },
+      "common_portions": [{ "name": "cup", "grams": 140 }]
+    },
+    {
+      "id": "soup_chicken_noodle",
+      "name": "Chicken Noodle Soup",
+      "aliases": ["chicken soup"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 31, "protein_g": 2, "carbs_g": 4, "fat_g": 1, "sodium_mg": 343 },
+      "common_portions": [{ "name": "cup", "grams": 241 }, { "name": "bowl", "grams": 400 }]
+    },
+    {
+      "id": "soup_tomato",
+      "name": "Tomato Soup",
+      "aliases": ["cream of tomato"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 30, "protein_g": 0.8, "carbs_g": 6.5, "fat_g": 0.2, "fiber_g": 0.5, "sodium_mg": 310 },
+      "common_portions": [{ "name": "cup", "grams": 248 }]
+    },
+    {
+      "id": "fried_rice",
+      "name": "Fried Rice",
+      "aliases": ["chinese fried rice", "chicken fried rice", "vegetable fried rice"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 163, "protein_g": 4, "carbs_g": 22, "fat_g": 6, "sodium_mg": 470 },
+      "common_portions": [{ "name": "cup", "grams": 198 }]
+    },
+    {
+      "id": "stir_fry",
+      "name": "Stir Fry",
+      "aliases": ["chicken stir fry", "beef stir fry", "vegetable stir fry"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 117, "protein_g": 9, "carbs_g": 8, "fat_g": 5, "fiber_g": 2, "sodium_mg": 380 },
+      "common_portions": [{ "name": "cup", "grams": 200 }]
+    },
+    {
+      "id": "sushi_roll",
+      "name": "Sushi Roll",
+      "aliases": ["california roll", "maki roll", "sushi"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 145, "protein_g": 6, "carbs_g": 22, "fat_g": 4, "sodium_mg": 350 },
+      "common_portions": [{ "name": "piece", "grams": 30 }, { "name": "roll (8 pcs)", "grams": 240 }]
+    },
+    {
+      "id": "ramen",
+      "name": "Ramen",
+      "aliases": ["ramen noodles", "instant ramen", "japanese ramen"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 91, "protein_g": 4, "carbs_g": 13, "fat_g": 2.5, "sodium_mg": 500 },
+      "common_portions": [{ "name": "bowl", "grams": 450 }]
+    },
+    {
+      "id": "pad_thai",
+      "name": "Pad Thai",
+      "aliases": ["thai noodles"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 155, "protein_g": 7, "carbs_g": 20, "fat_g": 5, "sodium_mg": 450 },
+      "common_portions": [{ "name": "plate", "grams": 350 }]
+    },
+    {
+      "id": "curry_chicken",
+      "name": "Chicken Curry",
+      "aliases": ["curry", "indian curry", "thai curry"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 142, "protein_g": 10, "carbs_g": 8, "fat_g": 8, "sodium_mg": 380 },
+      "common_portions": [{ "name": "cup", "grams": 240 }]
+    },
+    {
+      "id": "lasagna",
+      "name": "Lasagna",
+      "aliases": ["beef lasagna", "meat lasagna"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 135, "protein_g": 8, "carbs_g": 14, "fat_g": 5, "fiber_g": 1.2, "sodium_mg": 350 },
+      "common_portions": [{ "name": "piece", "grams": 250 }]
+    },
+    {
+      "id": "mac_and_cheese",
+      "name": "Mac and Cheese",
+      "aliases": ["macaroni and cheese", "kraft mac and cheese"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 164, "protein_g": 7, "carbs_g": 18, "fat_g": 7, "fiber_g": 1, "sodium_mg": 470 },
+      "common_portions": [{ "name": "cup", "grams": 200 }]
+    },
+    {
+      "id": "mashed_potatoes",
+      "name": "Mashed Potatoes",
+      "aliases": ["mashed potato", "creamy potatoes"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 83, "protein_g": 2, "carbs_g": 15, "fat_g": 2, "fiber_g": 1.5, "sodium_mg": 320 },
+      "common_portions": [{ "name": "cup", "grams": 210 }]
+    },
+    {
+      "id": "fried_chicken",
+      "name": "Fried Chicken",
+      "aliases": ["KFC", "crispy chicken", "breaded chicken"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 269, "protein_g": 19, "carbs_g": 11, "fat_g": 17, "sodium_mg": 560 },
+      "common_portions": [{ "name": "drumstick", "grams": 72 }, { "name": "breast", "grams": 140 }]
+    },
+    {
+      "id": "fish_and_chips",
+      "name": "Fish and Chips",
+      "aliases": ["battered fish", "fried fish"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 220, "protein_g": 12, "carbs_g": 20, "fat_g": 10, "sodium_mg": 380 },
+      "common_portions": [{ "name": "serving", "grams": 300 }]
+    },
+    {
+      "id": "ice_cream",
+      "name": "Ice Cream",
+      "aliases": ["vanilla ice cream", "chocolate ice cream"],
+      "category": "desserts",
+      "per_100g": { "calories": 207, "protein_g": 3.5, "carbs_g": 24, "fat_g": 11, "sugar_g": 21, "sodium_mg": 80 },
+      "common_portions": [{ "name": "scoop", "grams": 72 }, { "name": "cup", "grams": 132 }]
+    },
+    {
+      "id": "chocolate",
+      "name": "Chocolate",
+      "aliases": ["milk chocolate", "dark chocolate", "chocolate bar"],
+      "category": "desserts",
+      "per_100g": { "calories": 535, "protein_g": 8, "carbs_g": 60, "fat_g": 30, "sugar_g": 48, "sodium_mg": 79 },
+      "common_portions": [{ "name": "square", "grams": 10 }, { "name": "bar", "grams": 43 }]
+    },
+    {
+      "id": "brownie",
+      "name": "Brownie",
+      "aliases": ["chocolate brownie", "fudge brownie"],
+      "category": "desserts",
+      "per_100g": { "calories": 405, "protein_g": 5, "carbs_g": 50, "fat_g": 21, "sugar_g": 35, "sodium_mg": 213 },
+      "common_portions": [{ "name": "brownie", "grams": 56 }]
+    },
+    {
+      "id": "cookie",
+      "name": "Cookie",
+      "aliases": ["chocolate chip cookie", "oatmeal cookie", "sugar cookie"],
+      "category": "desserts",
+      "per_100g": { "calories": 488, "protein_g": 5, "carbs_g": 64, "fat_g": 24, "sugar_g": 35, "sodium_mg": 340 },
+      "common_portions": [{ "name": "cookie", "grams": 30 }]
+    },
+    {
+      "id": "cake",
+      "name": "Cake",
+      "aliases": ["birthday cake", "chocolate cake", "vanilla cake"],
+      "category": "desserts",
+      "per_100g": { "calories": 371, "protein_g": 5, "carbs_g": 53, "fat_g": 16, "sugar_g": 35, "sodium_mg": 285 },
+      "common_portions": [{ "name": "slice", "grams": 80 }]
+    },
+    {
+      "id": "cheesecake",
+      "name": "Cheesecake",
+      "aliases": ["NY cheesecake"],
+      "category": "desserts",
+      "per_100g": { "calories": 321, "protein_g": 6, "carbs_g": 26, "fat_g": 22, "sugar_g": 18, "sodium_mg": 274 },
+      "common_portions": [{ "name": "slice", "grams": 125 }]
+    },
+    {
+      "id": "donut",
+      "name": "Donut",
+      "aliases": ["doughnut", "glazed donut", "chocolate donut"],
+      "category": "desserts",
+      "per_100g": { "calories": 421, "protein_g": 5, "carbs_g": 49, "fat_g": 23, "sugar_g": 22, "sodium_mg": 340 },
+      "common_portions": [{ "name": "donut", "grams": 60 }]
+    },
+    {
+      "id": "pie_apple",
+      "name": "Apple Pie",
+      "aliases": ["pie", "fruit pie"],
+      "category": "desserts",
+      "per_100g": { "calories": 265, "protein_g": 2, "carbs_g": 38, "fat_g": 12, "sugar_g": 15, "sodium_mg": 181 },
+      "common_portions": [{ "name": "slice", "grams": 125 }]
+    },
+    {
+      "id": "frozen_yogurt",
+      "name": "Frozen Yogurt",
+      "aliases": ["froyo"],
+      "category": "desserts",
+      "per_100g": { "calories": 127, "protein_g": 3, "carbs_g": 24, "fat_g": 2, "sugar_g": 20, "sodium_mg": 60 },
+      "common_portions": [{ "name": "cup", "grams": 144 }]
+    },
+    {
+      "id": "protein_shake",
+      "name": "Protein Shake",
+      "aliases": ["whey protein", "protein powder", "protein drink"],
+      "category": "protein",
+      "per_100g": { "calories": 120, "protein_g": 24, "carbs_g": 3, "fat_g": 1, "sodium_mg": 150 },
+      "common_portions": [{ "name": "scoop", "grams": 30 }, { "name": "shake", "grams": 350 }]
+    },
+    {
+      "id": "hummus",
+      "name": "Hummus",
+      "aliases": ["chickpea dip"],
+      "category": "mixed_dishes",
+      "per_100g": { "calories": 166, "protein_g": 8, "carbs_g": 14, "fat_g": 10, "fiber_g": 6, "sodium_mg": 379 },
+      "common_portions": [{ "name": "tbsp", "grams": 30 }, { "name": "cup", "grams": 246 }]
+    },
+    {
+      "id": "edamame",
+      "name": "Edamame",
+      "aliases": ["soybeans"],
+      "category": "vegetables",
+      "per_100g": { "calories": 121, "protein_g": 12, "carbs_g": 9, "fat_g": 5, "fiber_g": 5, "sodium_mg": 6 },
+      "common_portions": [{ "name": "cup shelled", "grams": 155 }]
+    },
+    {
+      "id": "sour_cream",
+      "name": "Sour Cream",
+      "aliases": ["creme fraiche"],
+      "category": "dairy",
+      "per_100g": { "calories": 193, "protein_g": 2.4, "carbs_g": 4.6, "fat_g": 19, "sodium_mg": 53 },
+      "common_portions": [{ "name": "tbsp", "grams": 12 }]
+    },
+    {
+      "id": "cottage_cheese",
+      "name": "Cottage Cheese",
+      "aliases": ["low fat cottage cheese"],
+      "category": "dairy",
+      "per_100g": { "calories": 98, "protein_g": 11, "carbs_g": 3.4, "fat_g": 4.3, "sodium_mg": 364 },
+      "common_portions": [{ "name": "cup", "grams": 226 }]
+    },
+    {
+      "id": "black_beans",
+      "name": "Black Beans",
+      "aliases": ["black bean"],
+      "category": "protein",
+      "per_100g": { "calories": 132, "protein_g": 9, "carbs_g": 24, "fat_g": 0.5, "fiber_g": 8, "sodium_mg": 1 },
+      "common_portions": [{ "name": "cup", "grams": 172 }]
+    },
+    {
+      "id": "chickpeas",
+      "name": "Chickpeas",
+      "aliases": ["garbanzo beans"],
+      "category": "protein",
+      "per_100g": { "calories": 164, "protein_g": 9, "carbs_g": 27, "fat_g": 2.6, "fiber_g": 8, "sodium_mg": 7 },
+      "common_portions": [{ "name": "cup", "grams": 164 }]
+    },
+    {
+      "id": "lentils",
+      "name": "Lentils",
+      "aliases": ["cooked lentils", "red lentils", "green lentils"],
+      "category": "protein",
+      "per_100g": { "calories": 116, "protein_g": 9, "carbs_g": 20, "fat_g": 0.4, "fiber_g": 8, "sodium_mg": 2 },
+      "common_portions": [{ "name": "cup", "grams": 198 }]
+    },
+    {
+      "id": "couscous",
+      "name": "Couscous",
+      "aliases": ["israeli couscous"],
+      "category": "grains",
+      "per_100g": { "calories": 112, "protein_g": 3.8, "carbs_g": 23, "fat_g": 0.2, "fiber_g": 1.4, "sodium_mg": 5 },
+      "common_portions": [{ "name": "cup", "grams": 157 }]
+    },
+    {
+      "id": "protein_bar",
+      "name": "Protein Bar",
+      "aliases": ["energy bar", "nutrition bar"],
+      "category": "snacks",
+      "per_100g": { "calories": 380, "protein_g": 30, "carbs_g": 35, "fat_g": 12, "fiber_g": 5, "sodium_mg": 200 },
+      "common_portions": [{ "name": "bar", "grams": 60 }]
+    },
+    {
+      "id": "beef_jerky",
+      "name": "Beef Jerky",
+      "aliases": ["jerky"],
+      "category": "snacks",
+      "per_100g": { "calories": 410, "protein_g": 33, "carbs_g": 11, "fat_g": 25, "sodium_mg": 2081 },
+      "common_portions": [{ "name": "piece", "grams": 20 }, { "name": "bag", "grams": 85 }]
+    }
+  ]
+}

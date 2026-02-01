@@ -17,6 +17,8 @@ export {
   selectTopLevers,
   computeFeatureScores,
   runScoringPipeline,
+  computeHarmonyIndex,
+  getStylePreferenceFromAppearance,
 } from './scoring';
 
 // Adapter (high-level analysis function)
