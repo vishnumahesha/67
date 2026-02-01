@@ -17,7 +17,6 @@ import {
   PhotoQualityWarnings,
   FeatureDetailModal,
   Button,
-  Top3Levers,
   AppearanceProfileCard,
 } from '@/components';
 import { CONFIDENCE_LABELS, SCORE_CONTEXT } from '@/constants';
@@ -180,16 +179,7 @@ export default function ResultsScreen() {
           />
         </Animated.View>
 
-        {/* Top 3 Levers - Section 4 */}
-        <Animated.View entering={FadeIn.delay(400)} style={styles.leversSection}>
-          <Top3Levers
-            levers={result.potential.top3Levers}
-            totalGain={result.potential.totalPossibleGain}
-            timelineToFull={result.potential.timelineToFullPotential}
-          />
-        </Animated.View>
-
-        {/* Photo Quality - Section 5 */}
+        {/* Photo Quality - Section 4 */}
         <Animated.View entering={FadeIn.delay(500)} style={styles.qualitySection}>
           <ConfidenceBadge
             confidence={result.overall.confidence}
@@ -300,35 +290,6 @@ export default function ResultsScreen() {
             </Animated.View>
           </View>
         </View>
-
-        {/* Improvement Deltas (Premium) */}
-        {premiumEnabled && result.potential.deltas.length > 0 && (
-          <View style={styles.deltasSection}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>All Improvement Opportunities</Text>
-              <Text style={styles.sectionSubtitle}>
-                Ranked by impact potential
-              </Text>
-            </View>
-            <View style={styles.deltasList}>
-              {result.potential.deltas.map((delta, idx) => (
-                <View key={delta.lever} style={styles.deltaCard}>
-                  <View style={styles.deltaHeader}>
-                    <Text style={styles.deltaLever}>{delta.lever}</Text>
-                    <View style={styles.deltaBadge}>
-                      <Text style={styles.deltaBadgeText}>+{delta.delta.toFixed(1)}</Text>
-                    </View>
-                  </View>
-                  <Text style={styles.deltaIssue}>{delta.currentIssue}</Text>
-                  <View style={styles.deltaFooter}>
-                    <Text style={styles.deltaTimeline}>⏱️ {delta.timeline}</Text>
-                    <Text style={styles.deltaDifficulty}>{delta.difficulty}</Text>
-                  </View>
-                </View>
-              ))}
-            </View>
-          </View>
-        )}
 
         {/* Premium Upsell */}
         {!premiumEnabled && (
