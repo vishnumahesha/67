@@ -26,11 +26,18 @@ import {
   RatioMeasurement,
   SymmetryScore,
 } from './types';
-import { calculateScores, assessPhotoQuality, CALIBRATION } from './scoring';
+import {
+  computePhotoQuality,
+  runScoringPipeline,
+  computeFeatureScores,
+} from './scoring';
+
+// Target mean for calibration display
+const TARGET_MEAN = 5.5;
 
 // ============ FEATURE TEMPLATES ============
 
-const FEATURE_TEMPLATES: Record<FeatureKey, {
+export const FEATURE_TEMPLATES: Record<FeatureKey, {
   label: string;
   traits: string[];
   defaultStrengths: string[];
@@ -220,7 +227,7 @@ const FEATURE_TEMPLATES: Record<FeatureKey, {
 
 // ============ STYLE RECOMMENDATIONS ============
 
-const STYLE_BY_FACE_SHAPE: Record<string, StyleTips> = {
+export const STYLE_BY_FACE_SHAPE: Record<string, StyleTips> = {
   oval: {
     haircuts: ['Most styles work well', 'Can experiment freely', 'Avoid completely covering forehead'],
     glasses: ['Most frame shapes complement', 'Avoid overly large frames that overwhelm'],
@@ -268,7 +275,6 @@ const STYLE_BY_FACE_SHAPE: Record<string, StyleTips> = {
 // ============ MOCK MEASUREMENTS ============
 
 function generateMockMeasurements(): Measurements {
-  // Generate realistic mock measurements when no actual data available
   const generateRatio = (mean: number, std: number): number => {
     return mean + (Math.random() - 0.5) * std * 2;
   };
@@ -312,7 +318,7 @@ function generateMockMeasurements(): Measurements {
   ];
 
   const symmetry: SymmetryScore = {
-    overall: 5.5 + (Math.random() - 0.5) * 2,
+    overall: 0.55 + (Math.random() - 0.5) * 0.2,
     eyeHeightDelta: Math.random() * 0.03,
     mouthCornerDelta: Math.random() * 0.02,
     noseDeviation: Math.random() * 0.02,
@@ -325,70 +331,55 @@ function generateMockMeasurements(): Measurements {
 
 // ============ MAIN ADAPTER FUNCTION ============
 
-export async function analyzeface(input: AnalysisInput): Promise<FaceAnalysisResponse> {
+export async function analyzeFace(input: AnalysisInput): Promise<FaceAnalysisResponse> {
   const { frontImage, sideImage, sexMode, stylePreference = 'neutral' } = input;
 
   // Step 1: Assess photo quality
-  const qualityAssessment = assessPhotoQuality(frontImage, sideImage);
-  
-  const photoQuality: PhotoQuality = {
-    score: qualityAssessment.combined,
-    issues: [],
-    canProceed: qualityAssessment.combined >= 0.35,
-    warnings: [],
-  };
+  const photoQuality = computePhotoQuality({
+    sideProvided: !!sideImage,
+    brightness: 0.6,
+    sharpness: 0.7,
+    faceSize: 0.4,
+    headTilt: 0,
+    expressionNeutral: true,
+    hairObstructing: false,
+    glassesPresent: false,
+    faceCount: 1,
+  });
 
-  if (!sideImage) {
-    photoQuality.issues.push('side_missing');
-    photoQuality.warnings.push('Side profile not provided - jaw/chin analysis limited');
-  }
-  if (qualityAssessment.combined < 0.6) {
-    photoQuality.warnings.push('Photo quality may affect accuracy of some measurements');
-  }
-
-  // Step 2: Generate or get measurements
+  // Step 2: Generate measurements (in production, would use actual landmark detection)
   const measurements = generateMockMeasurements();
 
-  // Step 3: Try external API (placeholder - would call actual API)
-  let externalResult: Partial<FaceAnalysisResponse> | undefined;
-  try {
-    // In production: externalResult = await callExternalApi(frontImage, sideImage);
-    externalResult = undefined; // Placeholder
-  } catch {
-    console.log('External API unavailable, using internal scoring only');
-  }
-
-  // Step 4: Run scoring engine
+  // Step 3: Run scoring pipeline
   const scoringInput: ScoringInput = {
     measurements,
     photoQuality,
     sideProvided: !!sideImage,
     sexMode,
     stylePreference,
-    externalApiResult: externalResult,
   };
 
-  const scoringOutput = calculateScores(scoringInput);
+  const scoringOutput = runScoringPipeline(scoringInput);
 
-  // Step 5: Determine face shape
+  // Step 4: Determine face shape
   const faceShape = determineFaceShape(measurements);
 
-  // Step 6: Build feature breakdowns
+  // Step 5: Build feature breakdowns
   const features = buildFeatures(scoringOutput, photoQuality);
 
-  // Step 7: Get style recommendations
+  // Step 6: Get style recommendations
   const styleTips = STYLE_BY_FACE_SHAPE[faceShape.label] || STYLE_BY_FACE_SHAPE.oval;
 
-  // Step 8: Build overall score
+  // Step 7: Build overall score
   const overall: OverallScore = {
     currentScore10: scoringOutput.overallCurrent,
     potentialScoreRange: scoringOutput.overallPotential,
     confidence: photoQuality.score > 0.7 ? 'medium' : 'low',
     summary: generateSummary(scoringOutput.overallCurrent, scoringOutput.overallPotential, faceShape),
-    calibrationNote: `Scores calibrated to realistic distribution (average ~${CALIBRATION.TARGET_MEAN}). Most people score 4.5-6.5.`,
+    calibrationNote: `Scores calibrated to realistic distribution (average ~${TARGET_MEAN}). Most people score 4.5-6.5.`,
   };
 
-  // Step 9: Build safety section
+  // Step 8: Build safety section
   const safety: Safety = {
     disclaimer: 'Results are estimates based on general aesthetic guidelines. Individual perception varies. This is not a judgment of worth or beauty.',
     tone: 'neutral',
@@ -399,7 +390,7 @@ export async function analyzeface(input: AnalysisInput): Promise<FaceAnalysisRes
     ],
   };
 
-  // Step 10: Assemble final response
+  // Step 9: Assemble final response
   const response: FaceAnalysisResponse = {
     analysisId: generateId(),
     timestamp: new Date().toISOString(),
@@ -425,9 +416,8 @@ function determineFaceShape(measurements: Measurements): FaceShape {
   const jtc = measurements.ratios.find(r => r.key === 'jaw_to_cheek_ratio')?.value || 0.82;
 
   let label: FaceShape['label'] = 'oval';
-  let confidence: ConfidenceLevel = 'medium';
+  const confidence: ConfidenceLevel = 'medium';
 
-  // Simplified classification logic
   if (fwh > 0.72) {
     label = jtc > 0.85 ? 'square' : 'round';
   } else if (fwh < 0.62) {
@@ -458,7 +448,7 @@ function buildFeatures(scoringOutput: any, photoQuality: PhotoQuality): Feature[
     );
 
     // Calculate feature score
-    let featureScore = CALIBRATION.TARGET_MEAN;
+    let featureScore = TARGET_MEAN;
     let confidence: ConfidenceLevel = 'medium';
     
     if (relevantScores.length > 0) {
@@ -544,7 +534,3 @@ function generateFeatureWhy(key: FeatureKey, score: number, confidence: Confiden
 function generateId(): string {
   return `fa_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 }
-
-// ============ EXPORTS ============
-
-export { FEATURE_TEMPLATES, STYLE_BY_FACE_SHAPE };

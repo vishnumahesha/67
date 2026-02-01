@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aesthetics Analyzer - AI-Powered Face & Body Analysis</title>
+  <title>LifeMAX - See Your Current Self. Unlock Your Potential.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1672,39 +1672,61 @@
       margin-bottom: 3rem;
     }
 
+    /* Expandable Feature Cards */
     .feature-result-card {
       background: var(--surface);
       border-radius: 16px;
-      padding: 1.5rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(139, 92, 246, 0.03);
-      transition: all 0.3s;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      cursor: pointer;
     }
 
     .feature-result-card:hover {
-      box-shadow: 0 0 30px rgba(139, 92, 246, 0.2), inset 0 0 25px rgba(139, 92, 246, 0.05);
-      border-color: rgba(139, 92, 246, 0.2);
+      border-color: rgba(139, 92, 246, 0.3);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.15);
     }
 
     .feature-result-card.body-mode:hover {
-      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2), inset 0 0 25px rgba(16, 185, 129, 0.05);
-      border-color: rgba(16, 185, 129, 0.2);
+      border-color: rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+    }
+
+    .feature-result-card.expanded {
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.2);
+    }
+
+    .feature-result-card.body-mode.expanded {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+    }
+
+    .feature-collapsed {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .feature-result-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      flex: 1;
     }
 
     .feature-result-name {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .feature-result-score {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--primary);
     }
@@ -1713,24 +1735,401 @@
       color: var(--success);
     }
 
+    .feature-expand-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-result-card.expanded .feature-expand-icon {
+      transform: rotate(180deg);
+    }
+
     .feature-result-bar {
-      height: 8px;
+      height: 6px;
       background: var(--surface-light);
-      border-radius: 4px;
+      border-radius: 3px;
       overflow: hidden;
-      margin-bottom: 1rem;
+      margin: 0 1.5rem 0.5rem;
     }
 
     .feature-result-fill {
       height: 100%;
-      border-radius: 4px;
+      border-radius: 3px;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+      transition: width 0.5s ease;
     }
 
     .feature-result-card.body-mode .feature-result-fill {
       background: linear-gradient(90deg, var(--success), var(--accent));
       box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+    }
+
+    /* Expanded Content */
+    .feature-expanded-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+
+    .feature-result-card.expanded .feature-expanded-content {
+      max-height: 1500px;
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .feature-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .feature-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-evidence {
+      background: var(--surface-light);
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      border-left: 3px solid var(--primary);
+    }
+
+    .feature-result-card.body-mode .feature-evidence {
+      border-left-color: var(--success);
+    }
+
+    .feature-strengths-list, .feature-limits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-strengths-list li {
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--success);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .feature-strengths-list li:last-child {
+      border-bottom: none;
+    }
+
+    .feature-limits-list li {
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      color: var(--warning);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .feature-limits-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Fixes/Actions */
+    .feature-fixes {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .feature-fix-item {
+      background: var(--surface-light);
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .feature-fix-item:hover {
+      border-color: rgba(139, 92, 246, 0.2);
+    }
+
+    .feature-fix-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-fix-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .feature-fix-delta {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .feature-fix-meta {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .feature-fix-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: var(--text-muted);
+    }
+
+    .feature-fix-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-fix-steps li {
+      padding: 0.35rem 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .feature-fix-steps li::before {
+      content: '•';
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Product Recommendations Button */
+    .feature-recommend-btn {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(139, 92, 246, 0.05));
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 10px;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .feature-recommend-btn:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.1));
+      border-color: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .feature-result-card.body-mode .feature-recommend-btn {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+      border-color: rgba(16, 185, 129, 0.3);
+      color: var(--success);
+    }
+
+    .feature-result-card.body-mode .feature-recommend-btn:hover {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.1));
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    /* Recommendations Modal */
+    .recommend-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .recommend-modal.active {
+      display: flex;
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .recommend-modal-content {
+      background: var(--surface);
+      border-radius: 20px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      box-shadow: 0 0 60px rgba(139, 92, 246, 0.3);
+      animation: modalSlideIn 0.3s ease;
+    }
+
+    @keyframes modalSlideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .recommend-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .recommend-modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .recommend-modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface-light);
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .recommend-modal-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #EF4444;
+    }
+
+    .recommend-modal-body {
+      padding: 1.5rem;
+    }
+
+    .recommend-loading {
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .recommend-loading .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid var(--surface-light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    .recommend-product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .recommend-product {
+      background: var(--surface-light);
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .recommend-product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .recommend-product-name {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .recommend-product-type {
+      font-size: 0.75rem;
+      color: var(--primary);
+      background: rgba(139, 92, 246, 0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    .recommend-product-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+
+    .recommend-product-tips {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .recommend-disclaimer {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 3px solid var(--warning);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .feature-confidence-badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    .feature-confidence-badge.high {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+    }
+
+    .feature-confidence-badge.medium {
+      background: rgba(99, 102, 241, 0.15);
+      color: #818CF8;
+    }
+
+    .feature-confidence-badge.low {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
     }
 
     .feature-result-notes {
@@ -2929,7 +3328,7 @@
     <div class="nav-container">
       <a href="#" class="logo">
         <span class="logo-icon">✨</span>
-        Aesthetics Analyzer
+        LifeMAX
       </a>
       <ul class="nav-links">
         <li><a href="#" data-page="home" class="active">Home</a></li>
@@ -2970,7 +3369,7 @@
         </div>
         <h1>Discover Your <span class="highlight">True Potential</span></h1>
         <p class="hero-description">
-          Get honest, calibrated analysis of your face and body with your current score, realistic potential, and a clear action plan. No score inflation – just evidence-based insights.
+          See your current self. Unlock your potential.
         </p>
         <div class="hero-buttons">
           <a href="#" data-page="analyze" data-scan-type="face" class="btn btn-primary">
@@ -3574,11 +3973,11 @@
   <footer>
     <div class="footer-content">
       <div class="footer-logo">
-        <span>✨</span> Aesthetics Analyzer
+        <span>✨</span> LifeMAX
       </div>
       <p class="footer-text">
         AI-powered face and body aesthetics analysis. Results are estimates based on general guidelines.<br>
-        © 2026 Aesthetics Analyzer. Built for demonstration purposes.
+        © 2026 LifeMAX. Built for demonstration purposes.
       </p>
     </div>
   </footer>
@@ -3591,7 +3990,7 @@
     let currentScanType = 'face'; // 'face' or 'body'
     // For local testing use: 'http://localhost:3001'
     // For mobile/public testing, use the tunnel URL:
-    const API_URL = 'https://slimy-deer-buy.loca.lt';
+    const API_URL = 'http://localhost:3001';
 
     // Scroll to top on page load
     window.onload = function() {
@@ -4093,28 +4492,95 @@
         `;
       }).join('');
 
-      // Features
+      // Features - Expandable Cards
       const featuresContainer = document.getElementById('features-results');
       const features = data.features || [];
-      featuresContainer.innerHTML = features.map(feature => {
+      featuresContainer.innerHTML = features.map((feature, idx) => {
         const featureColor = getScoreColor(feature.rating10);
-        const holdingBack = feature.holdingBack || feature.limitations || feature.imperfections || [];
-        const confidenceIcon = feature.confidence === 'high' ? '🟢' : feature.confidence === 'low' ? '🟡' : '🔵';
+        const holdingBack = feature.holdingBack || feature.limitations || feature.whatLimitsIt || feature.imperfections || [];
+        const strengths = feature.strengths || [];
+        const fixes = feature.fixes || feature.actions || [];
+        const evidence = feature.evidence || feature.why || '';
+        const featureKey = feature.key || feature.label || 'feature';
+        
+        // Generate detailed explanation based on the feature
+        const detailedExplanation = generateFeatureExplanation(feature, isBody);
+        
         return `
-          <div class="feature-result-card ${isBody ? 'body-mode' : ''}">
-            <div class="feature-result-header">
-              <span class="feature-result-name">${feature.label || feature.key}</span>
-              <span class="feature-result-score" style="color: ${featureColor}">${feature.rating10.toFixed(1)}/10</span>
+          <div class="feature-result-card ${isBody ? 'body-mode' : ''}" data-feature-key="${featureKey}" onclick="toggleFeatureCard(this)">
+            <div class="feature-collapsed">
+              <div class="feature-result-header">
+                <span class="feature-result-name">
+                  ${getFeatureIcon(featureKey)} ${feature.label || feature.key}
+                  ${feature.confidence ? `<span class="feature-confidence-badge ${feature.confidence}">${feature.confidence}</span>` : ''}
+                </span>
+                <span class="feature-result-score" style="color: ${featureColor}">${feature.rating10.toFixed(1)}/10</span>
+              </div>
+              <span class="feature-expand-icon">▼</span>
             </div>
             <div class="feature-result-bar">
               <div class="feature-result-fill" style="width: ${feature.rating10 * 10}%; background: linear-gradient(90deg, ${featureColor}, ${featureColor}99);"></div>
             </div>
-            ${feature.confidence ? `<div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">${confidenceIcon} ${feature.confidence} confidence</div>` : ''}
-            ${feature.evidence ? `<div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem; background: var(--surface-light); padding: 0.5rem; border-radius: 6px;"><strong>Why:</strong> ${feature.evidence}</div>` : ''}
-            <ul class="feature-result-notes">
-              ${(feature.strengths || []).slice(0, 2).map(s => `<li style="color: var(--success);">✓ ${s}</li>`).join('')}
-              ${holdingBack.slice(0, 1).map(i => `<li style="color: var(--text-muted);">• ${i}</li>`).join('')}
-            </ul>
+            
+            <div class="feature-expanded-content">
+              <!-- Why This Score -->
+              <div class="feature-section">
+                <div class="feature-section-title">📊 Why This Score</div>
+                <div class="feature-evidence">${detailedExplanation}</div>
+              </div>
+              
+              ${strengths.length > 0 ? `
+              <!-- Strengths -->
+              <div class="feature-section">
+                <div class="feature-section-title">✅ What's Working</div>
+                <ul class="feature-strengths-list">
+                  ${strengths.map(s => `<li><span>✓</span> ${s}</li>`).join('')}
+                </ul>
+              </div>
+              ` : ''}
+              
+              ${holdingBack.length > 0 ? `
+              <!-- What Limits It -->
+              <div class="feature-section">
+                <div class="feature-section-title">⚠️ What's Limiting This</div>
+                <ul class="feature-limits-list">
+                  ${holdingBack.map(l => `<li><span>→</span> ${l}</li>`).join('')}
+                </ul>
+              </div>
+              ` : ''}
+              
+              ${fixes.length > 0 ? `
+              <!-- How to Improve -->
+              <div class="feature-section">
+                <div class="feature-section-title">🎯 How to Improve</div>
+                <div class="feature-fixes">
+                  ${fixes.slice(0, 3).map(fix => `
+                    <div class="feature-fix-item">
+                      <div class="feature-fix-header">
+                        <span class="feature-fix-title">${fix.title || fix.name || fix}</span>
+                        ${fix.delta ? `<span class="feature-fix-delta">+${fix.delta.toFixed(1)}</span>` : ''}
+                      </div>
+                      <div class="feature-fix-meta">
+                        <span>⏱️ ${fix.timeline || fix.time || '2-4 weeks'}</span>
+                        <span>📈 ${fix.difficulty || 'Easy'}</span>
+                        ${fix.type ? `<span>💰 ${fix.type.replace('_', ' ')}</span>` : ''}
+                      </div>
+                      ${fix.steps && fix.steps.length > 0 ? `
+                      <ul class="feature-fix-steps">
+                        ${fix.steps.slice(0, 4).map(step => `<li>${step}</li>`).join('')}
+                      </ul>
+                      ` : ''}
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              ` : ''}
+              
+              <!-- Get Product Recommendations -->
+              <button class="feature-recommend-btn" onclick="event.stopPropagation(); openRecommendModal('${featureKey}', '${feature.label || feature.key}', ${feature.rating10})">
+                🛒 Get Product & Routine Recommendations
+              </button>
+            </div>
           </div>
         `;
       }).join('');
@@ -4762,6 +5228,493 @@
       // Display progress gallery
       displayProgressGallery();
     };
+
+    // ====== EXPANDABLE FEATURE CARDS ======
+
+    // Toggle feature card expansion
+    window.toggleFeatureCard = function(card) {
+      const wasExpanded = card.classList.contains('expanded');
+      
+      // Close all other cards
+      document.querySelectorAll('.feature-result-card.expanded').forEach(c => {
+        if (c !== card) c.classList.remove('expanded');
+      });
+      
+      // Toggle this card
+      card.classList.toggle('expanded');
+      
+      // Scroll into view if expanding
+      if (!wasExpanded) {
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    };
+
+    // Get icon for feature
+    function getFeatureIcon(key) {
+      const icons = {
+        skin: '✨',
+        eye_area: '👁️',
+        eyes: '👁️',
+        nose: '👃',
+        lips: '👄',
+        jawline: '💎',
+        jaw: '💎',
+        cheekbones: '🌟',
+        hair: '💇',
+        brows: '🪮',
+        harmony: '⚖️',
+        symmetry: '⚖️',
+        posture: '🧘',
+        v_taper: '💪',
+        vtaper: '💪',
+        muscle_balance: '🏋️',
+        core: '🎯',
+        overall_proportions: '📐',
+        lean_mass: '💪',
+        body_fat: '📊'
+      };
+      return icons[key.toLowerCase().replace(/ /g, '_')] || '📊';
+    }
+
+    // Generate detailed explanation for a feature
+    function generateFeatureExplanation(feature, isBody = false) {
+      const key = (feature.key || feature.label || '').toLowerCase().replace(/ /g, '_');
+      const score = feature.rating10;
+      const scoreLevel = score >= 7 ? 'above average' : score >= 5 ? 'average' : 'below average';
+      
+      // If feature has evidence/why, use it
+      if (feature.evidence) return feature.evidence;
+      if (feature.why && typeof feature.why === 'string') return feature.why;
+      if (feature.why && Array.isArray(feature.why)) return feature.why.join(' ');
+      
+      // Generate contextual explanation based on feature type
+      const explanations = {
+        skin: {
+          high: `Your skin texture and clarity score ${scoreLevel} at ${score.toFixed(1)}. This indicates good skin health with minimal visible concerns. Your skin tone appears even, and texture looks smooth. Maintaining your current routine is working well, though there's always room for optimization.`,
+          mid: `Your skin scores ${score.toFixed(1)}/10, which is ${scoreLevel}. There may be some unevenness in skin tone or minor texture concerns visible. These are common and highly improvable with a consistent skincare routine. Photo lighting can also affect this assessment.`,
+          low: `Your skin currently scores ${score.toFixed(1)}/10. There appear to be visible concerns like uneven tone, texture irregularities, or minor blemishes. The good news: skin is one of the most modifiable features. A targeted routine can improve this significantly within 4-8 weeks.`
+        },
+        eye_area: {
+          high: `Your eye area scores ${score.toFixed(1)}/10 (${scoreLevel}). Eye spacing is proportionate, with good clarity in the sclera and minimal under-eye concerns. The palpebral fissure (eye opening) appears balanced and well-defined.`,
+          mid: `Your eye area scores ${score.toFixed(1)}/10, which is ${scoreLevel}. Eye proportions are within normal ranges. There may be slight under-eye shadows or minor asymmetry, which is extremely common. Lifestyle factors like sleep and hydration significantly impact this area.`,
+          low: `Your eye area currently scores ${score.toFixed(1)}/10. There may be noticeable under-eye circles, puffiness, or spacing concerns. This area is heavily influenced by sleep quality, hydration, and genetics. Many improvements are possible through lifestyle changes.`
+        },
+        eyes: {
+          high: `Your eyes score ${score.toFixed(1)}/10 (${scoreLevel}). Eye shape, spacing, and symmetry are favorable. The canthal tilt (eye angle) appears balanced, contributing to overall facial harmony.`,
+          mid: `Your eyes score ${score.toFixed(1)}/10. Eye proportions fall within typical ranges with minor variations. Small asymmetries are completely normal—perfect symmetry doesn't exist naturally.`,
+          low: `Your eyes score ${score.toFixed(1)}/10. There may be spacing or proportion concerns affecting this score. Remember that lighting and photo angle significantly impact eye measurements.`
+        },
+        nose: {
+          high: `Your nose scores ${score.toFixed(1)}/10 (${scoreLevel}). Nasal width to face ratio is proportionate, and the bridge appears well-defined. This contributes positively to overall facial harmony.`,
+          mid: `Your nose scores ${score.toFixed(1)}/10. Proportions are within typical ranges. The nose-to-face width ratio is acceptable, though minor variations exist. Contouring techniques can enhance appearance for photos if desired.`,
+          low: `Your nose currently scores ${score.toFixed(1)}/10. The width-to-face ratio may fall outside typical ranges. Note that nose projection and profile cannot be fully assessed without a side photo. Photo angle also significantly affects nasal appearance.`
+        },
+        lips: {
+          high: `Your lips score ${score.toFixed(1)}/10 (${scoreLevel}). Lip fullness and definition appear proportionate, with good vermillion border visibility. The upper-to-lower lip ratio is balanced.`,
+          mid: `Your lips score ${score.toFixed(1)}/10. Proportions are typical, with room for enhancement through hydration and care. The philtrum and cupid's bow contribute to overall lip aesthetics.`,
+          low: `Your lips score ${score.toFixed(1)}/10. There may be concerns with fullness, definition, or symmetry. Lip care routines and proper hydration can noticeably improve lip appearance.`
+        },
+        jawline: {
+          high: `Your jawline scores ${score.toFixed(1)}/10 (${scoreLevel}). Good jaw definition is visible, with a favorable jaw-to-face width ratio. This provides strong facial structure.`,
+          mid: `Your jawline scores ${score.toFixed(1)}/10. Definition is average, which is affected by body composition, posture, and photo lighting. A side profile photo would provide more accurate assessment.`,
+          low: `Your jawline currently scores ${score.toFixed(1)}/10. Definition may be obscured by lighting, angle, or body composition factors. Posture exercises and body recomposition can significantly improve jaw appearance. Note: without a side photo, this assessment has lower confidence.`
+        },
+        cheekbones: {
+          high: `Your cheekbones score ${score.toFixed(1)}/10 (${scoreLevel}). Good prominence and positioning contribute to facial structure and light reflection, creating attractive shadows.`,
+          mid: `Your cheekbones score ${score.toFixed(1)}/10. Prominence is average, which is typical. Cheekbone visibility is heavily affected by lighting conditions and can be enhanced with contouring for photos.`,
+          low: `Your cheekbones score ${score.toFixed(1)}/10. Prominence assessment is difficult from photos and heavily lighting-dependent. Body composition changes can reveal more cheekbone definition over time.`
+        },
+        hair: {
+          high: `Your hair scores ${score.toFixed(1)}/10 (${scoreLevel}). Current style complements your face shape well, with good volume and health appearance.`,
+          mid: `Your hair scores ${score.toFixed(1)}/10. There's opportunity to optimize your style for your face shape. Hair is one of the highest-impact, quickest-to-change features.`,
+          low: `Your hair currently scores ${score.toFixed(1)}/10. Style or presentation may not be optimized for your face shape. This is excellent news—hair is the #1 most improvable feature with immediate results.`
+        },
+        harmony: {
+          high: `Your facial harmony scores ${score.toFixed(1)}/10 (${scoreLevel}). Features work well together with good proportion relationships and symmetry within normal ranges.`,
+          mid: `Your facial harmony scores ${score.toFixed(1)}/10. Overall proportions are typical with minor variations. Perfect harmony is rare—most faces have small asymmetries that add character.`,
+          low: `Your facial harmony currently scores ${score.toFixed(1)}/10. There may be proportion imbalances affecting the overall aesthetic. Individual feature improvements often improve harmony scores as well.`
+        },
+        posture: {
+          high: `Your posture scores ${score.toFixed(1)}/10 (${scoreLevel}). Good spinal alignment and shoulder positioning are visible, which enhances overall body presentation.`,
+          mid: `Your posture scores ${score.toFixed(1)}/10. There's room for improvement in alignment. Posture significantly impacts how physique is perceived and is highly improvable with consistent effort.`,
+          low: `Your posture currently scores ${score.toFixed(1)}/10. Forward head position or rounded shoulders may be present. The good news: posture is 100% trainable with targeted exercises over 2-4 weeks.`
+        },
+        v_taper: {
+          high: `Your V-taper scores ${score.toFixed(1)}/10 (${scoreLevel}). Shoulder-to-waist ratio is favorable, creating an athletic silhouette.`,
+          mid: `Your V-taper scores ${score.toFixed(1)}/10. The shoulder-to-waist ratio is average. Building lat width and reducing waist circumference can improve this ratio.`,
+          low: `Your V-taper currently scores ${score.toFixed(1)}/10. The shoulder-to-waist ratio has room for improvement. This is a trainable metric through targeted lat development and body recomposition.`
+        }
+      };
+
+      // Find matching explanation
+      const level = score >= 7 ? 'high' : score >= 5 ? 'mid' : 'low';
+      for (const [k, v] of Object.entries(explanations)) {
+        if (key.includes(k)) return v[level];
+      }
+
+      // Default explanation
+      return `This feature scores ${score.toFixed(1)}/10, which is ${scoreLevel} based on our calibrated scoring system (where 5.5 is average). ${
+        score >= 6 ? 'This is a relative strength.' : 
+        score >= 4.5 ? 'This falls within typical ranges with room for enhancement.' : 
+        'There are clear opportunities for improvement in this area.'
+      } Click "Get Recommendations" below for specific products and routines to optimize this feature.`;
+    }
+
+    // Open recommendation modal
+    window.openRecommendModal = function(featureKey, featureLabel, featureScore) {
+      const modal = document.getElementById('recommend-modal');
+      const modalTitle = document.getElementById('recommend-modal-title');
+      const modalBody = document.getElementById('recommend-modal-body');
+      
+      modalTitle.innerHTML = `<span>🛒</span> ${featureLabel} Recommendations`;
+      
+      // Show loading state
+      modalBody.innerHTML = `
+        <div class="recommend-loading">
+          <div class="spinner"></div>
+          <p>Generating personalized recommendations...</p>
+        </div>
+      `;
+      
+      modal.classList.add('active');
+      
+      // Generate recommendations
+      setTimeout(() => {
+        const recommendations = generateProductRecommendations(featureKey, featureScore);
+        displayRecommendations(modalBody, recommendations, featureKey);
+      }, 1200);
+    };
+
+    // Close recommendation modal
+    window.closeRecommendModal = function() {
+      document.getElementById('recommend-modal').classList.remove('active');
+    };
+
+    // Generate product recommendations based on feature
+    function generateProductRecommendations(featureKey, score) {
+      const key = featureKey.toLowerCase().replace(/ /g, '_');
+      
+      const recommendations = {
+        skin: [
+          {
+            name: 'Gentle Cleanser (CeraVe, La Roche-Posay, or Vanicream)',
+            type: 'Essential',
+            description: 'Start with a gentle, non-stripping cleanser. Avoid harsh sulfates. Use morning and night as the foundation of your routine.',
+            tips: 'Look for "for sensitive skin" labels. Foam or gel for oily skin, cream for dry skin.'
+          },
+          {
+            name: 'Niacinamide Serum (The Ordinary, Paula\'s Choice)',
+            type: 'Active',
+            description: 'Niacinamide (Vitamin B3) helps with pore appearance, uneven tone, and overall skin texture. Use daily in the morning.',
+            tips: 'Start with 5-10% concentration. Can be layered with most other products.'
+          },
+          {
+            name: 'Moisturizer with Ceramides',
+            type: 'Essential',
+            description: 'Maintains skin barrier health. Apply morning and night after serums.',
+            tips: 'CeraVe PM or Vanicream are solid affordable options. Heavier creams for dry skin, lighter lotions for oily.'
+          },
+          {
+            name: 'SPF 30+ Sunscreen (Daily)',
+            type: 'Essential',
+            description: 'The single most important anti-aging product. Protects against UV damage and prevents dark spots.',
+            tips: 'Reapply every 2 hours when outside. Look for "broad spectrum" coverage.'
+          },
+          {
+            name: 'Retinol (Start Low, Go Slow)',
+            type: 'Advanced',
+            description: 'Gold standard for skin texture and tone. Start with 0.25% retinol 2x/week, gradually increase.',
+            tips: 'Only use at night. Always use sunscreen when using retinol. Expect purging in first 2-4 weeks.'
+          }
+        ],
+        eye_area: [
+          {
+            name: 'Caffeine Eye Serum (The Ordinary, INKEY List)',
+            type: 'Targeted',
+            description: 'Caffeine reduces puffiness and temporarily tightens the under-eye area. Apply morning and night.',
+            tips: 'Keep in refrigerator for extra de-puffing effect. Pat gently, don\'t rub.'
+          },
+          {
+            name: 'Vitamin C Eye Cream',
+            type: 'Brightening',
+            description: 'Helps with dark circles by brightening the delicate under-eye skin over time.',
+            tips: 'Look for stable Vitamin C forms like ascorbyl glucoside. Use in the morning.'
+          },
+          {
+            name: 'Cold Compress or Ice Roller',
+            type: 'Tool',
+            description: 'Reduces morning puffiness and inflammation. Use for 2-3 minutes after waking.',
+            tips: 'Store in freezer. Also helps product absorption when used before serums.'
+          },
+          {
+            name: 'Sleep Optimization',
+            type: 'Lifestyle',
+            description: 'Aim for 7-9 hours consistent sleep. Nothing replaces proper rest for under-eye appearance.',
+            tips: 'Sleep on your back with head slightly elevated to reduce fluid accumulation.'
+          }
+        ],
+        eyes: [
+          {
+            name: 'Lash Serum (Grande Lash, RevitaLash)',
+            type: 'Enhancement',
+            description: 'Promotes lash growth and thickness, making eyes appear more defined.',
+            tips: 'Apply to lash line nightly. Results visible in 4-8 weeks.'
+          },
+          {
+            name: 'Brow Gel (Clear or Tinted)',
+            type: 'Grooming',
+            description: 'Well-groomed brows frame the eyes. Use to keep brows in place and add definition.',
+            tips: 'Brush upward for a lifted look. Boy Brow, NYX, or drugstore options work well.'
+          }
+        ],
+        nose: [
+          {
+            name: 'Pore Strips (Occasional Use)',
+            type: 'Treatment',
+            description: 'Can help with blackheads on nose area when used sparingly (1-2x per week max).',
+            tips: 'Don\'t overuse—can irritate skin. Follow with a BHA like salicylic acid for maintenance.'
+          },
+          {
+            name: 'Salicylic Acid Cleanser',
+            type: 'Maintenance',
+            description: 'BHA penetrates pores to keep them clear. Great for nose area where pores are often more visible.',
+            tips: 'Use 2-3x per week, not daily. Paula\'s Choice BHA is a cult favorite.'
+          },
+          {
+            name: 'Contouring Palette (For Photos)',
+            type: 'Makeup',
+            description: 'Learn basic nose contouring for photos if desired. Shade sides, highlight bridge.',
+            tips: 'Use matte products only. Blend well. For photos only—too obvious in person.'
+          }
+        ],
+        lips: [
+          {
+            name: 'Exfoliating Lip Scrub',
+            type: 'Treatment',
+            description: 'Removes dead skin for smoother, more defined lips. Use 1-2x per week.',
+            tips: 'Can DIY with sugar + honey. Be gentle—lip skin is delicate.'
+          },
+          {
+            name: 'Hydrating Lip Balm (Aquaphor, Lanolips)',
+            type: 'Essential',
+            description: 'Keep lips hydrated 24/7. Dehydrated lips look thinner and less defined.',
+            tips: 'Avoid lip balms with menthol or camphor—they can be drying long-term.'
+          },
+          {
+            name: 'Lip Sleeping Mask (Laneige)',
+            type: 'Treatment',
+            description: 'Overnight intense hydration for noticeably softer, plumper lips by morning.',
+            tips: 'Apply generous layer before bed. Game-changer for dry climates.'
+          }
+        ],
+        jawline: [
+          {
+            name: 'Gua Sha / Face Roller',
+            type: 'Tool',
+            description: 'Facial massage promotes lymphatic drainage, reducing puffiness and enhancing definition.',
+            tips: 'Use with facial oil. Stroke upward and outward. 5 minutes daily.'
+          },
+          {
+            name: 'Chin Tuck Exercises',
+            type: 'Exercise',
+            description: 'Strengthens neck muscles and improves posture, making jaw appear more defined.',
+            tips: '3 sets of 10 reps daily. Hold each rep 3 seconds. Results in 2-4 weeks.'
+          },
+          {
+            name: 'Reduce Sodium Intake',
+            type: 'Lifestyle',
+            description: 'High sodium causes water retention, softening jaw definition.',
+            tips: 'Limit processed foods. Drink more water. Notice changes in 3-7 days.'
+          },
+          {
+            name: 'Body Recomposition',
+            type: 'Long-term',
+            description: 'Lower body fat reveals underlying jaw structure. The most impactful change for jawline.',
+            tips: 'Focus on slight caloric deficit + strength training. 8-12 week timeline.'
+          }
+        ],
+        cheekbones: [
+          {
+            name: 'Contouring (Cream or Powder)',
+            type: 'Makeup',
+            description: 'Strategic shading below cheekbones creates the appearance of more prominence.',
+            tips: 'Use cool-toned shades. Blend upward. Less is more.'
+          },
+          {
+            name: 'Highlighter (Subtle)',
+            type: 'Makeup',
+            description: 'Applied to tops of cheekbones, catches light and emphasizes bone structure.',
+            tips: 'Avoid glitter. Cream highlighters look more natural. Apply after foundation.'
+          },
+          {
+            name: 'Facial Exercises',
+            type: 'Exercise',
+            description: 'Smile exercises and cheek lifts can subtly tone facial muscles over time.',
+            tips: 'Results are subtle but cumulative. Consistency matters more than intensity.'
+          }
+        ],
+        hair: [
+          {
+            name: 'Face Shape Analysis Haircut',
+            type: 'Service',
+            description: 'Consult a stylist about cuts that complement your face shape. Show them reference photos.',
+            tips: 'Bring 3-5 photos of styles you like. Ask about maintenance requirements.'
+          },
+          {
+            name: 'Quality Styling Products',
+            type: 'Essential',
+            description: 'The right product makes a huge difference. Pomade for control, clay for texture, sea salt spray for volume.',
+            tips: 'Start with small amounts. Hanz de Fuko, Baxter, or Suavecito are solid options.'
+          },
+          {
+            name: 'Regular Trims (Every 4-6 Weeks)',
+            type: 'Maintenance',
+            description: 'Keeps your cut looking fresh and intentional rather than grown-out.',
+            tips: 'Find a barber/stylist you trust and stick with them. Communication is key.'
+          }
+        ],
+        harmony: [
+          {
+            name: 'Consistent Skincare Across Face',
+            type: 'Routine',
+            description: 'Even skin tone across all features improves overall harmony perception.',
+            tips: 'Don\'t neglect forehead, temples, and jawline in your routine.'
+          },
+          {
+            name: 'Brow Shaping',
+            type: 'Grooming',
+            description: 'Well-shaped brows that suit your face significantly improve perceived harmony.',
+            tips: 'Professional shaping first, then maintain at home. Don\'t over-pluck.'
+          },
+          {
+            name: 'Photo Angle Practice',
+            type: 'Skill',
+            description: 'Learning your best angles for photos can dramatically improve how your features appear together.',
+            tips: 'Slight chin forward, camera at eye level or slightly above. Find your "better side."'
+          }
+        ],
+        posture: [
+          {
+            name: 'Posture Corrector (Short-term)',
+            type: 'Tool',
+            description: 'Trains muscle memory for proper alignment. Use 30 min/day while building strength.',
+            tips: 'Don\'t rely on it forever—use it to learn the feeling of proper posture.'
+          },
+          {
+            name: 'Chin Tuck & Wall Angel Exercises',
+            type: 'Exercise',
+            description: 'Strengthens the muscles needed to maintain good posture naturally.',
+            tips: 'Chin tucks: 3x10 daily. Wall angels: 2x15 daily. Results in 2-4 weeks.'
+          },
+          {
+            name: 'Ergonomic Workspace Setup',
+            type: 'Environment',
+            description: 'Monitor at eye level, keyboard at elbow height. Prevents posture degradation during work.',
+            tips: 'Consider a standing desk converter. Take movement breaks every 30 minutes.'
+          }
+        ],
+        v_taper: [
+          {
+            name: 'Lat-Focused Training',
+            type: 'Exercise',
+            description: 'Pull-ups, lat pulldowns, and rows build width. Focus on mind-muscle connection.',
+            tips: 'Wide grip for width. 3x per week. Progressive overload over time.'
+          },
+          {
+            name: 'Core Work + Vacuum Exercises',
+            type: 'Exercise',
+            description: 'Strong core and stomach vacuums create a tighter waist, improving the V-taper ratio.',
+            tips: 'Vacuums: 3 sets of 20-30 second holds daily. Game-changer for waist tightness.'
+          },
+          {
+            name: 'Caloric Deficit (If Needed)',
+            type: 'Nutrition',
+            description: 'Reducing waist size through fat loss dramatically improves V-taper appearance.',
+            tips: '200-500 calorie deficit. High protein. Be patient—8-12 weeks minimum.'
+          }
+        ]
+      };
+
+      // Find matching recommendations
+      for (const [k, recs] of Object.entries(recommendations)) {
+        if (key.includes(k)) return recs;
+      }
+
+      // Default recommendations
+      return [
+        {
+          name: 'Consistent Daily Routine',
+          type: 'Foundation',
+          description: 'The most important factor is consistency. Pick 2-3 targeted actions and do them daily.',
+          tips: 'Track your habits. Results come from accumulated small efforts over time.'
+        },
+        {
+          name: 'Quality Sleep (7-9 Hours)',
+          type: 'Lifestyle',
+          description: 'Almost every aesthetic metric improves with better sleep. This is foundational.',
+          tips: 'Consistent sleep schedule matters more than total hours. Avoid screens before bed.'
+        },
+        {
+          name: 'Hydration (8+ Glasses Daily)',
+          type: 'Lifestyle',
+          description: 'Proper hydration improves skin, reduces puffiness, and enhances overall appearance.',
+          tips: 'Start your day with water. Carry a bottle. Add electrolytes if needed.'
+        }
+      ];
+    }
+
+    // Display recommendations in modal
+    function displayRecommendations(container, recommendations, featureKey) {
+      container.innerHTML = `
+        <div class="recommend-product-list">
+          ${recommendations.map(rec => `
+            <div class="recommend-product">
+              <div class="recommend-product-header">
+                <span class="recommend-product-name">${rec.name}</span>
+                <span class="recommend-product-type">${rec.type}</span>
+              </div>
+              <p class="recommend-product-desc">${rec.description}</p>
+              <p class="recommend-product-tips">💡 ${rec.tips}</p>
+            </div>
+          `).join('')}
+        </div>
+        <div class="recommend-disclaimer">
+          ⚠️ <strong>Disclaimer:</strong> These are general recommendations for educational purposes. 
+          Results vary by individual. Consult a dermatologist or professional for personalized advice. 
+          Always patch-test new products. We are not affiliated with any brands mentioned.
+        </div>
+      `;
+    }
+
+    // Close modal on outside click
+    document.addEventListener('click', function(e) {
+      const modal = document.getElementById('recommend-modal');
+      if (e.target === modal) {
+        closeRecommendModal();
+      }
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeRecommendModal();
+      }
+    });
   </script>
+
+  <!-- Recommendation Modal -->
+  <div id="recommend-modal" class="recommend-modal">
+    <div class="recommend-modal-content">
+      <div class="recommend-modal-header">
+        <h3 id="recommend-modal-title" class="recommend-modal-title">Recommendations</h3>
+        <button class="recommend-modal-close" onclick="closeRecommendModal()">×</button>
+      </div>
+      <div id="recommend-modal-body" class="recommend-modal-body">
+        <!-- Recommendations loaded dynamically -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>

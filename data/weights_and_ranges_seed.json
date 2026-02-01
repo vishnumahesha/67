@@ -1,372 +1,778 @@
 {
   "meta": {
-    "version": "1.0.0",
-    "description": "Scoring weights, reference ranges, and potential delta caps for face analyzer",
-    "calibration_target": {
+    "name": "weights_and_ranges_seed",
+    "version": "2.0.0",
+    "last_updated": "2026-02-01",
+    "description": "Scoring calibration, pillar weights, feature weights, reference ranges by sex, and potential model deltas"
+  },
+
+  "scoring_calibration": {
+    "target_distribution": {
       "mean": 5.5,
       "std": 1.2,
-      "note": "Scores should follow normal distribution. 68% of people score 4.3-6.7"
-    }
-  },
-
-  "pillar_weights": {
-    "neutral": {
-      "structure": 0.35,
-      "features": 0.30,
-      "skin_presentation": 0.20,
-      "harmony": 0.15
+      "min_score": 0.0,
+      "max_score": 10.0
     },
-    "masculine_leaning": {
-      "structure": 0.40,
-      "features": 0.28,
-      "skin_presentation": 0.17,
-      "harmony": 0.15
+    "score_bands": {
+      "exceptional": { "min": 8.5, "max": 10.0, "percentile_top": 2 },
+      "very_high": { "min": 7.5, "max": 8.49, "percentile_top": 10 },
+      "above_average": { "min": 6.5, "max": 7.49, "percentile_top": 30 },
+      "average": { "min": 4.5, "max": 6.49, "percentile_top": 70 },
+      "below_average": { "min": 3.5, "max": 4.49, "percentile_top": 90 },
+      "low": { "min": 0.0, "max": 3.49, "percentile_top": 100 }
     },
-    "feminine_leaning": {
-      "structure": 0.30,
-      "features": 0.33,
-      "skin_presentation": 0.22,
-      "harmony": 0.15
-    }
-  },
-
-  "pillar_trait_mapping": {
-    "structure": [
-      "face_shape_class", "face_width_to_height", "face_tapering",
-      "jaw_width", "jaw_definition", "jaw_angle", "chin_shape", "chin_projection",
-      "cheekbone_prominence", "cheekbone_width", "midface_ratio"
-    ],
-    "features": [
-      "eye_shape", "eye_size", "eye_spacing", "canthal_tilt", "eye_symmetry",
-      "brow_shape", "brow_thickness", "brow_position", "brow_grooming",
-      "nose_length", "nose_width", "nose_bridge", "nose_tip", "nose_symmetry",
-      "lip_fullness", "lip_ratio", "lip_definition", "mouth_width", "philtrum_length"
-    ],
-    "skin_presentation": [
-      "skin_texture", "skin_tone_evenness", "skin_clarity", "skin_hydration",
-      "under_eye_darkness", "under_eye_puffiness",
-      "hair_health", "hair_density", "hair_style_fit", "hair_framing",
-      "brow_grooming", "facial_hair_grooming"
-    ],
-    "harmony": [
-      "overall_harmony", "vertical_symmetry", "horizontal_thirds",
-      "golden_ratio_adherence", "proportion_harmony"
+    "zscore_to_score": {
+      "method": "sigmoid_scaled",
+      "formula": "score = 5.5 + (z * 1.2 * 1.5)",
+      "clamp_min": 0.0,
+      "clamp_max": 10.0,
+      "notes": [
+        "z=0 maps to 5.5 (mean)",
+        "z=+1 maps to ~7.3",
+        "z=-1 maps to ~3.7",
+        "z=+2 maps to ~9.1 (clamped at 10)",
+        "z=-2 maps to ~1.9 (clamped at 0)"
+      ]
+    },
+    "anti_inflation_rules": [
+      "Never give 9+ without exceptional measurements AND high confidence",
+      "Never give 8+ without above-average measurements AND medium+ confidence",
+      "Default to 5.5 when uncertain",
+      "Round scores to 1 decimal place"
     ]
   },
 
-  "reference_ranges": {
-    "ratios": {
-      "eye_spacing_ratio": { "ideal_min": 0.28, "ideal_max": 0.35, "population_mean": 0.31, "population_std": 0.04 },
-      "nose_width_ratio": { "ideal_min": 0.22, "ideal_max": 0.30, "population_mean": 0.26, "population_std": 0.03 },
-      "mouth_width_ratio": { "ideal_min": 0.38, "ideal_max": 0.50, "population_mean": 0.44, "population_std": 0.05 },
-      "face_width_to_height": { "ideal_min": 0.62, "ideal_max": 0.72, "population_mean": 0.67, "population_std": 0.05 },
-      "jaw_to_cheek_ratio": { "ideal_min": 0.75, "ideal_max": 0.90, "population_mean": 0.82, "population_std": 0.06 },
-      "philtrum_ratio": { "ideal_min": 0.28, "ideal_max": 0.38, "population_mean": 0.33, "population_std": 0.04 },
-      "midface_ratio": { "ideal_min": 0.30, "ideal_max": 0.36, "population_mean": 0.33, "population_std": 0.03 },
-      "upper_to_lower_lip": { "ideal_min": 0.40, "ideal_max": 0.60, "population_mean": 0.50, "population_std": 0.08 }
+  "dampen_low_quality": {
+    "description": "When photo quality is low, dampen extreme scores toward mean",
+    "method": "linear_interpolation_to_mean",
+    "formula": "dampened_score = lerp(mean, raw_score, quality_factor)",
+    "quality_thresholds": {
+      "block_below": 0.35,
+      "heavy_dampen_below": 0.50,
+      "light_dampen_below": 0.70,
+      "no_dampen_above": 0.70
     },
-    "angles": {
-      "canthal_tilt": { "ideal_min": 2, "ideal_max": 8, "population_mean": 4, "population_std": 3, "unit": "degrees" },
-      "jaw_angle": { "ideal_min": 110, "ideal_max": 130, "population_mean": 120, "population_std": 8, "unit": "degrees" },
-      "nasolabial_angle": { "ideal_min": 90, "ideal_max": 115, "population_mean": 102, "population_std": 10, "unit": "degrees" },
-      "cervicomental_angle": { "ideal_min": 105, "ideal_max": 120, "population_mean": 112, "population_std": 8, "unit": "degrees" }
+    "dampen_factors": {
+      "quality_0.35_to_0.50": 0.4,
+      "quality_0.50_to_0.60": 0.6,
+      "quality_0.60_to_0.70": 0.8,
+      "quality_above_0.70": 1.0
+    },
+    "confidence_reduction": {
+      "quality_below_0.50": "low",
+      "quality_0.50_to_0.70": "reduce_one_level",
+      "quality_above_0.70": "no_change"
+    },
+    "notes": [
+      "Dampening pulls extreme scores toward 5.5",
+      "A raw 8.0 with quality 0.5 becomes: 5.5 + (8.0-5.5)*0.6 = 7.0",
+      "A raw 3.0 with quality 0.5 becomes: 5.5 + (3.0-5.5)*0.6 = 4.0"
+    ]
+  },
+
+  "pillar_weights": {
+    "description": "High-level category weights that sum to 1.0",
+    "presets": {
+      "neutral": {
+        "structure": 0.35,
+        "features": 0.30,
+        "presentation": 0.20,
+        "harmony": 0.15
+      },
+      "masculine_leaning": {
+        "structure": 0.42,
+        "features": 0.28,
+        "presentation": 0.17,
+        "harmony": 0.13
+      },
+      "feminine_leaning": {
+        "structure": 0.30,
+        "features": 0.35,
+        "presentation": 0.22,
+        "harmony": 0.13
+      }
+    },
+    "pillar_definitions": {
+      "structure": {
+        "description": "Bone structure, face shape, proportions",
+        "includes": ["face_shape", "facial_thirds", "jaw_definition", "chin_projection", "cheekbone_prominence"]
+      },
+      "features": {
+        "description": "Individual feature quality",
+        "includes": ["eyes", "brows", "nose", "lips"]
+      },
+      "presentation": {
+        "description": "Modifiable surface qualities",
+        "includes": ["skin", "hair", "grooming"]
+      },
+      "harmony": {
+        "description": "How features work together",
+        "includes": ["symmetry", "proportion_harmony", "golden_ratio_proximity"]
+      }
     }
   },
 
-  "potential_deltas": {
-    "description": "Maximum realistic improvement deltas by lever. Output as range (min to max).",
-    "levers": {
-      "skin_routine": {
-        "min_delta": 0.2,
-        "max_delta": 1.0,
-        "timeline": "8_12_weeks",
-        "confidence_multiplier": 0.8,
-        "applies_to_traits": ["skin_texture", "skin_tone_evenness", "skin_clarity", "skin_hydration", "skin_glow"],
-        "actions": ["basic_skincare_am", "basic_skincare_pm", "spf_daily", "hydration"]
+  "feature_weights": {
+    "description": "Weights within the features pillar, sum to 1.0 per preset",
+    "presets": {
+      "neutral": {
+        "eyes": 0.28,
+        "brows": 0.12,
+        "nose": 0.22,
+        "lips": 0.18,
+        "cheekbones": 0.10,
+        "jawline": 0.10
       },
-      "under_eye_care": {
-        "min_delta": 0.1,
-        "max_delta": 0.6,
-        "timeline": "2_4_weeks",
-        "confidence_multiplier": 0.7,
-        "applies_to_traits": ["under_eye_darkness", "under_eye_puffiness", "under_eye_area"],
-        "actions": ["sleep_consistency", "eye_cream", "reduce_sodium", "cold_compress"]
+      "masculine_leaning": {
+        "eyes": 0.22,
+        "brows": 0.14,
+        "nose": 0.20,
+        "lips": 0.12,
+        "cheekbones": 0.12,
+        "jawline": 0.20
       },
-      "brow_grooming": {
-        "min_delta": 0.1,
-        "max_delta": 0.5,
-        "timeline": "today",
-        "confidence_multiplier": 0.9,
-        "applies_to_traits": ["brow_shape", "brow_grooming", "brow_symmetry"],
-        "actions": ["brow_cleanup", "brow_shaping", "brow_fill"]
+      "feminine_leaning": {
+        "eyes": 0.32,
+        "brows": 0.12,
+        "nose": 0.18,
+        "lips": 0.22,
+        "cheekbones": 0.10,
+        "jawline": 0.06
+      }
+    }
+  },
+
+  "structure_weights": {
+    "description": "Weights within the structure pillar, sum to 1.0 per preset",
+    "presets": {
+      "neutral": {
+        "face_shape": 0.20,
+        "facial_thirds": 0.20,
+        "jaw_definition": 0.25,
+        "chin_projection": 0.15,
+        "cheekbone_prominence": 0.20
       },
-      "hair_styling": {
+      "masculine_leaning": {
+        "face_shape": 0.15,
+        "facial_thirds": 0.15,
+        "jaw_definition": 0.35,
+        "chin_projection": 0.20,
+        "cheekbone_prominence": 0.15
+      },
+      "feminine_leaning": {
+        "face_shape": 0.25,
+        "facial_thirds": 0.25,
+        "jaw_definition": 0.15,
+        "chin_projection": 0.10,
+        "cheekbone_prominence": 0.25
+      }
+    }
+  },
+
+  "presentation_weights": {
+    "description": "Weights within the presentation pillar, sum to 1.0 per preset",
+    "presets": {
+      "neutral": {
+        "skin_quality": 0.40,
+        "hair_fit": 0.35,
+        "grooming": 0.25
+      },
+      "masculine_leaning": {
+        "skin_quality": 0.35,
+        "hair_fit": 0.35,
+        "grooming": 0.30
+      },
+      "feminine_leaning": {
+        "skin_quality": 0.45,
+        "hair_fit": 0.35,
+        "grooming": 0.20
+      }
+    }
+  },
+
+  "harmony_weights": {
+    "description": "Weights within the harmony pillar, sum to 1.0",
+    "presets": {
+      "neutral": {
+        "symmetry": 0.45,
+        "proportion_harmony": 0.35,
+        "golden_ratio_proximity": 0.20
+      },
+      "masculine_leaning": {
+        "symmetry": 0.40,
+        "proportion_harmony": 0.40,
+        "golden_ratio_proximity": 0.20
+      },
+      "feminine_leaning": {
+        "symmetry": 0.50,
+        "proportion_harmony": 0.30,
+        "golden_ratio_proximity": 0.20
+      }
+    }
+  },
+
+  "reference_ranges": {
+    "eye_spacing_ratio": {
+      "definition": "intercanthal_distance / interpupillary_distance",
+      "reliability": "high",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.32,
+        "std": 0.03,
+        "soft_min": 0.26,
+        "soft_max": 0.38,
+        "target_band": [0.30, 0.34]
+      },
+      "female": {
+        "mean": 0.31,
+        "std": 0.03,
+        "soft_min": 0.25,
+        "soft_max": 0.37,
+        "target_band": [0.29, 0.33]
+      },
+      "notes": [
+        "One of the most reliable facial metrics",
+        "Values < soft_min suggest wide-set eyes",
+        "Values > soft_max suggest close-set eyes",
+        "Target band represents aesthetically ideal range"
+      ]
+    },
+
+    "nose_width_ratio": {
+      "definition": "alar_width / face_width_at_cheekbones",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.26,
+        "std": 0.025,
+        "soft_min": 0.21,
+        "soft_max": 0.31,
+        "target_band": [0.24, 0.28]
+      },
+      "female": {
+        "mean": 0.24,
+        "std": 0.025,
+        "soft_min": 0.19,
+        "soft_max": 0.29,
+        "target_band": [0.22, 0.26]
+      },
+      "notes": [
+        "Alar width ideally equals eye fissure width",
+        "Ethnic variation is normal and expected",
+        "Use ratio not absolute width"
+      ]
+    },
+
+    "mouth_width_ratio": {
+      "definition": "mouth_width / face_width_at_cheekbones",
+      "reliability": "high",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.42,
+        "std": 0.035,
+        "soft_min": 0.35,
+        "soft_max": 0.49,
+        "target_band": [0.40, 0.46]
+      },
+      "female": {
+        "mean": 0.40,
+        "std": 0.035,
+        "soft_min": 0.33,
+        "soft_max": 0.47,
+        "target_band": [0.38, 0.44]
+      },
+      "notes": [
+        "Mouth corners should roughly align with pupils",
+        "Expression affects measurement",
+        "Require neutral expression for accuracy"
+      ]
+    },
+
+    "jaw_to_face_width_ratio": {
+      "definition": "bigonial_width / bizygomatic_width",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.78,
+        "std": 0.05,
+        "soft_min": 0.68,
+        "soft_max": 0.88,
+        "target_band": [0.75, 0.85]
+      },
+      "female": {
+        "mean": 0.72,
+        "std": 0.05,
+        "soft_min": 0.62,
+        "soft_max": 0.82,
+        "target_band": [0.68, 0.76]
+      },
+      "notes": [
+        "Higher ratio indicates more angular/square jaw",
+        "Lower ratio indicates more tapered/heart shape",
+        "Male preference typically higher than female",
+        "Body composition affects apparent jaw width"
+      ]
+    },
+
+    "eye_fissure_to_ipd": {
+      "definition": "palpebral_fissure_width / interpupillary_distance",
+      "reliability": "high",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.48,
+        "std": 0.04,
+        "soft_min": 0.40,
+        "soft_max": 0.56,
+        "target_band": [0.46, 0.52]
+      },
+      "female": {
+        "mean": 0.50,
+        "std": 0.04,
+        "soft_min": 0.42,
+        "soft_max": 0.58,
+        "target_band": [0.48, 0.54]
+      },
+      "notes": [
+        "Larger eyes relative to IPD often perceived as youthful",
+        "Very reliable metric",
+        "Expression can affect (squinting reduces)"
+      ]
+    },
+
+    "nose_length_over_ipd": {
+      "definition": "nasion_to_subnasale / interpupillary_distance",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.72,
+        "std": 0.06,
+        "soft_min": 0.60,
+        "soft_max": 0.84,
+        "target_band": [0.68, 0.76]
+      },
+      "female": {
+        "mean": 0.68,
+        "std": 0.06,
+        "soft_min": 0.56,
+        "soft_max": 0.80,
+        "target_band": [0.64, 0.72]
+      },
+      "notes": [
+        "Nose should be approximately one face-third",
+        "Shorter nose often perceived as more feminine",
+        "Camera angle affects apparent length"
+      ]
+    },
+
+    "symmetry_composite_seed": {
+      "definition": "weighted_average(eye_symmetry, brow_symmetry, mouth_symmetry, nose_deviation)",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.85,
+        "std": 0.08,
+        "soft_min": 0.70,
+        "soft_max": 1.00,
+        "target_band": [0.88, 0.98]
+      },
+      "female": {
+        "mean": 0.86,
+        "std": 0.08,
+        "soft_min": 0.70,
+        "soft_max": 1.00,
+        "target_band": [0.88, 0.98]
+      },
+      "notes": [
+        "1.0 = perfect symmetry (rare)",
+        "0.85+ is good symmetry",
+        "Head tilt can fake asymmetry - reduce confidence if tilt detected",
+        "Some asymmetry is normal and adds character"
+      ]
+    },
+
+    "philtrum_to_chin_ratio": {
+      "definition": "philtrum_length / chin_height",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.50,
+        "std": 0.06,
+        "soft_min": 0.38,
+        "soft_max": 0.62,
+        "target_band": [0.45, 0.52]
+      },
+      "female": {
+        "mean": 0.48,
+        "std": 0.06,
+        "soft_min": 0.36,
+        "soft_max": 0.60,
+        "target_band": [0.42, 0.50]
+      },
+      "notes": [
+        "Shorter philtrum relative to chin generally preferred",
+        "Affects lower face harmony",
+        "Expression affects philtrum measurement"
+      ]
+    },
+
+    "upper_to_lower_lip_ratio": {
+      "definition": "upper_lip_height / lower_lip_height",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.62,
+        "std": 0.08,
+        "soft_min": 0.45,
+        "soft_max": 0.80,
+        "target_band": [0.55, 0.70]
+      },
+      "female": {
+        "mean": 0.60,
+        "std": 0.08,
+        "soft_min": 0.42,
+        "soft_max": 0.78,
+        "target_band": [0.52, 0.68]
+      },
+      "notes": [
+        "Lower lip typically fuller than upper",
+        "Golden ratio would be ~0.618",
+        "Expression and camera angle affect"
+      ]
+    },
+
+    "facial_thirds_balance": {
+      "definition": "max_deviation_from_equal_thirds",
+      "reliability": "low",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.08,
+        "std": 0.05,
+        "soft_min": 0.00,
+        "soft_max": 0.18,
+        "target_band": [0.00, 0.06]
+      },
+      "female": {
+        "mean": 0.07,
+        "std": 0.05,
+        "soft_min": 0.00,
+        "soft_max": 0.17,
+        "target_band": [0.00, 0.05]
+      },
+      "notes": [
+        "0 = perfect thirds balance",
+        "Hairline detection very unreliable",
+        "Lower confidence on this metric always",
+        "Values are deviation percentages"
+      ]
+    },
+
+    "face_width_to_height": {
+      "definition": "bizygomatic_width / face_height",
+      "reliability": "low",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 0.68,
+        "std": 0.05,
+        "soft_min": 0.58,
+        "soft_max": 0.78,
+        "target_band": [0.65, 0.72]
+      },
+      "female": {
+        "mean": 0.66,
+        "std": 0.05,
+        "soft_min": 0.56,
+        "soft_max": 0.76,
+        "target_band": [0.62, 0.70]
+      },
+      "notes": [
+        "Key determinant of face shape classification",
+        "Hairline affects height measurement",
+        "Lower ratio = more elongated face"
+      ]
+    },
+
+    "canthal_tilt_degrees": {
+      "definition": "angle_inner_to_outer_canthus_from_horizontal",
+      "reliability": "medium",
+      "measurement_source": "front_view",
+      "male": {
+        "mean": 4.0,
+        "std": 3.0,
+        "soft_min": -2.0,
+        "soft_max": 10.0,
+        "target_band": [3.0, 8.0]
+      },
+      "female": {
+        "mean": 5.0,
+        "std": 3.0,
+        "soft_min": -1.0,
+        "soft_max": 11.0,
+        "target_band": [4.0, 9.0]
+      },
+      "notes": [
+        "Positive = outer corner higher than inner",
+        "Head tilt heavily affects this measurement",
+        "Reduce confidence if any head tilt detected",
+        "Units are degrees"
+      ]
+    },
+
+    "gonial_angle_degrees": {
+      "definition": "angle_at_jaw_corner",
+      "reliability": "low",
+      "measurement_source": "side_view",
+      "male": {
+        "mean": 118.0,
+        "std": 8.0,
+        "soft_min": 100.0,
+        "soft_max": 136.0,
+        "target_band": [110.0, 125.0]
+      },
+      "female": {
+        "mean": 122.0,
+        "std": 8.0,
+        "soft_min": 104.0,
+        "soft_max": 140.0,
+        "target_band": [115.0, 130.0]
+      },
+      "notes": [
+        "Requires side view for accurate measurement",
+        "Lower angle = more defined jaw",
+        "Male preference typically for lower angle",
+        "Omit or low confidence without side view"
+      ]
+    },
+
+    "cervicomental_angle_degrees": {
+      "definition": "angle_between_chin_and_neck",
+      "reliability": "low",
+      "measurement_source": "side_view",
+      "male": {
+        "mean": 112.0,
+        "std": 10.0,
+        "soft_min": 90.0,
+        "soft_max": 135.0,
+        "target_band": [100.0, 120.0]
+      },
+      "female": {
+        "mean": 115.0,
+        "std": 10.0,
+        "soft_min": 92.0,
+        "soft_max": 138.0,
+        "target_band": [105.0, 125.0]
+      },
+      "notes": [
+        "Requires side view",
+        "Posture heavily affects this",
+        "Body composition affects appearance",
+        "One of most modifiable via posture"
+      ]
+    }
+  },
+
+  "potential_model": {
+    "description": "Delta ranges for modifiable levers that contribute to potential score",
+    "calculation_method": "potential_range = current + sum(applicable_lever_deltas)",
+    "output_type": "range_not_promise",
+    "timeline_buckets": [
+      { "key": "today", "days": [0, 1], "description": "Immediate fixes" },
+      { "key": "1_2_weeks", "days": [7, 14], "description": "Short-term habits" },
+      { "key": "2_4_weeks", "days": [14, 28], "description": "Routine establishment" },
+      { "key": "8_12_weeks", "days": [56, 84], "description": "Sustained improvement" }
+    ],
+    "lever_deltas": {
+      "hair": {
         "min_delta": 0.2,
         "max_delta": 0.8,
+        "typical_delta": 0.5,
         "timeline": "today",
-        "confidence_multiplier": 0.85,
-        "applies_to_traits": ["hair_style_fit", "hair_framing", "hair_health"],
-        "actions": ["haircut_for_face_shape", "styling_products", "hair_care_routine"]
+        "confidence": "high",
+        "affected_traits": ["hair_style_fit", "hair_framing", "hair_volume", "face_shape_perception"],
+        "description": "Haircut and styling to complement face shape",
+        "actions": [
+          "Get cut suited to face shape",
+          "Add volume where needed",
+          "Frame face appropriately",
+          "Consider professional consultation"
+        ],
+        "notes": ["High impact, immediate results", "One of the biggest levers available"]
+      },
+      "skin": {
+        "min_delta": 0.2,
+        "max_delta": 1.0,
+        "typical_delta": 0.6,
+        "timeline": "2_4_weeks",
+        "confidence": "medium",
+        "affected_traits": ["skin_texture", "skin_clarity", "skin_tone_evenness", "skin_glow"],
+        "description": "Basic skincare routine establishment",
+        "actions": [
+          "AM: Gentle cleanser, moisturizer, SPF",
+          "PM: Gentle cleanser, moisturizer",
+          "Stay hydrated",
+          "Consistent sleep schedule"
+        ],
+        "notes": ["Results take 2-4 weeks minimum", "Max delta requires 8-12 weeks"]
+      },
+      "brows": {
+        "min_delta": 0.1,
+        "max_delta": 0.5,
+        "typical_delta": 0.3,
+        "timeline": "today",
+        "confidence": "high",
+        "affected_traits": ["brow_shape", "brow_grooming_quality", "brow_symmetry", "brow_definition"],
+        "description": "Brow grooming and shaping",
+        "actions": [
+          "Clean up stray hairs",
+          "Define natural shape",
+          "Avoid over-plucking",
+          "Consider professional shaping"
+        ],
+        "notes": ["Immediate impact", "Conservative approach recommended"]
+      },
+      "under_eye": {
+        "min_delta": 0.1,
+        "max_delta": 0.6,
+        "typical_delta": 0.35,
+        "timeline": "2_4_weeks",
+        "confidence": "medium",
+        "affected_traits": ["under_eye_darkness", "under_eye_puffiness", "eye_area_appearance"],
+        "description": "Under-eye appearance improvement",
+        "actions": [
+          "7-9 hours consistent sleep",
+          "Reduce sodium intake",
+          "Stay hydrated",
+          "Cold compress for puffiness"
+        ],
+        "notes": ["Lifestyle factors dominate", "Genetics set baseline"]
+      },
+      "posture": {
+        "min_delta": 0.1,
+        "max_delta": 0.5,
+        "typical_delta": 0.3,
+        "timeline": "2_4_weeks",
+        "confidence": "medium",
+        "affected_traits": ["jaw_definition", "cervicomental_angle", "neck_length", "submental_area"],
+        "description": "Head and neck posture improvement",
+        "actions": [
+          "Chin tucks: 2 sets of 10 daily",
+          "Reduce forward head position",
+          "Strengthen neck muscles",
+          "Ergonomic workspace setup"
+        ],
+        "notes": ["Affects jaw appearance significantly", "Requires consistency"]
+      },
+      "photo_optimization": {
+        "min_delta": 0.1,
+        "max_delta": 0.4,
+        "typical_delta": 0.25,
+        "timeline": "today",
+        "confidence": "high",
+        "affected_traits": ["lighting_quality", "photo_angle", "camera_distance"],
+        "description": "Better photo-taking technique",
+        "actions": [
+          "Face natural light source (window)",
+          "Use back camera, not selfie cam",
+          "Step back to reduce lens distortion",
+          "Hold at eye level, not below"
+        ],
+        "notes": ["Affects how you photograph, not actual face", "Immediate application"]
       },
       "facial_hair": {
         "min_delta": 0.1,
         "max_delta": 0.5,
-        "timeline": "2_4_weeks",
-        "confidence_multiplier": 0.8,
-        "applies_to_traits": ["facial_hair_grooming", "facial_hair_style", "jaw_definition"],
-        "actions": ["beard_shaping", "stubble_maintenance", "clean_shave"],
-        "condition": "has_facial_hair"
-      },
-      "posture_correction": {
-        "min_delta": 0.1,
-        "max_delta": 0.4,
-        "timeline": "2_4_weeks",
-        "confidence_multiplier": 0.7,
-        "applies_to_traits": ["jaw_definition", "submental_area", "neck_length", "posture_presentation"],
-        "actions": ["chin_tucks", "wall_angels", "ergonomic_setup"]
-      },
-      "photo_optimization": {
-        "min_delta": 0.1,
-        "max_delta": 0.3,
+        "typical_delta": 0.3,
         "timeline": "today",
-        "confidence_multiplier": 0.9,
-        "applies_to_traits": ["photo_angle_optimization", "lighting_quality", "camera_distance"],
-        "actions": ["natural_lighting", "back_camera", "eye_level", "step_back"]
+        "confidence": "medium",
+        "affected_traits": ["facial_hair_grooming", "facial_hair_style", "jaw_definition_appearance"],
+        "description": "Facial hair styling and grooming",
+        "actions": [
+          "Style to complement face shape",
+          "Maintain clean lines",
+          "Regular trimming",
+          "Consider clean-shaven vs beard"
+        ],
+        "notes": ["Only applicable if facial hair present/desired", "Can redefine jaw appearance"]
       },
-      "lip_care": {
+      "hydration": {
         "min_delta": 0.05,
         "max_delta": 0.3,
-        "timeline": "2_4_weeks",
-        "confidence_multiplier": 0.7,
-        "applies_to_traits": ["lip_color", "lip_definition"],
-        "actions": ["lip_balm", "exfoliation", "hydration"]
+        "typical_delta": 0.15,
+        "timeline": "1_2_weeks",
+        "confidence": "low",
+        "affected_traits": ["skin_hydration", "lip_color", "under_eye_area"],
+        "description": "Improved hydration habits",
+        "actions": [
+          "8 glasses water daily",
+          "Reduce caffeine/alcohol",
+          "Moisturize consistently",
+          "Humidifier in dry environments"
+        ],
+        "notes": ["Subtle effect", "Supports other levers"]
       },
       "body_composition": {
         "min_delta": 0.2,
-        "max_delta": 0.6,
+        "max_delta": 0.8,
+        "typical_delta": 0.5,
         "timeline": "8_12_weeks",
-        "confidence_multiplier": 0.6,
-        "applies_to_traits": ["jaw_definition", "cheek_fullness", "submental_area"],
-        "actions": ["caloric_deficit", "strength_training", "cardio"],
-        "note": "Only suggest if visible indicators; no assumptions"
+        "confidence": "medium",
+        "affected_traits": ["jaw_definition", "cheekbone_prominence", "submental_area", "face_shape"],
+        "description": "Body fat percentage optimization",
+        "actions": [
+          "Caloric awareness",
+          "Regular exercise",
+          "Adequate protein",
+          "Patience - 8-12 week minimum"
+        ],
+        "notes": ["Long timeline", "Significant impact on facial definition", "No extreme dieting"]
       }
     }
   },
 
-  "scoring_functions": {
-    "ratio_to_score": {
-      "description": "Convert a ratio measurement to 0-10 score based on distance from ideal range",
-      "algorithm": "If within ideal range: 7-10 based on center proximity. Outside: penalize by std deviations from ideal edge.",
-      "formula_pseudo": "within_ideal ? 7 + 3*(1 - dist_to_center/range_half) : 7 - 2*stds_from_edge"
-    },
-    "confidence_damping": {
-      "description": "Reduce extreme scores when confidence is low",
-      "formula_pseudo": "damped_score = mean + (raw_score - mean) * confidence_factor",
-      "confidence_factors": { "high": 1.0, "medium": 0.75, "low": 0.5 }
-    },
-    "photo_quality_damping": {
-      "description": "Further reduce extremes when photo quality is poor",
-      "formula_pseudo": "if quality < 0.6: score = lerp(5.5, score, quality / 0.6)"
-    },
-    "overall_score_calc": {
-      "description": "Weighted average of pillar scores",
-      "formula_pseudo": "sum(pillar_score * pillar_weight) for all pillars",
-      "post_processing": "Apply calibration to ensure mean ~5.5, std ~1.2"
+  "confidence_mapping": {
+    "description": "How to assign confidence levels based on measurement reliability and photo quality",
+    "rules": [
+      {
+        "condition": "reliability=high AND quality>=0.7",
+        "confidence": "high"
+      },
+      {
+        "condition": "reliability=high AND quality>=0.5",
+        "confidence": "medium"
+      },
+      {
+        "condition": "reliability=medium AND quality>=0.7",
+        "confidence": "medium"
+      },
+      {
+        "condition": "reliability=medium AND quality>=0.5",
+        "confidence": "low"
+      },
+      {
+        "condition": "reliability=low OR quality<0.5",
+        "confidence": "low"
+      }
+    ],
+    "output_labels": {
+      "high": "Measurement is reliable for this photo",
+      "medium": "Measurement has moderate uncertainty",
+      "low": "Measurement has high uncertainty; treat as approximate"
     }
   },
 
-  "photo_quality_weights": {
-    "brightness": 0.20,
-    "sharpness": 0.25,
-    "face_size": 0.15,
-    "head_tilt": 0.15,
-    "occlusion": 0.15,
-    "expression": 0.10
-  },
-
-  "photo_quality_thresholds": {
-    "block_below": 0.35,
-    "warn_below": 0.60,
-    "good_above": 0.75
-  },
-
-  "confidence_rules": {
-    "base_confidence": "medium",
-    "upgrade_to_high": [
-      "front_photo_quality > 0.75",
-      "side_photo_provided && side_quality > 0.6",
-      "neutral_expression",
-      "no_occlusions"
+  "ratio_to_score_mapping": {
+    "description": "How to convert a ratio measurement to a 0-10 score",
+    "method": "zscore_with_target_band_bonus",
+    "steps": [
+      "1. Calculate z-score: z = (value - mean) / std",
+      "2. Check if value is within target_band: if yes, bonus +0.3 to z",
+      "3. Convert z to score: score = 5.5 + (z * 1.5)",
+      "4. Clamp to [0, 10]",
+      "5. Apply dampen_low_quality if photo_quality < 0.7",
+      "6. Round to 1 decimal place"
     ],
-    "downgrade_to_low": [
-      "photo_quality < 0.5",
-      "significant_head_tilt",
-      "harsh_shadows",
-      "blurry_image",
-      "hair_covering_features"
-    ]
-  },
-
-  "feature_ui_mapping": {
-    "eyes": ["eye_shape", "eye_size", "eye_spacing", "canthal_tilt", "eye_symmetry", "under_eye_area"],
-    "brows": ["brow_shape", "brow_thickness", "brow_symmetry", "brow_position", "brow_grooming"],
-    "nose": ["nose_length", "nose_width", "nose_bridge", "nose_tip", "nose_symmetry", "nose_projection"],
-    "lips": ["lip_fullness", "lip_ratio", "lip_definition", "mouth_width", "lip_symmetry", "philtrum_length"],
-    "cheekbones": ["cheekbone_prominence", "cheekbone_width", "midface_ratio", "cheek_fullness"],
-    "jawline": ["jaw_width", "jaw_definition", "jaw_angle", "jaw_symmetry", "chin_shape", "chin_projection"],
-    "skin": ["skin_texture", "skin_tone_evenness", "skin_clarity", "under_eye_darkness"],
-    "hair": ["hair_style_fit", "hair_framing", "hair_health", "hair_density"],
-    "harmony": ["overall_harmony", "vertical_symmetry", "proportion_harmony", "golden_ratio_adherence"]
-  },
-
-  "action_library": {
-    "skincare": [
-      {
-        "key": "basic_skincare_am",
-        "title": "Morning Skincare Routine",
-        "type": "routine",
-        "difficulty": "easy",
-        "timeline": "2_4_weeks",
-        "cost": "low",
-        "steps": ["Gentle cleanser", "Moisturizer", "SPF 30+ daily"],
-        "expected_delta": 0.3
-      },
-      {
-        "key": "basic_skincare_pm",
-        "title": "Evening Skincare Routine",
-        "type": "routine",
-        "difficulty": "easy",
-        "timeline": "2_4_weeks",
-        "cost": "low",
-        "steps": ["Oil-based cleanser if wearing SPF", "Gentle cleanser", "Moisturizer"],
-        "expected_delta": 0.2
-      },
-      {
-        "key": "retinol_intro",
-        "title": "Introduce Retinol (Gradual)",
-        "type": "routine",
-        "difficulty": "medium",
-        "timeline": "8_12_weeks",
-        "cost": "medium",
-        "steps": ["Start 1x/week", "Increase to 2-3x/week over month", "Always use SPF next day"],
-        "expected_delta": 0.4,
-        "caution": "Start low concentration; patch test first"
-      }
-    ],
-    "grooming": [
-      {
-        "key": "brow_cleanup",
-        "title": "Brow Cleanup",
-        "type": "grooming",
-        "difficulty": "easy",
-        "timeline": "today",
-        "cost": "free",
-        "steps": ["Brush brows up", "Trim only longest strays", "Clean up stray hairs below arch", "Do NOT over-pluck"],
-        "expected_delta": 0.2
-      },
-      {
-        "key": "professional_brow_shape",
-        "title": "Professional Brow Shaping",
-        "type": "grooming",
-        "difficulty": "easy",
-        "timeline": "today",
-        "cost": "low",
-        "steps": ["Find experienced brow specialist", "Request natural enhancement", "Maintain shape at home"],
-        "expected_delta": 0.3
-      }
-    ],
-    "hair": [
-      {
-        "key": "haircut_consultation",
-        "title": "Face-Shape Haircut",
-        "type": "styling",
-        "difficulty": "easy",
-        "timeline": "today",
-        "cost": "medium",
-        "steps": ["Research styles for your face shape", "Bring reference photos", "Ask stylist opinion"],
-        "expected_delta": 0.4
-      }
-    ],
-    "posture": [
-      {
-        "key": "chin_tucks",
-        "title": "Chin Tuck Exercises",
-        "type": "exercise",
-        "difficulty": "easy",
-        "timeline": "2_4_weeks",
-        "cost": "free",
-        "steps": ["2 sets of 10 reps daily", "Hold 2-3 seconds each", "Keep movement small and controlled"],
-        "expected_delta": 0.15
-      }
-    ],
-    "lifestyle": [
-      {
-        "key": "sleep_optimization",
-        "title": "Sleep Consistency",
-        "type": "lifestyle",
-        "difficulty": "medium",
-        "timeline": "2_4_weeks",
-        "cost": "free",
-        "steps": ["Fixed wake time", "7-9 hours target", "No screens 1hr before bed", "Cool dark room"],
-        "expected_delta": 0.2
-      },
-      {
-        "key": "hydration",
-        "title": "Increase Hydration",
-        "type": "lifestyle",
-        "difficulty": "easy",
-        "timeline": "2_4_weeks",
-        "cost": "free",
-        "steps": ["8 glasses water daily", "Reduce caffeine", "Limit alcohol"],
-        "expected_delta": 0.1
-      }
-    ],
-    "photo": [
-      {
-        "key": "better_photos",
-        "title": "Optimize Photo Taking",
-        "type": "immediate",
-        "difficulty": "easy",
-        "timeline": "today",
-        "cost": "free",
-        "steps": ["Face natural window light", "Use back camera", "Hold at eye level", "Step back 3-4 feet"],
-        "expected_delta": 0.2
-      }
-    ]
-  },
-
-  "style_recommendations": {
-    "by_face_shape": {
-      "oval": {
-        "haircuts": ["Most styles work", "Avoid covering forehead completely", "Can experiment freely"],
-        "glasses": ["Most frame shapes work", "Avoid overly large frames"],
-        "facial_hair": ["Most styles work", "Match to personal style"]
-      },
-      "round": {
-        "haircuts": ["Add height on top", "Avoid full sides", "Angular styles work well"],
-        "glasses": ["Angular/rectangular frames", "Avoid round frames"],
-        "facial_hair": ["Defined jawline beard", "Avoid rounded beard shapes"]
-      },
-      "square": {
-        "haircuts": ["Softer styles", "Side-swept looks", "Avoid boxy cuts"],
-        "glasses": ["Round or oval frames", "Thin frames work well"],
-        "facial_hair": ["Rounded beard styles", "Soften jaw angles"]
-      },
-      "heart": {
-        "haircuts": ["Width at jaw level", "Side-swept bangs", "Avoid excessive top volume"],
-        "glasses": ["Bottom-heavy frames", "Light colored frames"],
-        "facial_hair": ["Fuller at chin", "Light stubble at temples"]
-      },
-      "oblong": {
-        "haircuts": ["Add width at sides", "Bangs can shorten face", "Avoid excessive length"],
-        "glasses": ["Wide frames", "Decorative temples"],
-        "facial_hair": ["Fuller sides", "Avoid long goatees"]
-      },
-      "diamond": {
-        "haircuts": ["Width at forehead/chin", "Side-swept styles", "Fringe options"],
-        "glasses": ["Cat-eye or oval", "Rimless work well"],
-        "facial_hair": ["Width at chin", "Defined lines"]
-      }
+    "special_cases": {
+      "deviation_metrics": "For metrics where lower is better (like facial_thirds_balance), invert the z-score",
+      "angle_metrics": "For angles, check if within target_band; outside band, calculate distance-based penalty"
     }
   }
 }

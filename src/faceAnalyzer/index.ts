@@ -1,7 +1,7 @@
 /**
  * Face Analyzer Module
  * 
- * Exports all types, scoring functions, and the main analyzer
+ * Exports all types, scoring functions, API, and prompts
  */
 
 // Types
@@ -9,22 +9,31 @@ export * from './types';
 
 // Scoring Engine
 export {
-  calculateScores,
-  assessPhotoQuality,
-  CALIBRATION,
-  CONFIDENCE_FACTORS,
-  PILLAR_WEIGHTS,
-  LEVER_CONFIG,
-  ratioToScore,
-  dampByConfidence,
-  dampByPhotoQuality,
-  determineConfidence,
+  computePhotoQuality,
   calibrateScore,
+  scoreMetricsToTraits,
+  computeOverallScore,
+  computePotentialRange,
+  selectTopLevers,
+  computeFeatureScores,
+  runScoringPipeline,
 } from './scoring';
 
-// Adapter (main entry point)
+// Adapter (high-level analysis function)
 export {
-  analyzeface,
+  analyzeFace as analyzeWithAdapter,
   FEATURE_TEMPLATES,
   STYLE_BY_FACE_SHAPE,
 } from './adapter';
+
+// API (LLM-based analysis)
+export {
+  analyzeFace,
+  getMockAnalysisResult,
+} from './api';
+
+// Prompts
+export {
+  FACE_ANALYZER_SYSTEM_PROMPT,
+  FACE_ANALYZER_USER_PROMPT_TEMPLATE,
+} from './prompts/analyzerSystemPrompt';
